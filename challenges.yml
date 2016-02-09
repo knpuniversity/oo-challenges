@@ -435,9 +435,9 @@ brokenship_createdeathstariiicoding:
             type: php
             assertTrue: reflection_class('\DeathStarIII').isSubclassOf('\AbstractDeathStar')
             failure: The `DeathStarIII` class should extend the `AbstractDeathStar` one.
-        check_class:
+        look_for_text:
             type: http
-            assertTrue: css('h3') matches get_variable('deathStar3').getDescription()
+            assertTrue: css('h3') matches /get_variable('deathStar3').getDescription()/
             failure: Hmm, did you print the `DeathStarIII` description in `h3` tag?
 
 # PdoShipStorage
@@ -531,7 +531,7 @@ abstractshiploader_createabstractplanetcoding:
         GasPlanet.php: ~
         PlanetRenderer.php: ~
         index.php:
-            read_only: ~
+            read_only: true
     features:
         editor: ~
         browser: ~
@@ -568,3 +568,87 @@ abstractshiploader_createabstractplanetcoding:
             type: php
             assertTrue: reflection_class('\GasPlanet').isSubclassOf('\AbstractPlanet')
             failure: Class `GasPlanet` should inherit the `AbstractPlanet` one.
+
+# Interfaces
+interfaces_implementplanetinterfacecoding:
+    question: >
+        After watching this last episode, you realize that `AbstractPlanet` should really
+        be an interface. I've given you a head start by creating the `PlanetInterface`.
+        Now, update all of your code to use it and get these planets rendering again!
+    step: ~
+    files:
+        SolidPlanet.php: ~
+        GasPlanet.php: ~
+        PlanetRenderer.php: ~
+        PlanetInterface.php:
+            read_only: true
+        index.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        check_implement_1:
+            type: php
+            assertTrue: reflection_class('\SolidPlanet').implementsInterface('\PlanetInterface')
+            failure: Class `SolidPlanet` should implement the `PlanetInterface` interface.
+        check_implement_2:
+            type: php
+            assertTrue: reflection_class('\GasPlanet').implementsInterface('\PlanetInterface')
+            failure: Class `GasPlanet` should implement the `PlanetInterface` interface.
+
+interfaces_interfacevsabstractclassmc:
+    question: >
+        You over-hear the intern Bob telling another teammate about the differences between
+        abstract classes and interfaces. He's *mostly* right, but he got one detail wrong.
+        Which of the following is *not* true:
+    explanation: >
+        `C` is the only answer that's incorrect: both interfaces and abstract classes can
+        force you to implement methods in the classes that use them. So in many ways, they
+        are the same.
+
+        So why use one or the other? Well, a class can implement *many* interfaces, which
+        makes interfaces more attractive, especially for re-usable code. But, an abstract
+        class can contain *real* methods, which can help you reduce code duplication between
+        classes. They're similar, but not the same.
+    features:
+        multiple_choice:
+            choices:
+                a: Classes can implement many interfaces, but only extend one class.
+                b: Abstract classes can contain concrete methods, but interfaces can't.
+                c: Interfaces force the user to implement certain methods, abstract classes do not.
+                d: >
+                    Even though Interfaces don't use the `abstract` keyword before methods,
+                    those methods act just like abstract methods in an abstract class.
+            correct: c
+
+interfaces_implementweaponinterfacecoding:
+    question: >
+        Now you're working on creating different weapons for the spaceships in our game.
+        By looking at the `WeaponInterface` create a new `LaserWeapon` class that implements
+        this interface. You can return anything you want from the methods. Use the class
+        to print out the weapon's range, just to see that things are working:
+    step: ~
+    files:
+        index.php: ~
+        LaserWeapon.php: ~
+        WeaponInterface.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        check_class:
+            type: php
+            assertTrue: class_exists('\LaserWeapon')
+            failure: Class `LaserWeapon` could not be found. Did you create it?
+        check_implement:
+            type: php
+            assertTrue: reflection_class('\LaserWeapon').implementsInterface('\WeaponInterface')
+            failure: Class `LaserWeapon` should implement the `WeaponInterface` interface.
+        # TODO Wondering how can we get expressions from both http and php types togeather in one assertion?
+        # I think we have a preblem here for now
+        look_for_text:
+            type: http
+            assertTrue: body() matches /get_variable('laserWeapon').getWeaponRange()/
+            failure: Seems you forgot to output the laser weapon range. Did you print the result of the `getWeaponRange()` method?
