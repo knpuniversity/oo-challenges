@@ -1,0 +1,77 @@
+extending_inheritfunctionalitycoding:
+    question: >
+        Your team has been working hard building the `DeathStar` class, only
+        to find out that the Rebels have just destroyed it! Time to rebuild!
+        Create a new class called `DeathStarII` in the `DeathStarII.php` file
+        and make it inherit all of the functionality from the original `DeathStar`.
+        In `index.php`, instantiate a new `DeathStarII` object and set it to
+        a `$deathStar` variable. Long live the Empire!
+    step: ~
+    files:
+        index.php: ~
+        DeathStarII.php: ~
+        DeathStar.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        check_variable:
+            type: php
+            # TODO: Implement variable_exists() function
+            assertFalse: variable_exists('deathStar')
+            failure: Make sure the `$deathStar` variable is exist
+        check_variable:
+            type: php
+            # @TODO: Implement is_subclass_of() and get_variable() functions
+            assertFalse: is_subclass_of(get_variable('deathStar'), '\DeathStarII')
+            failure: The `$deathStar` variable exists, but is not set to a `DeathStarII` object.
+        type: php
+            assertFalse: is_subclass_of(get_variable('deathStar'), '\DeathStar')
+            failure: The `DeathStarII` class is not extending `DeathStar` one.
+
+extending_callnonexistentmethodmc:
+    question: >
+        Look at these two classes:
+
+        ```php
+        class Ship
+        {
+            public function getName()
+            {
+                return 'Starfighter';
+            }
+        }
+        ```
+
+        ```php
+        class JediShip extends Ship
+        {
+            public function getFavoriteJedi()
+            {
+                return 'Yoda';
+            }
+        }
+        ```
+
+        Suppose we instantiate both objects:
+
+        ```php
+        $ship = new Ship();
+        $jediShip = new JediShip();
+        ```
+
+        Which of the following lines will cause an error?
+    explanation: >
+        The `Ship` object does *not* have a `getFavoriteJedi()` method
+        on it - only `JediShip` has this. But, since `JediShip extends Ship`,
+        the `JediShip` *does* have a `getName()` method: it inherits it from
+        `Ship`.
+    features:
+        multiple_choice:
+            choices:
+                a: `echo $ship->getName();`
+                b: `echo $ship->getFavoriteJedi();`
+                c: `echo $jediShip->getName();`
+                d: Both (B) and (C) will cause an error
+            correct: b
