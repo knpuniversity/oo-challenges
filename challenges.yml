@@ -436,6 +436,79 @@ brokenship_createdeathstariiicoding:
             assertTrue: reflection_class('\DeathStarIII').isSubclassOf('\AbstractDeathStar')
             failure: The `DeathStarIII` class should extend the `AbstractDeathStar` one.
         check_class:
-            type: php
+            type: http
             assertTrue: css('h3') matches get_variable('deathStar3').getDescription()
             failure: Hmm, did you print the `DeathStarIII` description in `h3` tag?
+
+# PdoShipStorage
+pdoshipstorage_decomposestringtransformercoding:
+    question: >
+        Tired from working on the DeathStar, you challenged the intern (let's call him
+        "Bob") to create a class that can reverse a string and upper case every other letter.
+        "Ha!" John says, "This is simple!". To show off, John creates the `StringTransformer`
+        class and *even* makes it cache the results to be super-performant.
+
+        But wait you say! Combining the string transformation *and* caching into the same
+        class make `StringTransformer` responsible for two jobs. Help show Bob the intern
+        a better way, by creating a new `Cache` class with two methods `fetchFromCache($key)`
+        and `saveToCache($key, $val)`. Then, pass this into `StringTransformer` and use it
+        to cache, instead of using your own logic:
+    step: ~
+    files:
+        index.php: ~
+        StringTransformer.php: ~
+        Cache.php: ~
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        check_class:
+            type: php
+            assertTrue: class_exists('\Cache')
+            failure: Class `Cache` does not exist. Did you create it?
+        check_method:
+            type: php
+            assertTrue: reflection_class('\Cache').hasMethod('fetchFromCache')
+            failure: Method `fetchFromCache()` does not exist in the `Cache` class.
+        check_method:
+            type: php
+            assertTrue: reflection_class('\Cache').hasMethod('saveToCache')
+            failure: Method `saveToCache()` does not exist in the `Cache` class.
+        check_variable:
+            type: php
+            # @TODO Implement variable_exists() function
+            assertTrue: variable_exists('transformer')
+            failure: I don't see the `$transformer` variable in `index.php` anymore - did you delete it?
+        assert_variable:
+            type: php
+            # @TODO Implement reflection_object() function
+            assertTrue: reflection_object(get_variable('transformer')).hasMethod('__construct')
+            failure: Make sure you give the `StringTransformer` class a `__construct()`. It should have one argument: a `Cache` object.
+        look_for_function:
+            type: http
+            assertFalse: body() matches /file_get_contents(/
+            failure: I still see `file_get_contents()` inside of `StringTransformer`. Make sure you've moved all of the caching logic into the Cache class.
+        # @TODO Create a mocked Cache, pass it into
+        # @TODO $transformer and assert that its cache methods are called
+
+pdoshipstorage_stringtransformerdecompositionadvantagesmc:
+    question: >
+        In the previous challenge, you split the logic from `StringTransformer`
+        into two different classes. What are the advantages of this?
+    explanation: >
+        All of these are advantages! Before, you might not even realize that
+        the `StringTransformer` had caching logic, but now its very obvious:
+        the caching logic is in a class called `Cache` and you can see that
+        the `StringTransformer` requires a `Cache` object. You could also use
+        the `Cache` class in other situations to cache other things. And you
+        could even - with a little bit of work - create a new `Cache` class
+        that caches via something like Redis, and pass *this* to `StringTransformer`
+        to cache using a different method.
+    features:
+        multiple_choice:
+            choices:
+                a: Each class is smaller and so easier to understand
+                b: The `Cache` class could be re-used to cache other things
+                c: You could easily use the `StringTransformer`, but cache using a different mechanism, like *Redis*
+                d: All of these are real advantages
+            correct: d
