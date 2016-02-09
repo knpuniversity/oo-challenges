@@ -294,3 +294,122 @@ parent_callparentmethodcoding:
             type: php
             assertTrue: 4000000 === get_variable('deathStar').getLaserRange()
             failure: The `getLaserRange()` method in the `DeathStarII` class should return a doubled value of the parent method.
+
+# AbstractShip
+abstractship_extendabstractclasscoding:
+    question: >
+        We've just gotten word that the Rebels have *also*
+        destroyed the `DeathStarII`. Wow, rotten luck. Anyways,
+        it sounds like we'll be creating blue prints for many
+        different types of DeathStar's in the future, to keep
+        the Rebels guessing.
+
+        To make this easier, create an `AbstractDeathStar` class,
+        move all of the shared code into it, and update
+        `DeathStar` and `DeathStarII` to extend this new class.
+        Make sure to get rid of anything in those classes
+        that you've moved into the new parent class.
+    step: ~
+    files:
+        AbstractDeathStar: ~
+        DeathStar.php: ~
+        DeathStarII.php: ~
+        index.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        check_class:
+            type: php
+            assertTrue: class_exists('\AbstractDeathStar')
+            failure: The `AbstractDeathStar` class does not exist! Did you create it?
+        assert_abstract:
+            type: php
+            assertTrue: reflection_class('\AbstractDeathStar').isAbstract()
+            failure: The `AbstractDeathStar` class should be declared as abstract.
+        check_methods:
+            type: php
+            assertTrue: reflection_class('\AbstractDeathStar').hasMethod('setWeaponPower') and reflection_class('\AbstractDeathStar').hasMethod('getWeaponPower') and reflection_class('\AbstractDeathStar').hasMethod('makeFiringNoise')
+            failure: The `AbstractDeathStar` class should have `getWeaponPower()`, `setWeaponPower()`, and `makeFiringNoise()` methods.
+        check_method:
+            type: php
+            assertTrue: reflection_class('\AbstractDeathStar').hasMethod('setCrewSize')
+            failure: The `AbstractDeathStar` class should not have a `setCrewSize()` method! The `DeathStarII` just has a hardcoded crew size, so does not need this setter. Move it to `Deathstar`.
+        assert_subclass_of:
+            type: php
+            assertTrue: reflection_class('\DeathStar').isSubclassOf('\AbstractDeathStar') and reflection_class('\DeathStarII').isSubclassOf('\AbstractDeathStar')
+            failure: The both `DeathStar` and `DeathStarII` classes should extend `AbstractDeathStar` one.
+
+abstractship_inheritanceoverheadmc:
+    question: >
+        A co-worker created a few classes and has asked for
+        your advice about organizing them:
+
+        ```php
+        class Ship
+        {
+            private $name;
+
+            public function getName()
+            {
+                return $name;
+            }
+
+            public function setName($name)
+            {
+                $this->name = $name;
+            }
+
+            // other stuff...
+        }
+        ```
+
+        ```php
+        class Person
+        {
+            private $name;
+
+            public function getName()
+            {
+                return $name;
+            }
+
+            public function setName($name)
+            {
+                $this->name = $name;
+            }
+
+            // other stuff...
+        }
+        ```
+
+        Your teammate is wondering if this can be organized better.
+        Which if the following is the best advice?
+    explanation: >
+        Even though both classes share some code, a `Ship`
+        and a `Person` fundamentally aren't the same thing,
+        and probably don't have any other overlapping code.
+        So, you *could* create an `AbstractNamedItem`, but
+        that's a bit awkward. And remember, you can only
+        extend *one* class, so make sure your parent class
+        makes sense.
+
+        In this case, the best action is to do nothing: leave
+        these two blueprints totally independent. In a future
+        episode, we'll talk about traits: a cool way to help
+        remove duplication without inheritance.
+    features:
+        multiple_choice:
+            choices:
+                a: >
+                    Create a new `AbstractNamedItem` class that has the
+                    `name` property and the `getName()` and `setName()`
+                    methods. Then, make `Person` and `Ship` extend this
+                    class.
+                b: >
+                    Make `Ship` extend `Person`, and remove all the
+                    duplicated code in `Person`.
+                c: >
+                    Leave things exactly like they are now.
+            correct: c
