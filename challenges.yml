@@ -17,7 +17,7 @@ extending_inheritfunctionalitycoding:
         editor: ~
         browser: ~
     grading:
-        check_variable_existent:
+        check_variable:
             type: php
             # TODO: Implement variable_exists() function
             assertTrue: variable_exists('deathStar')
@@ -95,11 +95,11 @@ override_overrideinheritmethodcoding:
         editor: ~
         browser: ~
     grading:
-        check_variable_existent_1:
+        check_variable_1:
             type: php
             assertTrue: variable_exists('original')
             failure: Make sure the `$original` variable is exist
-        check_variable_existent_2:
+        check_variable_2:
             type: php
             assertTrue: variable_exists('new')
             failure: Make sure the `$new` variable is exist
@@ -186,8 +186,8 @@ protectedvisibility_getinheritedpropertycoding:
         so that the new `getSpecs()` method works:
     step: ~
     files:
-        DeathStar.php:
-        DeathStarII.php: ~
+        DeathStar.php: ~
+        DeathStarII.php:
             read_only: true
         index.php:
             read_only: true
@@ -265,3 +265,32 @@ protectedvisibility_propertyvisibilitymc:
                 c: `return $this->weaponPower` in `JediShip.php`
                 d: None of the above is bad code - we're awesome!
             correct: a
+
+# Parent
+parent_callparentmethodcoding:
+    question: >
+        It took too long to travel to planets to destroy them
+        in the first DeathStar, so Darth wants the laser range
+        on the new DeathStar to be *twice* as far! Override
+        the `getLaserRange()` method in `DeathStarII` to make
+        this happen. But don't repeat the `2000000` value!
+        Call the parent function and then multiple that value by 2!
+    step: ~
+    files:
+        DeathStarII.php: ~
+        DeathStar.php:
+            read_only: true
+        index.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        check_method:
+            type: php
+            assertTrue: method_exists(get_variable('deathStar'), 'getLaserRange')
+            failure: The `getLaserRange()` method does not exist for the `DeathStarII` class - did you create it?
+        assert_method:
+            type: php
+            assertTrue: 4000000 === get_variable('deathStar').getLaserRange()
+            failure: The `getLaserRange()` method in the `DeathStarII` class should return a doubled value of the parent method.
