@@ -512,3 +512,59 @@ pdoshipstorage_stringtransformerdecompositionadvantagesmc:
                 c: You could easily use the `StringTransformer`, but cache using a different mechanism, like *Redis*
                 d: All of these are real advantages
             correct: d
+
+# AbstractShipLoader
+abstractshiploader_createabstractplanetcoding:
+    question: >
+        Tired of their DeathStars being destroyed, the Empire has decided to transform into
+        a video game company. Awesome! Two different teammates have already created two
+        classes to model this: `SolidPlanet` and `GasPlanet`. They look and work differently,
+        but both have `getRadius()` and `getHexColor()` methods. You've built a `PlanetRenderer`
+        class with a `render()` method, but it's not quite working yet.
+
+        Create an `AbstractPlanet` class and update any other code you need to make these
+        planets render!
+    step: ~
+    files:
+        AbstractPlanet.php: ~
+        SolidPlanet.php: ~
+        GasPlanet.php: ~
+        PlanetRenderer.php: ~
+        index.php:
+            read_only: ~
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        check_class:
+            type: php
+            assertTrue: class_exists('\AbstractPlanet')
+            failure: Class `AbstractPlanet` does not exist! Did you create it?
+        assert_class_abstract:
+            type: php
+            assertTrue: reflection_class('\AbstractPlanet').isAbstract()
+            failure: Class `AbstractPlanet` should be declared as abstract.
+        check_method_1:
+            type: php
+            assertTrue: reflection_class('\AbstractPlanet').hasMethod('getRadius')
+            failure: Method `getRadius()` does not exist in the `AbstractPlanet` class.
+        assert_method_1_abstract:
+            type: php
+            assertTrue: reflection_class('\AbstractPlanet').hasMethod('getRadius').isAbstract()
+            failure: Method `getRadius()` should be declared as abstract.
+        check_method_2:
+            type: php
+            assertTrue: reflection_class('\AbstractPlanet').hasMethod('getHexColor')
+            failure: Method `getHexColor()` does not exist in the `AbstractPlanet` class.
+        assert_method_2_abstract:
+            type: php
+            assertTrue: reflection_class('\AbstractPlanet').hasMethod('getHexColor').isAbstract()
+            failure: Method `getHexColor()` should be declared as abstract.
+        check_subclass_of_1:
+            type: php
+            assertTrue: reflection_class('\SolidPlanet').isSubclassOf('\AbstractPlanet')
+            failure: Class `SolidPlanet` should inherit the `AbstractPlanet` one.
+        check_subclass_of_2:
+            type: php
+            assertTrue: reflection_class('\GasPlanet').isSubclassOf('\AbstractPlanet')
+            failure: Class `GasPlanet` should inherit the `AbstractPlanet` one.
