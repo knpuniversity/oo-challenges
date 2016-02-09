@@ -176,3 +176,92 @@ override_calloverriddenmethodmc:
                 c: `Empire ShipI like to fly!RebelShipI like to fly`
                 d: `RebelShipRebelShip`
             correct: b
+
+# ProtectedVisibility
+protectedvisibility_getinheritedpropertycoding:
+    question: >
+        The construction of the `DeathStarII` continues, but we need access
+        to the `planetarySuperLaserRange` property from the original, because
+        we're going to make it fire twice as far! Fix the `DeathStar` class
+        so that the new `getSpecs()` method works:
+    step: ~
+    files:
+        DeathStar.php:
+        DeathStarII.php: ~
+            read_only: true
+        index.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        check_property:
+            type: php
+            assertTrue: reflection_class('\DeathStar').hasProperty('planetarySuperLaserRange')
+            failure: The `planetarySuperLaserRange` property does not exist in the `DeathStar` class.
+        check_property_visibility:
+            type: php
+            assertTrue: reflection_class('\DeathStar').getProperty('planetarySuperLaserRange').isProtected()
+            failure: The `planetarySuperLaserRange` property should have protected visibility.
+
+protectedvisibility_propertyvisibilitymc:
+    question: >
+        Check out the following code:
+
+        ```php
+        // Ship.php
+
+        class Ship
+        {
+            public $name;
+
+            protected $weaponPower;
+
+            private $defense;
+
+            public function getDefense()
+            {
+                return $this->defense;
+            }
+        }
+        ```
+
+        ```php
+        // JediShip.php
+
+        class JediShip extends Ship
+        {
+            public function getWeaponPower()
+            {
+                return $this->weaponPower;
+            }
+        }
+        ```
+
+        ```php
+        // index.php
+
+        $jediShip = new JediShip();
+        $jediShip->name;
+        $jediShip->weaponPower;
+        ```
+
+        Which of the above code will give us an error?
+    explanation: >
+        Since the `$defense` property is `private`, we can only access it from
+        within the `Ship` class. But that's exactly what we're doing in (B),
+        so that's fine.
+
+        The `$weaponPower` property is `protected`. That means we can access it
+        only from inside `Ship`, `JediShip` or any other sub-classes. That's why
+        (C) is valid. But in (A), we're accessing `weaponPower` from `index.php`.
+        Accessing a property or method from outside of the class is only allowed
+        if it is public. This is a bad code.
+    features:
+        multiple_choice:
+            choices:
+                a: `$jediShip->weaponPower` in `index.php`
+                b: `return $this->defense` in `Ship.php`
+                c: `return $this->weaponPower` in `JediShip.php`
+                d: None of the above is bad code - we're awesome!
+            correct: a
