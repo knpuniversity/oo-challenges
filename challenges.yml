@@ -311,7 +311,7 @@ abstractship_extendabstractclasscoding:
         that you've moved into the new parent class.
     step: ~
     files:
-        AbstractDeathStar: ~
+        AbstractDeathStar.php: ~
         DeathStar.php: ~
         DeathStarII.php: ~
         index.php:
@@ -413,3 +413,29 @@ abstractship_inheritanceoverheadmc:
                 c: >
                     Leave things exactly like they are now.
             correct: c
+
+# BrokenShip
+brokenship_createdeathstariiicoding:
+    question: >
+        I feel like we're *always* designing new DeathStars. Well, time to start
+        the DeathStarIII! Create a new `DeathStarIII` class, make it extend
+        `AbstractDeathStar`, and fill in any missing abstract methods. Finally,
+        print out the description in `index.php`.
+    step: ~
+    files:
+        DeathStarIII.php: ~
+        index.php: ~
+        AbstractDeathStar.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        assert_subclass_of:
+            type: php
+            assertTrue: reflection_class('\DeathStarIII').isSubclassOf('\AbstractDeathStar')
+            failure: The `DeathStarIII` class should extend the `AbstractDeathStar` one.
+        check_class:
+            type: php
+            assertTrue: css('h3') matches get_variable('deathStar3').getDescription()
+            failure: Hmm, did you print the `DeathStarIII` description in `h3` tag?
