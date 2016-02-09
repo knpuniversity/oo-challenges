@@ -1,3 +1,4 @@
+# Extending
 extending_inheritfunctionalitycoding:
     question: >
         Your team has been working hard building the `DeathStar` class, only
@@ -16,18 +17,19 @@ extending_inheritfunctionalitycoding:
         editor: ~
         browser: ~
     grading:
-        check_variable:
+        check_variable_existent:
             type: php
             # TODO: Implement variable_exists() function
-            assertFalse: variable_exists('deathStar')
+            assertTrue: variable_exists('deathStar')
             failure: Make sure the `$deathStar` variable is exist
-        check_variable:
+        assert_instance_of_1:
             type: php
             # @TODO: Implement is_subclass_of() and get_variable() functions
-            assertFalse: is_subclass_of(get_variable('deathStar'), '\DeathStarII')
+            assertTrue: is_subclass_of(get_variable('deathStar'), '\DeathStarII')
             failure: The `$deathStar` variable exists, but is not set to a `DeathStarII` object.
-        type: php
-            assertFalse: is_subclass_of(get_variable('deathStar'), '\DeathStar')
+        assert_instance_of_2:
+            type: php
+            assertTrue: is_subclass_of(get_variable('deathStar'), '\DeathStar')
             failure: The `DeathStarII` class is not extending `DeathStar` one.
 
 extending_callnonexistentmethodmc:
@@ -74,4 +76,103 @@ extending_callnonexistentmethodmc:
                 b: `echo $ship->getFavoriteJedi();`
                 c: `echo $jediShip->getName();`
                 d: Both (B) and (C) will cause an error
+            correct: b
+
+# Override
+override_overrideinheritmethodcoding:
+    question: >
+        Well, we learned some hard lessons after the destruction of the original `DeathStar`,
+        and we don't want to repeat them! Override the `getWeakness()` method in `DeathStarII`
+        and make it return `null`. Phew, problem solved!
+    step: ~
+    files:
+        DeathStarII.php: ~
+        index.php:
+            read_only: true
+        DeathStar.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        check_variable_existent_1:
+            type: php
+            assertTrue: variable_exists('original')
+            failure: Make sure the `$original` variable is exist
+        check_variable_existent_2:
+            type: php
+            assertTrue: variable_exists('new')
+            failure: Make sure the `$new` variable is exist
+        assert_instance_of_1:
+            type: php
+            assertTrue: is_subclass_of(get_variable('original'), '\DeathStar')
+            failure: The `$original` variable exists, but is not set to a `DeathStar` object.
+        assert_instance_of_2:
+            type: php
+            assertTrue: is_subclass_of(get_variable('new'), '\DeathStarII')
+            failure: The `$new` variable exists, but is not set to a `DeathStarII` object.
+        assert_instance_of_3:
+            type: php
+            assertTrue: is_subclass_of(get_variable('new'), '\DeathStar')
+            failure: The `DeathStarII` class is not extending `DeathStar` one.
+        assert_method_1:
+            type: php
+            assertTrue: 'Thermal Exhaust Port' === get_variable('original').getWeakness()
+            failure: The return value of `getWeakness()` method in a `DeathStar` class was changed. You should override it.
+        assert_method_2:
+            type: php
+            assertTrue: null !== get_variable('new').getWeakness()
+            failure: The `getWeakness()` method of `DeathStarII` class does not return `null`.
+
+override_calloverriddenmethodmc:
+    question: >
+        Look at the following classes:
+
+        ```php
+        class Ship
+        {
+            public function printType()
+            {
+                echo 'Empire Ship';
+
+                $this->printMotto();
+            }
+
+            public function printMotto()
+            {
+                echo 'I like to fly!';
+            }
+        }
+        ```
+
+        ```php
+        class RebelShip extends Ship
+        {
+            public function printType()
+            {
+                echo 'Rebel Ship';
+            }
+        }
+        ```
+
+        What is the result of the following code:
+
+        ```
+        $ship = new Ship();
+        $rebelShip = new RebelShip();
+        $ship->printType();
+        $rebelShip->printType();
+        ```
+    explanation: >
+        For `Ship`, `printType()` prints "Empire Ship" and then also
+        calls `printMotto()`. But for `RebelShip`, `printType()` only
+        prints "Rebel Ship". *Nothing* calls the `printMotto()`
+        function in this case.
+    features:
+        multiple_choice:
+            choices:
+                a: `Empire ShipRebelShip`
+                b: `Empire ShipI like to fly!RebelShip`
+                c: `Empire ShipI like to fly!RebelShipI like to fly`
+                d: `RebelShipRebelShip`
             correct: b
