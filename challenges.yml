@@ -166,7 +166,7 @@ override_calloverriddenmethodmc:
 
         What is the result of the following code:
 
-        ```
+        ```php
         $ship = new Ship();
         $rebelShip = new RebelShip();
         $ship->printType();
