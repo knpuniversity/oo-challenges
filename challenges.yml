@@ -72,9 +72,18 @@ extending_callnonexistentmethodmc:
     features:
         multiple_choice:
             choices:
-                a: `echo $ship->getName();`
-                b: `echo $ship->getFavoriteJedi();`
-                c: `echo $jediShip->getName();`
+                a: |
+                    ```php
+                    echo $ship->getName();
+                    ```
+                b: |
+                    ```php
+                    echo $ship->getFavoriteJedi();
+                    ```
+                c: |
+                    ```php
+                    echo $jediShip->getName();
+                    ```
                 d: Both (B) and (C) will cause an error
             correct: b
 
@@ -117,7 +126,7 @@ override_overrideinheritmethodcoding:
             failure: The `DeathStarII` class is not extending `DeathStar` one.
         assert_method_1:
             type: php
-            assertTrue: 'Thermal Exhaust Port' === get_variable('original').getWeakness()
+            assertTrue: get_variable('original').getWeakness() match /Thermal Exhaust Port/
             failure: The return value of `getWeakness()` method in a `DeathStar` class was changed. You should override it.
         assert_method_2:
             type: php
@@ -171,10 +180,10 @@ override_calloverriddenmethodmc:
     features:
         multiple_choice:
             choices:
-                a: `Empire ShipRebelShip`
-                b: `Empire ShipI like to fly!RebelShip`
-                c: `Empire ShipI like to fly!RebelShipI like to fly`
-                d: `RebelShipRebelShip`
+                a: Empire ShipRebelShip
+                b: Empire ShipI like to fly!RebelShip
+                c: Empire ShipI like to fly!RebelShipI like to fly
+                d: RebelShipRebelShip
             correct: b
 
 # ProtectedVisibility
@@ -260,9 +269,9 @@ protectedvisibility_propertyvisibilitymc:
     features:
         multiple_choice:
             choices:
-                a: `$jediShip->weaponPower` in `index.php`
-                b: `return $this->defense` in `Ship.php`
-                c: `return $this->weaponPower` in `JediShip.php`
+                a: '`$jediShip->weaponPower` in `index.php`'
+                b: '`return $this->defense` in `Ship.php`'
+                c: '`return $this->weaponPower` in `JediShip.php`'
                 d: None of the above is bad code - we're awesome!
             correct: a
 
@@ -483,7 +492,7 @@ pdoshipstorage_decomposestringtransformercoding:
             type: php
             # @TODO Implement reflection_object() function
             assertTrue: reflection_object(get_variable('transformer')).hasMethod('__construct')
-            failure: Make sure you give the `StringTransformer` class a `__construct()`. It should have one argument: a `Cache` object.
+            failure: Make sure you give the `StringTransformer` class a `__construct()`. It should have one argument - a `Cache` object.
         look_for_function:
             type: http
             assertFalse: body() matches /file_get_contents(/
