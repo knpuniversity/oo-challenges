@@ -1,6 +1,6 @@
 # Extending
 extending_inheritfunctionalitycoding:
-    question: >
+    question: |
         Your team has been working hard building the `DeathStar` class, only
         to find out that the Rebels have just destroyed it! Time to rebuild!
         Create a new class called `DeathStarII` in the `DeathStarII.php` file
@@ -33,7 +33,7 @@ extending_inheritfunctionalitycoding:
             failure: The `DeathStarII` class is not extending `DeathStar` one.
 
 extending_callnonexistentmethodmc:
-    question: >
+    question: |
         Look at these two classes:
 
         ```php
@@ -64,7 +64,7 @@ extending_callnonexistentmethodmc:
         ```
 
         Which of the following lines will cause an error?
-    explanation: >
+    explanation: |
         The `Ship` object does *not* have a `getFavoriteJedi()` method
         on it - only `JediShip` has this. But, since `JediShip extends Ship`,
         the `JediShip` *does* have a `getName()` method: it inherits it from
@@ -89,7 +89,7 @@ extending_callnonexistentmethodmc:
 
 # Override
 override_overrideinheritmethodcoding:
-    question: >
+    question: |
         Well, we learned some hard lessons after the destruction of the original `DeathStar`,
         and we don't want to repeat them! Override the `getWeakness()` method in `DeathStarII`
         and make it return `null`. Phew, problem solved!
@@ -134,7 +134,7 @@ override_overrideinheritmethodcoding:
             failure: The `getWeakness()` method of `DeathStarII` class does not return `null`.
 
 override_calloverriddenmethodmc:
-    question: >
+    question: |
         Look at the following classes:
 
         ```php
@@ -172,7 +172,7 @@ override_calloverriddenmethodmc:
         $ship->printType();
         $rebelShip->printType();
         ```
-    explanation: >
+    explanation: |
         For `Ship`, `printType()` prints "Empire Ship" and then also
         calls `printMotto()`. But for `RebelShip`, `printType()` only
         prints "Rebel Ship". *Nothing* calls the `printMotto()`
@@ -188,7 +188,7 @@ override_calloverriddenmethodmc:
 
 # ProtectedVisibility
 protectedvisibility_getinheritedpropertycoding:
-    question: >
+    question: |
         The construction of the `DeathStarII` continues, but we need access
         to the `planetarySuperLaserRange` property from the original, because
         we're going to make it fire twice as far! Fix the `DeathStar` class
@@ -214,7 +214,7 @@ protectedvisibility_getinheritedpropertycoding:
             failure: The `planetarySuperLaserRange` property should have protected visibility.
 
 protectedvisibility_propertyvisibilitymc:
-    question: >
+    question: |
         Check out the following code:
 
         ```php
@@ -256,7 +256,7 @@ protectedvisibility_propertyvisibilitymc:
         ```
 
         Which of the above code will give us an error?
-    explanation: >
+    explanation: |
         Since the `$defense` property is `private`, we can only access it from
         within the `Ship` class. But that's exactly what we're doing in (B),
         so that's fine.
@@ -277,7 +277,7 @@ protectedvisibility_propertyvisibilitymc:
 
 # Parent
 parent_callparentmethodcoding:
-    question: >
+    question: |
         It took too long to travel to planets to destroy them
         in the first DeathStar, so Darth wants the laser range
         on the new DeathStar to be *twice* as far! Override
@@ -306,7 +306,7 @@ parent_callparentmethodcoding:
 
 # AbstractShip
 abstractship_extendabstractclasscoding:
-    question: >
+    question: |
         We've just gotten word that the Rebels have *also*
         destroyed the `DeathStarII`. Wow, rotten luck. Anyways,
         it sounds like we'll be creating blue prints for many
@@ -351,7 +351,7 @@ abstractship_extendabstractclasscoding:
             failure: The both `DeathStar` and `DeathStarII` classes should extend `AbstractDeathStar` one.
 
 abstractship_inheritanceoverheadmc:
-    question: >
+    question: |
         A co-worker created a few classes and has asked for
         your advice about organizing them:
 
@@ -395,7 +395,7 @@ abstractship_inheritanceoverheadmc:
 
         Your teammate is wondering if this can be organized better.
         Which if the following is the best advice?
-    explanation: >
+    explanation: |
         Even though both classes share some code, a `Ship`
         and a `Person` fundamentally aren't the same thing,
         and probably don't have any other overlapping code.
@@ -411,21 +411,21 @@ abstractship_inheritanceoverheadmc:
     features:
         multiple_choice:
             choices:
-                a: >
+                a: |
                     Create a new `AbstractNamedItem` class that has the
                     `name` property and the `getName()` and `setName()`
                     methods. Then, make `Person` and `Ship` extend this
                     class.
-                b: >
+                b: |
                     Make `Ship` extend `Person`, and remove all the
                     duplicated code in `Person`.
-                c: >
+                c: |
                     Leave things exactly like they are now.
             correct: c
 
 # BrokenShip
 brokenship_createdeathstariiicoding:
-    question: >
+    question: |
         I feel like we're *always* designing new DeathStars. Well, time to start
         the DeathStarIII! Create a new `DeathStarIII` class, make it extend
         `AbstractDeathStar`, and fill in any missing abstract methods. Finally,
@@ -451,7 +451,7 @@ brokenship_createdeathstariiicoding:
 
 # PdoShipStorage
 pdoshipstorage_decomposestringtransformercoding:
-    question: >
+    question: |
         Tired from working on the DeathStar, you challenged the intern (let's call him
         "Bob") to create a class that can reverse a string and upper case every other letter.
         "Ha!" John says, "This is simple!". To show off, John creates the `StringTransformer`
@@ -501,10 +501,10 @@ pdoshipstorage_decomposestringtransformercoding:
         # @TODO $transformer and assert that its cache methods are called
 
 pdoshipstorage_stringtransformerdecompositionadvantagesmc:
-    question: >
+    question: |
         In the previous challenge, you split the logic from `StringTransformer`
         into two different classes. What are the advantages of this?
-    explanation: >
+    explanation: |
         All of these are advantages! Before, you might not even realize that
         the `StringTransformer` had caching logic, but now its very obvious:
         the caching logic is in a class called `Cache` and you can see that
@@ -524,7 +524,7 @@ pdoshipstorage_stringtransformerdecompositionadvantagesmc:
 
 # AbstractShipLoader
 abstractshiploader_createabstractplanetcoding:
-    question: >
+    question: |
         Tired of their DeathStars being destroyed, the Empire has decided to transform into
         a video game company. Awesome! Two different teammates have already created two
         classes to model this: `SolidPlanet` and `GasPlanet`. They look and work differently,
@@ -580,7 +580,7 @@ abstractshiploader_createabstractplanetcoding:
 
 # Interfaces
 interfaces_implementplanetinterfacecoding:
-    question: >
+    question: |
         After watching this last episode, you realize that `AbstractPlanet` should really
         be an interface. I've given you a head start by creating the `PlanetInterface`.
         Now, update all of your code to use it and get these planets rendering again!
@@ -607,11 +607,11 @@ interfaces_implementplanetinterfacecoding:
             failure: Class `GasPlanet` should implement the `PlanetInterface` interface.
 
 interfaces_interfacevsabstractclassmc:
-    question: >
+    question: |
         You over-hear the intern Bob telling another teammate about the differences between
         abstract classes and interfaces. He's *mostly* right, but he got one detail wrong.
         Which of the following is *not* true:
-    explanation: >
+    explanation: |
         `C` is the only answer that's incorrect: both interfaces and abstract classes can
         force you to implement methods in the classes that use them. So in many ways, they
         are the same.
@@ -626,13 +626,13 @@ interfaces_interfacevsabstractclassmc:
                 a: Classes can implement many interfaces, but only extend one class.
                 b: Abstract classes can contain concrete methods, but interfaces can't.
                 c: Interfaces force the user to implement certain methods, abstract classes do not.
-                d: >
+                d: |
                     Even though Interfaces don't use the `abstract` keyword before methods,
                     those methods act just like abstract methods in an abstract class.
             correct: c
 
 interfaces_implementweaponinterfacecoding:
-    question: >
+    question: |
         Now you're working on creating different weapons for the spaceships in our game.
         By looking at the `WeaponInterface` create a new `LaserWeapon` class that implements
         this interface. You can return anything you want from the methods. Use the class
