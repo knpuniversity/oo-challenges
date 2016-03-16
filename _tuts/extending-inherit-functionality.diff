@@ -1,0 +1,35 @@
+diff --git a/DeathStar.php b/DeathStar.php
+new file mode 100644
+index 0000000..32a130e
+--- /dev/null
++++ b/DeathStar.php
+@@ -0,0 +1,14 @@
++<?php
++
++class DeathStar
++{
++    public function blastPlanet($planetName)
++    {
++        echo 'BOOM '.$planetName;
++    }
++
++    public function getWeakness()
++    {
++        return 'Thermal Exhaust Port';
++    }
++}
+diff --git a/DeathStarII.php b/DeathStarII.php
+new file mode 100644
+index 0000000..e69de29
+diff --git a/index.php b/index.php
+new file mode 100644
+index 0000000..0d1d771
+--- /dev/null
++++ b/index.php
+@@ -0,0 +1,6 @@
++<?php
++
++require 'DeathStar.php';
++require 'DeathStarII.php';
++
++// set your $deathStar variable here
