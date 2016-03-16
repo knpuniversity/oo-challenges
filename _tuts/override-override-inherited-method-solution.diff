@@ -1,0 +1,13 @@
+diff --git a/DeathStarII.php b/DeathStarII.php
+index 9142b6b..9864c0a 100644
+--- a/DeathStarII.php
++++ b/DeathStarII.php
+@@ -2,4 +2,8 @@
+ 
+ class DeathStarII extends DeathStar
+ {
++    public function getWeakness()
++    {
++        return null;
++    }
+ }

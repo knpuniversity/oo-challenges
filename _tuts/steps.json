@@ -14,7 +14,17 @@
             "id": "extending-inherit-functionality-solution",
             "name": "Extending: Inherit functionality [Solution]",
             "description": null
+        },
+        {
+            "id": "override-override-inherited-method",
+            "name": "Override: Override inherited method",
+            "description": null
+        },
+        {
+            "id": "override-override-inherited-method-solution",
+            "name": "Override: Override inherited method [Solution]",
+            "description": null
         }
     ],
-    "sha": "a7b04b8e950ef09953e7a709310c53d94d852fab"
+    "sha": "4e48e9241527c01082d0d97ec09d76e4915e7a32"
 }

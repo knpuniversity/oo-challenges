@@ -1,0 +1,16 @@
+diff --git a/index.php b/index.php
+index 8a3aee6..a116a7e 100644
+--- a/index.php
++++ b/index.php
+@@ -3,4 +3,10 @@
+ require 'DeathStar.php';
+ require 'DeathStarII.php';
+ 
+-$deathStar = new DeathStarII();
++$original = new DeathStar();
++$new = new DeathStarII();
++
++?>
++
++<h2>Original DeathStar Weakness: <?php echo $original->getWeakness(); ?></h2>
++<h2>New DeathStar Weakness: <?php echo $new->getWeakness(); ?></h2>
