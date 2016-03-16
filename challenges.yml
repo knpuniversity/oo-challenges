@@ -1,0 +1,661 @@
+# Extending
+extending_inheritfunctionalitycoding:
+    question: |
+        Your team has been working hard building the `DeathStar` class, only
+        to find out that the Rebels have just destroyed it! Time to rebuild!
+        Create a new class called `DeathStarII` in the `DeathStarII.php` file
+        and make it inherit all of the functionality from the original `DeathStar`.
+        In `index.php`, instantiate a new `DeathStarII` object and set it to
+        a `$deathStar` variable. Long live the Empire!
+    step: extending-inherit-functionality
+    files:
+        index.php: ~
+        DeathStarII.php: ~
+        DeathStar.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        check_variable:
+            type: php
+            assertTrue: variable_exists('deathStar')
+            failure: Make sure the `$deathStar` variable is exist
+        assert_instance_of_1:
+            type: php
+            assertTrue: get_class(variable('deathStar')) === 'DeathStarII'
+            failure: The `$deathStar` variable exists, but is not set to a `DeathStarII` object.
+        assert_instance_of_2:
+            type: php
+            assertTrue: is_subclass_of(variable('deathStar'), '\DeathStar')
+            failure: The `DeathStarII` class is not extending `DeathStar` one.
+
+extending_callnonexistentmethodmc:
+    question: |
+        Look at these two classes:
+
+        ```php
+        class Ship
+        {
+            public function getName()
+            {
+                return 'Starfighter';
+            }
+        }
+        ```
+
+        ```php
+        class JediShip extends Ship
+        {
+            public function getFavoriteJedi()
+            {
+                return 'Yoda';
+            }
+        }
+        ```
+
+        Suppose we instantiate both objects:
+
+        ```php
+        $ship = new Ship();
+        $jediShip = new JediShip();
+        ```
+
+        Which of the following lines will cause an error?
+    explanation: |
+        The `Ship` object does *not* have a `getFavoriteJedi()` method
+        on it - only `JediShip` has this. But, since `JediShip extends Ship`,
+        the `JediShip` *does* have a `getName()` method: it inherits it from
+        `Ship`.
+    features:
+        multiple_choice:
+            choices:
+                a: |
+                    ```php
+                    echo $ship->getName();
+                    ```
+                b: |
+                    ```php
+                    echo $ship->getFavoriteJedi();
+                    ```
+                c: |
+                    ```php
+                    echo $jediShip->getName();
+                    ```
+                d: Both (B) and (C) will cause an error
+            correct: b
+
+# Override
+override_overrideinheritmethodcoding:
+    question: |
+        Well, we learned some hard lessons after the destruction of the original `DeathStar`,
+        and we don't want to repeat them! Override the `getWeakness()` method in `DeathStarII`
+        and make it return `null`. Phew, problem solved!
+    step: ~
+    files:
+        DeathStarII.php: ~
+        index.php:
+            read_only: true
+        DeathStar.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        check_variable_1:
+            type: php
+            assertTrue: variable_exists('original')
+            failure: Make sure the `$original` variable is exist
+        check_variable_2:
+            type: php
+            assertTrue: variable_exists('new')
+            failure: Make sure the `$new` variable is exist
+        assert_instance_of_1:
+            type: php
+            assertTrue: is_subclass_of(get_variable('original'), '\DeathStar')
+            failure: The `$original` variable exists, but is not set to a `DeathStar` object.
+        assert_instance_of_2:
+            type: php
+            assertTrue: is_subclass_of(get_variable('new'), '\DeathStarII')
+            failure: The `$new` variable exists, but is not set to a `DeathStarII` object.
+        assert_instance_of_3:
+            type: php
+            assertTrue: is_subclass_of(get_variable('new'), '\DeathStar')
+            failure: The `DeathStarII` class is not extending `DeathStar` one.
+        assert_method_1:
+            type: php
+            assertTrue: get_variable('original').getWeakness() match /Thermal Exhaust Port/
+            failure: The return value of `getWeakness()` method in a `DeathStar` class was changed. You should override it.
+        assert_method_2:
+            type: php
+            assertTrue: null !== get_variable('new').getWeakness()
+            failure: The `getWeakness()` method of `DeathStarII` class does not return `null`.
+
+override_calloverriddenmethodmc:
+    question: |
+        Look at the following classes:
+
+        ```php
+        class Ship
+        {
+            public function printType()
+            {
+                echo 'Empire Ship';
+
+                $this->printMotto();
+            }
+
+            public function printMotto()
+            {
+                echo 'I like to fly!';
+            }
+        }
+        ```
+
+        ```php
+        class RebelShip extends Ship
+        {
+            public function printType()
+            {
+                echo 'Rebel Ship';
+            }
+        }
+        ```
+
+        What is the result of the following code:
+
+        ```php
+        $ship = new Ship();
+        $rebelShip = new RebelShip();
+        $ship->printType();
+        $rebelShip->printType();
+        ```
+    explanation: |
+        For `Ship`, `printType()` prints "Empire Ship" and then also
+        calls `printMotto()`. But for `RebelShip`, `printType()` only
+        prints "Rebel Ship". *Nothing* calls the `printMotto()`
+        function in this case.
+    features:
+        multiple_choice:
+            choices:
+                a: Empire ShipRebelShip
+                b: Empire ShipI like to fly!RebelShip
+                c: Empire ShipI like to fly!RebelShipI like to fly
+                d: RebelShipRebelShip
+            correct: b
+
+# ProtectedVisibility
+protectedvisibility_getinheritedpropertycoding:
+    question: |
+        The construction of the `DeathStarII` continues, but we need access
+        to the `planetarySuperLaserRange` property from the original, because
+        we're going to make it fire twice as far! Fix the `DeathStar` class
+        so that the new `getSpecs()` method works:
+    step: ~
+    files:
+        DeathStar.php: ~
+        DeathStarII.php:
+            read_only: true
+        index.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        check_property:
+            type: php
+            assertTrue: reflection_class('\DeathStar').hasProperty('planetarySuperLaserRange')
+            failure: The `planetarySuperLaserRange` property does not exist in the `DeathStar` class.
+        check_property_visibility:
+            type: php
+            assertTrue: reflection_class('\DeathStar').getProperty('planetarySuperLaserRange').isProtected()
+            failure: The `planetarySuperLaserRange` property should have protected visibility.
+
+protectedvisibility_propertyvisibilitymc:
+    question: |
+        Check out the following code:
+
+        ```php
+        // Ship.php
+
+        class Ship
+        {
+            public $name;
+
+            protected $weaponPower;
+
+            private $defense;
+
+            public function getDefense()
+            {
+                return $this->defense;
+            }
+        }
+        ```
+
+        ```php
+        // JediShip.php
+
+        class JediShip extends Ship
+        {
+            public function getWeaponPower()
+            {
+                return $this->weaponPower;
+            }
+        }
+        ```
+
+        ```php
+        // index.php
+
+        $jediShip = new JediShip();
+        $jediShip->name;
+        $jediShip->weaponPower;
+        ```
+
+        Which of the above code will give us an error?
+    explanation: |
+        Since the `$defense` property is `private`, we can only access it from
+        within the `Ship` class. But that's exactly what we're doing in (B),
+        so that's fine.
+
+        The `$weaponPower` property is `protected`. That means we can access it
+        only from inside `Ship`, `JediShip` or any other sub-classes. That's why
+        (C) is valid. But in (A), we're accessing `weaponPower` from `index.php`.
+        Accessing a property or method from outside of the class is only allowed
+        if it is public. This is a bad code.
+    features:
+        multiple_choice:
+            choices:
+                a: '`$jediShip->weaponPower` in `index.php`'
+                b: '`return $this->defense` in `Ship.php`'
+                c: '`return $this->weaponPower` in `JediShip.php`'
+                d: None of the above is bad code - we're awesome!
+            correct: a
+
+# Parent
+parent_callparentmethodcoding:
+    question: |
+        It took too long to travel to planets to destroy them
+        in the first DeathStar, so Darth wants the laser range
+        on the new DeathStar to be *twice* as far! Override
+        the `getLaserRange()` method in `DeathStarII` to make
+        this happen. But don't repeat the `2000000` value!
+        Call the parent function and then multiple that value by 2!
+    step: ~
+    files:
+        DeathStarII.php: ~
+        DeathStar.php:
+            read_only: true
+        index.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        check_method:
+            type: php
+            assertTrue: method_exists(get_variable('deathStar'), 'getLaserRange')
+            failure: The `getLaserRange()` method does not exist for the `DeathStarII` class - did you create it?
+        assert_method:
+            type: php
+            assertTrue: 4000000 === get_variable('deathStar').getLaserRange()
+            failure: The `getLaserRange()` method in the `DeathStarII` class should return a doubled value of the parent method.
+
+# AbstractShip
+abstractship_extendabstractclasscoding:
+    question: |
+        We've just gotten word that the Rebels have *also*
+        destroyed the `DeathStarII`. Wow, rotten luck. Anyways,
+        it sounds like we'll be creating blue prints for many
+        different types of DeathStar's in the future, to keep
+        the Rebels guessing.
+
+        To make this easier, create an `AbstractDeathStar` class,
+        move all of the shared code into it, and update
+        `DeathStar` and `DeathStarII` to extend this new class.
+        Make sure to get rid of anything in those classes
+        that you've moved into the new parent class.
+    step: ~
+    files:
+        AbstractDeathStar.php: ~
+        DeathStar.php: ~
+        DeathStarII.php: ~
+        index.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        check_class:
+            type: php
+            assertTrue: class_exists('\AbstractDeathStar')
+            failure: The `AbstractDeathStar` class does not exist! Did you create it?
+        assert_abstract:
+            type: php
+            assertTrue: reflection_class('\AbstractDeathStar').isAbstract()
+            failure: The `AbstractDeathStar` class should be declared as abstract.
+        check_methods:
+            type: php
+            assertTrue: reflection_class('\AbstractDeathStar').hasMethod('setWeaponPower') and reflection_class('\AbstractDeathStar').hasMethod('getWeaponPower') and reflection_class('\AbstractDeathStar').hasMethod('makeFiringNoise')
+            failure: The `AbstractDeathStar` class should have `getWeaponPower()`, `setWeaponPower()`, and `makeFiringNoise()` methods.
+        check_method:
+            type: php
+            assertTrue: reflection_class('\AbstractDeathStar').hasMethod('setCrewSize')
+            failure: The `AbstractDeathStar` class should not have a `setCrewSize()` method! The `DeathStarII` just has a hardcoded crew size, so does not need this setter. Move it to `Deathstar`.
+        assert_subclass_of:
+            type: php
+            assertTrue: reflection_class('\DeathStar').isSubclassOf('\AbstractDeathStar') and reflection_class('\DeathStarII').isSubclassOf('\AbstractDeathStar')
+            failure: The both `DeathStar` and `DeathStarII` classes should extend `AbstractDeathStar` one.
+
+abstractship_inheritanceoverheadmc:
+    question: |
+        A co-worker created a few classes and has asked for
+        your advice about organizing them:
+
+        ```php
+        class Ship
+        {
+            private $name;
+
+            public function getName()
+            {
+                return $name;
+            }
+
+            public function setName($name)
+            {
+                $this->name = $name;
+            }
+
+            // other stuff...
+        }
+        ```
+
+        ```php
+        class Person
+        {
+            private $name;
+
+            public function getName()
+            {
+                return $name;
+            }
+
+            public function setName($name)
+            {
+                $this->name = $name;
+            }
+
+            // other stuff...
+        }
+        ```
+
+        Your teammate is wondering if this can be organized better.
+        Which if the following is the best advice?
+    explanation: |
+        Even though both classes share some code, a `Ship`
+        and a `Person` fundamentally aren't the same thing,
+        and probably don't have any other overlapping code.
+        So, you *could* create an `AbstractNamedItem`, but
+        that's a bit awkward. And remember, you can only
+        extend *one* class, so make sure your parent class
+        makes sense.
+
+        In this case, the best action is to do nothing: leave
+        these two blueprints totally independent. In a future
+        episode, we'll talk about traits: a cool way to help
+        remove duplication without inheritance.
+    features:
+        multiple_choice:
+            choices:
+                a: |
+                    Create a new `AbstractNamedItem` class that has the
+                    `name` property and the `getName()` and `setName()`
+                    methods. Then, make `Person` and `Ship` extend this
+                    class.
+                b: |
+                    Make `Ship` extend `Person`, and remove all the
+                    duplicated code in `Person`.
+                c: |
+                    Leave things exactly like they are now.
+            correct: c
+
+# BrokenShip
+brokenship_createdeathstariiicoding:
+    question: |
+        I feel like we're *always* designing new DeathStars. Well, time to start
+        the DeathStarIII! Create a new `DeathStarIII` class, make it extend
+        `AbstractDeathStar`, and fill in any missing abstract methods. Finally,
+        print out the description in `index.php`.
+    step: ~
+    files:
+        DeathStarIII.php: ~
+        index.php: ~
+        AbstractDeathStar.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        assert_subclass_of:
+            type: php
+            assertTrue: reflection_class('\DeathStarIII').isSubclassOf('\AbstractDeathStar')
+            failure: The `DeathStarIII` class should extend the `AbstractDeathStar` one.
+        look_for_text:
+            type: http
+            assertTrue: css('h3') matches /get_variable('deathStar3').getDescription()/
+            failure: Hmm, did you print the `DeathStarIII` description in `h3` tag?
+
+# PdoShipStorage
+pdoshipstorage_decomposestringtransformercoding:
+    question: |
+        Tired from working on the DeathStar, you challenged the intern (let's call him
+        "Bob") to create a class that can reverse a string and upper case every other letter.
+        "Ha!" John says, "This is simple!". To show off, John creates the `StringTransformer`
+        class and *even* makes it cache the results to be super-performant.
+
+        But wait you say! Combining the string transformation *and* caching into the same
+        class make `StringTransformer` responsible for two jobs. Help show Bob the intern
+        a better way, by creating a new `Cache` class with two methods `fetchFromCache($key)`
+        and `saveToCache($key, $val)`. Then, pass this into `StringTransformer` and use it
+        to cache, instead of using your own logic:
+    step: ~
+    files:
+        index.php: ~
+        StringTransformer.php: ~
+        Cache.php: ~
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        check_class:
+            type: php
+            assertTrue: class_exists('\Cache')
+            failure: Class `Cache` does not exist. Did you create it?
+        check_method:
+            type: php
+            assertTrue: reflection_class('\Cache').hasMethod('fetchFromCache')
+            failure: Method `fetchFromCache()` does not exist in the `Cache` class.
+        check_method:
+            type: php
+            assertTrue: reflection_class('\Cache').hasMethod('saveToCache')
+            failure: Method `saveToCache()` does not exist in the `Cache` class.
+        check_variable:
+            type: php
+            # @TODO Implement variable_exists() function
+            assertTrue: variable_exists('transformer')
+            failure: I don't see the `$transformer` variable in `index.php` anymore - did you delete it?
+        assert_variable:
+            type: php
+            # @TODO Implement reflection_object() function
+            assertTrue: reflection_object(get_variable('transformer')).hasMethod('__construct')
+            failure: Make sure you give the `StringTransformer` class a `__construct()`. It should have one argument - a `Cache` object.
+        look_for_function:
+            type: http
+            assertFalse: body() matches /file_get_contents(/
+            failure: I still see `file_get_contents()` inside of `StringTransformer`. Make sure you've moved all of the caching logic into the Cache class.
+        # @TODO Create a mocked Cache, pass it into
+        # @TODO $transformer and assert that its cache methods are called
+
+pdoshipstorage_stringtransformerdecompositionadvantagesmc:
+    question: |
+        In the previous challenge, you split the logic from `StringTransformer`
+        into two different classes. What are the advantages of this?
+    explanation: |
+        All of these are advantages! Before, you might not even realize that
+        the `StringTransformer` had caching logic, but now its very obvious:
+        the caching logic is in a class called `Cache` and you can see that
+        the `StringTransformer` requires a `Cache` object. You could also use
+        the `Cache` class in other situations to cache other things. And you
+        could even - with a little bit of work - create a new `Cache` class
+        that caches via something like Redis, and pass *this* to `StringTransformer`
+        to cache using a different method.
+    features:
+        multiple_choice:
+            choices:
+                a: Each class is smaller and so easier to understand
+                b: The `Cache` class could be re-used to cache other things
+                c: You could easily use the `StringTransformer`, but cache using a different mechanism, like *Redis*
+                d: All of these are real advantages
+            correct: d
+
+# AbstractShipLoader
+abstractshiploader_createabstractplanetcoding:
+    question: |
+        Tired of their DeathStars being destroyed, the Empire has decided to transform into
+        a video game company. Awesome! Two different teammates have already created two
+        classes to model this: `SolidPlanet` and `GasPlanet`. They look and work differently,
+        but both have `getRadius()` and `getHexColor()` methods. You've built a `PlanetRenderer`
+        class with a `render()` method, but it's not quite working yet.
+
+        Create an `AbstractPlanet` class and update any other code you need to make these
+        planets render!
+    step: ~
+    files:
+        AbstractPlanet.php: ~
+        SolidPlanet.php: ~
+        GasPlanet.php: ~
+        PlanetRenderer.php: ~
+        index.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        check_class:
+            type: php
+            assertTrue: class_exists('\AbstractPlanet')
+            failure: Class `AbstractPlanet` does not exist! Did you create it?
+        assert_class_abstract:
+            type: php
+            assertTrue: reflection_class('\AbstractPlanet').isAbstract()
+            failure: Class `AbstractPlanet` should be declared as abstract.
+        check_method_1:
+            type: php
+            assertTrue: reflection_class('\AbstractPlanet').hasMethod('getRadius')
+            failure: Method `getRadius()` does not exist in the `AbstractPlanet` class.
+        assert_method_1_abstract:
+            type: php
+            assertTrue: reflection_class('\AbstractPlanet').hasMethod('getRadius').isAbstract()
+            failure: Method `getRadius()` should be declared as abstract.
+        check_method_2:
+            type: php
+            assertTrue: reflection_class('\AbstractPlanet').hasMethod('getHexColor')
+            failure: Method `getHexColor()` does not exist in the `AbstractPlanet` class.
+        assert_method_2_abstract:
+            type: php
+            assertTrue: reflection_class('\AbstractPlanet').hasMethod('getHexColor').isAbstract()
+            failure: Method `getHexColor()` should be declared as abstract.
+        check_subclass_of_1:
+            type: php
+            assertTrue: reflection_class('\SolidPlanet').isSubclassOf('\AbstractPlanet')
+            failure: Class `SolidPlanet` should inherit the `AbstractPlanet` one.
+        check_subclass_of_2:
+            type: php
+            assertTrue: reflection_class('\GasPlanet').isSubclassOf('\AbstractPlanet')
+            failure: Class `GasPlanet` should inherit the `AbstractPlanet` one.
+
+# Interfaces
+interfaces_implementplanetinterfacecoding:
+    question: |
+        After watching this last episode, you realize that `AbstractPlanet` should really
+        be an interface. I've given you a head start by creating the `PlanetInterface`.
+        Now, update all of your code to use it and get these planets rendering again!
+    step: ~
+    files:
+        SolidPlanet.php: ~
+        GasPlanet.php: ~
+        PlanetRenderer.php: ~
+        PlanetInterface.php:
+            read_only: true
+        index.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        check_implement_1:
+            type: php
+            assertTrue: reflection_class('\SolidPlanet').implementsInterface('\PlanetInterface')
+            failure: Class `SolidPlanet` should implement the `PlanetInterface` interface.
+        check_implement_2:
+            type: php
+            assertTrue: reflection_class('\GasPlanet').implementsInterface('\PlanetInterface')
+            failure: Class `GasPlanet` should implement the `PlanetInterface` interface.
+
+interfaces_interfacevsabstractclassmc:
+    question: |
+        You over-hear the intern Bob telling another teammate about the differences between
+        abstract classes and interfaces. He's *mostly* right, but he got one detail wrong.
+        Which of the following is *not* true:
+    explanation: |
+        `C` is the only answer that's incorrect: both interfaces and abstract classes can
+        force you to implement methods in the classes that use them. So in many ways, they
+        are the same.
+
+        So why use one or the other? Well, a class can implement *many* interfaces, which
+        makes interfaces more attractive, especially for re-usable code. But, an abstract
+        class can contain *real* methods, which can help you reduce code duplication between
+        classes. They're similar, but not the same.
+    features:
+        multiple_choice:
+            choices:
+                a: Classes can implement many interfaces, but only extend one class.
+                b: Abstract classes can contain concrete methods, but interfaces can't.
+                c: Interfaces force the user to implement certain methods, abstract classes do not.
+                d: |
+                    Even though Interfaces don't use the `abstract` keyword before methods,
+                    those methods act just like abstract methods in an abstract class.
+            correct: c
+
+interfaces_implementweaponinterfacecoding:
+    question: |
+        Now you're working on creating different weapons for the spaceships in our game.
+        By looking at the `WeaponInterface` create a new `LaserWeapon` class that implements
+        this interface. You can return anything you want from the methods. Use the class
+        to print out the weapon's range, just to see that things are working:
+    step: ~
+    files:
+        index.php: ~
+        LaserWeapon.php: ~
+        WeaponInterface.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        check_class:
+            type: php
+            assertTrue: class_exists('\LaserWeapon')
+            failure: Class `LaserWeapon` could not be found. Did you create it?
+        check_implement:
+            type: php
+            assertTrue: reflection_class('\LaserWeapon').implementsInterface('\WeaponInterface')
+            failure: Class `LaserWeapon` should implement the `WeaponInterface` interface.
+        # TODO Wondering how can we get expressions from both http and php types togeather in one assertion?
+        # I think we have a preblem here for now
+        look_for_text:
+            type: http
+            assertTrue: body() matches /get_variable('laserWeapon').getWeaponRange()/
+            failure: Seems you forgot to output the laser weapon range. Did you print the result of the `getWeaponRange()` method?
