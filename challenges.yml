@@ -102,30 +102,6 @@ override_overrideinheritmethodcoding:
         editor: ~
         browser: ~
     grading:
-        #check_variable_1:
-        #    type: php
-        #    assertTrue: variable_exists('original')
-        #    failure: Make sure the `$original` variable is exist
-        #check_variable_2:
-        #    type: php
-        #    assertTrue: variable_exists('new')
-        #    failure: Make sure the `$new` variable is exist
-        #assert_instance_of_1:
-        #    type: php
-        #    assertTrue: get_class(variable('original')) === 'DeathStar'
-        #    failure: The `$original` variable exists, but is not set to a `DeathStar` object.
-        #assert_instance_of_2:
-        #    type: php
-        #    assertTrue: get_class(variable('new')) === 'DeathStarII'
-        #    failure: The `$new` variable exists, but is not set to a `DeathStarII` object.
-        #assert_instance_of_3:
-        #    type: php
-        #    assertTrue: is_subclass_of(variable('new'), '\DeathStar')
-        #    failure: The `DeathStarII` class is not extending `DeathStar` one.
-        #assert_method_1:
-        #    type: php
-        #    assertFalse: variable('original').getWeakness() matches '/Thermal Exhaust Port/'
-        #    failure: The return value of `getWeakness()` method in a `DeathStar` class was changed. You should override it.
         assert_method:
             type: php
             assertTrue: variable('new').getWeakness() === null
