@@ -6,10 +6,10 @@ extending_inheritfunctionalitycoding:
         
         Long live the Empire!
     question_steps:
-        - Create a new class called `DeathStarII` in the `DeathStarII.php` file
-        and make it inherit all of the functionality from the original `DeathStar`.
-        - In `index.php`, instantiate a new `DeathStarII` object and set it to
-        a `$deathStar` variable.
+        - |
+          Create a new class called `DeathStarII` in the `DeathStarII.php` file
+          and make it inherit all of the functionality from the original `DeathStar`.
+        - In `index.php`, instantiate a new `DeathStarII` object and set it to a `$deathStar` variable.
         
     step: extending-inherit-functionality
     files:
@@ -262,8 +262,9 @@ parent_callparentmethodcoding:
         in the first DeathStar, so Darth wants the laser range
         on the new DeathStar to be *twice* as far! Brilliant!
     question_steps:
-        - Override the `getLaserRange()` method in `DeathStarII` to make
-        this happen. (But don't repeat the `2000000` value!)
+        - |
+          Override the `getLaserRange()` method in `DeathStarII` to make
+          this happen. (But don't repeat the `2000000` value!)
         - Call the parent function and then multiply that value by 2!
     step: ~
     files:
@@ -297,8 +298,9 @@ abstractship_extendabstractclasscoding:
         To make this easier... 
     question_steps:
         - Create an `AbstractDeathStar` class and move all of the shared code into it.
-        - update `DeathStar` and `DeathStarII` to extend this new class and make sure to get rid of anything in those classes
-        that you've moved into the new parent class.
+        - | 
+          Update `DeathStar` and `DeathStarII` to extend this new class and make sure to get rid of anything in those classes
+          that you've moved into the new parent class.
     step: ~
     files:
         AbstractDeathStar.php: ~
@@ -515,8 +517,7 @@ abstractshiploader_createabstractplanetcoding:
         `PlanetRenderer` class with a `render()` method, but it's not quite working yet.
 
     question_steps:
-        - Create an `AbstractPlanet` class and update any other code you need to make these
-        planets render!
+        - Create an `AbstractPlanet` class and update any other code you need to make these planets render!
     step: ~
     files:
         AbstractPlanet.php: ~
@@ -621,9 +622,10 @@ interfaces_implementweaponinterfacecoding:
         Finally something fun! Now you're working on creating different weapons for the 
         spaceships in our game.
     question_steps:
-        - Looking at the `WeaponInterface` create a new `LaserWeapon` class that implements
-        this interface. You can return anything you want from the methods. Just don't let the
-        freedom go to your head.
+        - | 
+          Looking at the `WeaponInterface` create a new `LaserWeapon` class that implements
+          this interface. You can return anything you want from the methods. Just don't let the
+          freedom go to your head.
         - Use the class to print out the weapon's range, just to see that things are working.
     step: ~
     files:
