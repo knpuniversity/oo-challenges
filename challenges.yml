@@ -3,10 +3,14 @@ extending_inheritfunctionalitycoding:
     question: |
         Your team has been working hard building the `DeathStar` class, only
         to find out that the Rebels have just destroyed it! Time to rebuild!
-        Create a new class called `DeathStarII` in the `DeathStarII.php` file
+        
+        Long live the Empire!
+    question_steps:
+        - Create a new class called `DeathStarII` in the `DeathStarII.php` file
         and make it inherit all of the functionality from the original `DeathStar`.
-        In `index.php`, instantiate a new `DeathStarII` object and set it to
-        a `$deathStar` variable. Long live the Empire!
+        - In `index.php`, instantiate a new `DeathStarII` object and set it to
+        a `$deathStar` variable.
+        
     step: extending-inherit-functionality
     files:
         index.php: ~
@@ -89,8 +93,9 @@ extending_callnonexistentmethodmc:
 override_overrideinheritmethodcoding:
     question: |
         Well, we learned some hard lessons after the destruction of the original `DeathStar`,
-        and we don't want to repeat them! Override the `getWeakness()` method in `DeathStarII`
-        and make it return `null`. Phew, problem solved!
+        and we don't want to repeat them!
+    question_steps:
+        - Override the `getWeakness()` method in `DeathStarII` and make it return `null`. Phew, problem solved!
     step: override-override-inherited-method
     files:
         DeathStarII.php: ~
@@ -165,8 +170,9 @@ protectedvisibility_getinheritedpropertycoding:
     question: |
         The construction of the `DeathStarII` continues, but we need access
         to the `planetarySuperLaserRange` property from the original, because
-        we're going to make it fire twice as far! Fix the `DeathStar` class
-        so that the new `getSpecs()` method works:
+        we're going to make it fire twice as far!
+    question_steps:
+        - Fix the `DeathStar` class so that the new `getSpecs()` method works
     step: ~
     files:
         DeathStar.php: ~
@@ -254,10 +260,11 @@ parent_callparentmethodcoding:
     question: |
         It took too long to travel to planets to destroy them
         in the first DeathStar, so Darth wants the laser range
-        on the new DeathStar to be *twice* as far! Override
-        the `getLaserRange()` method in `DeathStarII` to make
-        this happen. But don't repeat the `2000000` value!
-        Call the parent function and then multiple that value by 2!
+        on the new DeathStar to be *twice* as far! Brilliant!
+    question_steps:
+        - Override the `getLaserRange()` method in `DeathStarII` to make
+        this happen. (But don't repeat the `2000000` value!)
+        - Call the parent function and then multiply that value by 2!
     step: ~
     files:
         DeathStarII.php: ~
@@ -284,13 +291,13 @@ abstractship_extendabstractclasscoding:
         We've just gotten word that the Rebels have *also*
         destroyed the `DeathStarII`. Wow, rotten luck. Anyways,
         it sounds like we'll be creating blue prints for many
-        different types of DeathStar's in the future, to keep
+        different types of DeathStars in the future, to keep
         the Rebels guessing.
 
-        To make this easier, create an `AbstractDeathStar` class,
-        move all of the shared code into it, and update
-        `DeathStar` and `DeathStarII` to extend this new class.
-        Make sure to get rid of anything in those classes
+        To make this easier... 
+    question_steps:
+        - Create an `AbstractDeathStar` class and move all of the shared code into it.
+        - update `DeathStar` and `DeathStarII` to extend this new class and make sure to get rid of anything in those classes
         that you've moved into the new parent class.
     step: ~
     files:
@@ -400,10 +407,11 @@ abstractship_inheritanceoverheadmc:
 # BrokenShip
 brokenship_createdeathstariiicoding:
     question: |
-        I feel like we're *always* designing new DeathStars. Well, time to start
-        the DeathStarIII! Create a new `DeathStarIII` class, make it extend
-        `AbstractDeathStar`, and fill in any missing abstract methods. Finally,
-        print out the description in `index.php`.
+        I feel like we're *always* designing new DeathStars. Well, no time to complain
+        time to start the DeathStarIII!
+    question_steps:
+        - Create a new `DeathStarIII` class, make it extend `AbstractDeathStar`, and fill in any missing abstract methods. 
+        - Lastly, print out the description in `index.php`.
     step: ~
     files:
         DeathStarIII.php: ~
@@ -426,16 +434,17 @@ brokenship_createdeathstariiicoding:
 # PdoShipStorage
 pdoshipstorage_decomposestringtransformercoding:
     question: |
-        Tired from working on the DeathStar, you challenged the intern (let's call him
-        "Bob") to create a class that can reverse a string and upper case every other letter.
-        "Ha!" John says, "This is simple!". To show off, John creates the `StringTransformer`
+        Tired from working on the DeathStar, you challenged the intern (let's call her
+        "Morgan") to create a class that can reverse a string and upper case every other letter.
+        "Ha!" Morgan says, "This is simple!". To show off, Morgan creates the `StringTransformer`
         class and *even* makes it cache the results to be super-performant.
 
         But wait you say! Combining the string transformation *and* caching into the same
-        class make `StringTransformer` responsible for two jobs. Help show Bob the intern
-        a better way, by creating a new `Cache` class with two methods `fetchFromCache($key)`
-        and `saveToCache($key, $val)`. Then, pass this into `StringTransformer` and use it
-        to cache, instead of using your own logic:
+        class make `StringTransformer` responsible for two jobs. Help show Morgan the intern
+        a better way.
+    question_steps:
+        - Creating a new `Cache` class with two methods `fetchFromCache($key)` and `saveToCache($key, $val)`. 
+        - Then, pass this into `StringTransformer` and use it to cache, instead of using your own logic.
     step: ~
     files:
         index.php: ~
@@ -499,13 +508,14 @@ pdoshipstorage_stringtransformerdecompositionadvantagesmc:
 # AbstractShipLoader
 abstractshiploader_createabstractplanetcoding:
     question: |
-        Tired of their DeathStars being destroyed, the Empire has decided to transform into
-        a video game company. Awesome! Two different teammates have already created two
-        classes to model this: `SolidPlanet` and `GasPlanet`. They look and work differently,
-        but both have `getRadius()` and `getHexColor()` methods. You've built a `PlanetRenderer`
-        class with a `render()` method, but it's not quite working yet.
+        Annoyed that the DeathStars are being destroyed, the Empire has decided to transform into
+        a video game company. Awesome, they'll never see it coming! Two different teammates have 
+        already created two classes to model this: `SolidPlanet` and `GasPlanet`. They look and 
+        work differently, but both have `getRadius()` and `getHexColor()` methods. You've built a 
+        `PlanetRenderer` class with a `render()` method, but it's not quite working yet.
 
-        Create an `AbstractPlanet` class and update any other code you need to make these
+    question_steps:
+        - Create an `AbstractPlanet` class and update any other code you need to make these
         planets render!
     step: ~
     files:
@@ -557,7 +567,8 @@ interfaces_implementplanetinterfacecoding:
     question: |
         After watching this last episode, you realize that `AbstractPlanet` should really
         be an interface. I've given you a head start by creating the `PlanetInterface`.
-        Now, update all of your code to use it and get these planets rendering again!
+    question_steps:
+        - Update all of your code to use it and get these planets rendering again!
     step: ~
     files:
         SolidPlanet.php: ~
@@ -607,10 +618,13 @@ interfaces_interfacevsabstractclassmc:
 
 interfaces_implementweaponinterfacecoding:
     question: |
-        Now you're working on creating different weapons for the spaceships in our game.
-        By looking at the `WeaponInterface` create a new `LaserWeapon` class that implements
-        this interface. You can return anything you want from the methods. Use the class
-        to print out the weapon's range, just to see that things are working:
+        Finally something fun! Now you're working on creating different weapons for the 
+        spaceships in our game.
+    question_steps:
+        - Looking at the `WeaponInterface` create a new `LaserWeapon` class that implements
+        this interface. You can return anything you want from the methods. Just don't let the
+        freedom go to your head.
+        - Use the class to print out the weapon's range, just to see that things are working.
     step: ~
     files:
         index.php: ~
