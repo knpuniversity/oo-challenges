@@ -1,0 +1,75 @@
+diff --git a/AbstractDeathStar.php b/AbstractDeathStar.php
+index e69de29..bdd0a9d 100644
+--- a/AbstractDeathStar.php
++++ b/AbstractDeathStar.php
+@@ -0,0 +1,21 @@
++<?php
++
++abstract class AbstractDeathStar
++{
++    private $weaponPower;
++
++    public function setWeaponPower($power)
++    {
++        $this->weaponPower = $power;
++    }
++
++    public function getWeaponPower()
++    {
++        return $this->weaponPower;
++    }
++
++    public function makeFiringNoise()
++    {
++        echo 'BOOM x '.$this->weaponPower;
++    }
++}
+diff --git a/DeathStar.php b/DeathStar.php
+index bde00ee..b254dd3 100644
+--- a/DeathStar.php
++++ b/DeathStar.php
+@@ -1,11 +1,9 @@
+ <?php
+ 
+-class DeathStar
++class DeathStar extends AbstractDeathStar
+ {
+     private $crewSize;
+ 
+-    private $weaponPower;
+-
+     public function setCrewSize($numberOfPeople)
+     {
+         $this->crewSize = $numberOfPeople;
+@@ -15,19 +13,4 @@ class DeathStar
+     {
+         return $this->crewSize;
+     }
+-
+-    public function setWeaponPower($power)
+-    {
+-        $this->weaponPower = $power;
+-    }
+-
+-    public function getWeaponPower()
+-    {
+-        return $this->weaponPower;
+-    }
+-
+-    public function makeFiringNoise()
+-    {
+-        echo 'BOOM x '.$this->weaponPower;
+-    }
+ }
+diff --git a/DeathStarII.php b/DeathStarII.php
+index 2bcb7c3..04ce6d1 100644
+--- a/DeathStarII.php
++++ b/DeathStarII.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-class DeathStarII extends DeathStar
++class DeathStarII extends AbstractDeathStar
+ {
+     /**
+      * NOTE: This DeathStar must *always* have 5000 people on it!

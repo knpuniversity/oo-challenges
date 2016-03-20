@@ -1,0 +1,62 @@
+diff --git a/DeathStar.php b/DeathStar.php
+index 32a130e..ccab6d5 100644
+--- a/DeathStar.php
++++ b/DeathStar.php
+@@ -2,13 +2,5 @@
+ 
+ class DeathStar
+ {
+-    public function blastPlanet($planetName)
+-    {
+-        echo 'BOOM '.$planetName;
+-    }
+-
+-    public function getWeakness()
+-    {
+-        return 'Thermal Exhaust Port';
+-    }
++    private $planetarySuperLaserRange = 2000000;
+ }
+diff --git a/DeathStarII.php b/DeathStarII.php
+index 9864c0a..172ba06 100644
+--- a/DeathStarII.php
++++ b/DeathStarII.php
+@@ -2,8 +2,11 @@
+ 
+ class DeathStarII extends DeathStar
+ {
+-    public function getWeakness()
++    public function getSpecs()
+     {
+-        return null;
++        return array(
++            'name' => 'DeathStarII',
++            'laser_range' => $this->planetarySuperLaserRange * 2,
++        );
+     }
+ }
+diff --git a/index.php b/index.php
+index a116a7e..ed169b6 100644
+--- a/index.php
++++ b/index.php
+@@ -3,10 +3,16 @@
+ require 'DeathStar.php';
+ require 'DeathStarII.php';
+ 
+-$original = new DeathStar();
+-$new = new DeathStarII();
++$deathStar = new DeathStarII();
+ 
+ ?>
+ 
+-<h2>Original DeathStar Weakness: <?php echo $original->getWeakness(); ?></h2>
+-<h2>New DeathStar Weakness: <?php echo $new->getWeakness(); ?></h2>
++<h2>New DeathStar Specs</h2>
++<table>
++    <?php foreach ($deathStar->getSpecs() as $key => $val): ?>
++        <tr>
++            <th><?php echo $key; ?></th>
++            <td><?php echo $val; ?></td>
++        </tr>
++    <?php endforeach; ?>
++</table>

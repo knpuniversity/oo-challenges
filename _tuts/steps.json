@@ -24,7 +24,47 @@
             "id": "override-override-inherited-method-solution",
             "name": "Override: Override inherited method [Solution]",
             "description": null
+        },
+        {
+            "id": "protected-visibility-get-inherited-property",
+            "name": "Protected visibility: Get inherited property",
+            "description": null
+        },
+        {
+            "id": "protected-visibility-get-inherited-property-solution",
+            "name": "Protected visibility: Get inherited property [Solution]",
+            "description": null
+        },
+        {
+            "id": "parent-call-parent-method",
+            "name": "Parent: Call parent method",
+            "description": null
+        },
+        {
+            "id": "parent-call-parent-method-solution",
+            "name": "Parent: Call parent method [Solution]",
+            "description": null
+        },
+        {
+            "id": "abstract-ship-extend-abstract-class",
+            "name": "Abstract ship: Extend abstract class",
+            "description": null
+        },
+        {
+            "id": "abstract-ship-extend-abstract-class-solution",
+            "name": "Abstract ship: Extend abstract class [Solution]",
+            "description": null
+        },
+        {
+            "id": "adding-abstract-create-abstract-method",
+            "name": "Adding abstract: Create abstract method",
+            "description": null
+        },
+        {
+            "id": "adding-abstract-create-abstract-method-solution",
+            "name": "Adding abstract: Create abstract method [Solution]",
+            "description": null
         }
     ],
-    "sha": "4e48e9241527c01082d0d97ec09d76e4915e7a32"
+    "sha": "2f72775b9f3a8e5c8c5ff90a3318d8e1d953c8c9"
 }

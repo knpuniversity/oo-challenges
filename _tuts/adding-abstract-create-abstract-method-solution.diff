@@ -1,0 +1,45 @@
+diff --git a/AbstractDeathStar.php b/AbstractDeathStar.php
+index 1eeaf2e..ce5c7e8 100644
+--- a/AbstractDeathStar.php
++++ b/AbstractDeathStar.php
+@@ -2,11 +2,13 @@
+ 
+ abstract class AbstractDeathStar
+ {
++    abstract public function getLaserRange();
++
+     public function getDescription()
+     {
+         // replace this with a call to get the correct
+         // range based on which DeathStar class is used
+-        $range = '???';
++        $range = $this->getLaserRange();
+ 
+         return <<<HEREDOC
+ A fantastic death machine, made to be extra cold and
+diff --git a/DeathStar.php b/DeathStar.php
+index c7e116e..1ba5fc9 100644
+--- a/DeathStar.php
++++ b/DeathStar.php
+@@ -2,4 +2,8 @@
+ 
+ class DeathStar extends AbstractDeathStar
+ {
++    public function getLaserRange()
++    {
++        return 500;
++    }
+ }
+diff --git a/DeathStarII.php b/DeathStarII.php
+index 356bc16..a81f93d 100644
+--- a/DeathStarII.php
++++ b/DeathStarII.php
+@@ -2,4 +2,8 @@
+ 
+ class DeathStarII extends AbstractDeathStar
+ {
++    public function getLaserRange()
++    {
++        return 900;
++    }
+ }

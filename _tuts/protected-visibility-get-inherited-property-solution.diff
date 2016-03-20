@@ -1,0 +1,11 @@
+diff --git a/DeathStar.php b/DeathStar.php
+index ccab6d5..98db915 100644
+--- a/DeathStar.php
++++ b/DeathStar.php
+@@ -2,5 +2,5 @@
+ 
+ class DeathStar
+ {
+-    private $planetarySuperLaserRange = 2000000;
++    protected $planetarySuperLaserRange = 2000000;
+ }

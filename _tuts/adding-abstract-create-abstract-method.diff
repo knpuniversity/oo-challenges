@@ -1,0 +1,124 @@
+diff --git a/AbstractDeathStar.php b/AbstractDeathStar.php
+index bdd0a9d..1eeaf2e 100644
+--- a/AbstractDeathStar.php
++++ b/AbstractDeathStar.php
+@@ -2,20 +2,16 @@
+ 
+ abstract class AbstractDeathStar
+ {
+-    private $weaponPower;
+-
+-    public function setWeaponPower($power)
+-    {
+-        $this->weaponPower = $power;
+-    }
+-
+-    public function getWeaponPower()
++    public function getDescription()
+     {
+-        return $this->weaponPower;
+-    }
++        // replace this with a call to get the correct
++        // range based on which DeathStar class is used
++        $range = '???';
+ 
+-    public function makeFiringNoise()
+-    {
+-        echo 'BOOM x '.$this->weaponPower;
++        return <<<HEREDOC
++A fantastic death machine, made to be extra cold and
++intimidating. It comes complete with a "super-laser"
++capable of destroying planets, with a range of $range.
++HEREDOC;
+     }
+ }
+diff --git a/DeathStar.php b/DeathStar.php
+index b254dd3..c7e116e 100644
+--- a/DeathStar.php
++++ b/DeathStar.php
+@@ -2,15 +2,4 @@
+ 
+ class DeathStar extends AbstractDeathStar
+ {
+-    private $crewSize;
+-
+-    public function setCrewSize($numberOfPeople)
+-    {
+-        $this->crewSize = $numberOfPeople;
+-    }
+-
+-    public function getCrewSize()
+-    {
+-        return $this->crewSize;
+-    }
+ }
+diff --git a/DeathStarII.php b/DeathStarII.php
+index 04ce6d1..356bc16 100644
+--- a/DeathStarII.php
++++ b/DeathStarII.php
+@@ -2,16 +2,4 @@
+ 
+ class DeathStarII extends AbstractDeathStar
+ {
+-    /**
+-     * NOTE: This DeathStar must *always* have 5000 people on it!
+-     */
+-    public function getCrewSize()
+-    {
+-        return 5000;
+-    }
+-
+-    public function makeFiringNoise()
+-    {
+-        echo 'SUPER BOOM';
+-    }
+ }
+diff --git a/index.php b/index.php
+index c556929..43193c2 100644
+--- a/index.php
++++ b/index.php
+@@ -4,34 +4,17 @@ require 'AbstractDeathStar.php';
+ require 'DeathStar.php';
+ require 'DeathStarII.php';
+ 
+-$deathStar1 = new DeathStar();
+-$deathStar1->setCrewSize(3000);
+-$deathStar1->setWeaponPower(500);
+-
++$deathStar = new DeathStar();
+ $deathStar2 = new DeathStarII();
+-$deathStar2->setWeaponPower(999);
+ 
+ ?>
+ 
+-<table>
+-    <tr>
+-        <td>&nbsp;</td>
+-        <th>DeathStar 1</th>
+-        <th>DeathStar 2</th>
+-    </tr>
+-    <tr>
+-        <th>Crew Size</th>
+-        <td><?php echo $deathStar1->getCrewSize(); ?></td>
+-        <td><?php echo $deathStar2->getCrewSize(); ?></td>
+-    </tr>
+-    <tr>
+-        <th>Weapon Power</th>
+-        <td><?php echo $deathStar1->getWeaponPower(); ?></td>
+-        <td><?php echo $deathStar2->getWeaponPower(); ?></td>
+-    </tr>
+-    <tr>
+-        <th>Fire!</th>
+-        <td><?php echo $deathStar1->makeFiringNoise(); ?></td>
+-        <td><?php echo $deathStar2->makeFiringNoise(); ?></td>
+-    </tr>
+-</table>
++<h3>
++    Original DeathStar
++    <span><?php echo $deathStar->getDescription(); ?></span>
++</h3>
++
++<h3>
++    Second DeathStar
++    <span><?php echo $deathStar2->getDescription(); ?></span>
++</h3>
