@@ -173,7 +173,7 @@ protectedvisibility_getinheritedpropertycoding:
         we're going to make it fire twice as far!
     question_steps:
         - Fix the `DeathStar` class so that the new `getSpecs()` method works
-    step: ~
+    step: protected-visibility-get-inherited-property
     files:
         DeathStar.php: ~
         DeathStarII.php:
@@ -266,7 +266,7 @@ parent_callparentmethodcoding:
           Override the `getLaserRange()` method in `DeathStarII` to make
           this happen. (But don't repeat the `2000000` value!)
         - Call the parent function and then multiply that value by 2!
-    step: ~
+    step: parent-call-parent-method
     files:
         DeathStarII.php: ~
         DeathStar.php:
@@ -279,11 +279,11 @@ parent_callparentmethodcoding:
     grading:
         check_method:
             type: php
-            assertTrue: method_exists(get_variable('deathStar'), 'getLaserRange')
+            assertTrue: method_exists(variable('deathStar'), 'getLaserRange')
             failure: The `getLaserRange()` method does not exist for the `DeathStarII` class - did you create it?
         assert_method:
             type: php
-            assertTrue: 4000000 === get_variable('deathStar').getLaserRange()
+            assertTrue: 4000000 === variable('deathStar').getLaserRange()
             failure: The `getLaserRange()` method in the `DeathStarII` class should return a doubled value of the parent method.
 
 # AbstractShip
@@ -301,7 +301,7 @@ abstractship_extendabstractclasscoding:
         - | 
           Update `DeathStar` and `DeathStarII` to extend this new class and make sure to get rid of anything in those classes
           that you've moved into the new parent class.
-    step: ~
+    step: abstract-ship-extend-abstract-class
     files:
         AbstractDeathStar.php: ~
         DeathStar.php: ~
@@ -326,7 +326,7 @@ abstractship_extendabstractclasscoding:
             failure: The `AbstractDeathStar` class should have `getWeaponPower()`, `setWeaponPower()`, and `makeFiringNoise()` methods.
         check_method:
             type: php
-            assertTrue: reflection_class('\AbstractDeathStar').hasMethod('setCrewSize')
+            assertFalse: reflection_class('\AbstractDeathStar').hasMethod('setCrewSize')
             failure: The `AbstractDeathStar` class should not have a `setCrewSize()` method! The `DeathStarII` just has a hardcoded crew size, so does not need this setter. Move it to `Deathstar`.
         assert_subclass_of:
             type: php
@@ -405,6 +405,91 @@ abstractship_inheritanceoverheadmc:
                 c: |
                     Leave things exactly like they are now.
             correct: c
+
+# AddingAbstract
+addingabstract_functiontypehintwithclassnamemc:
+    question: |
+        Check out these classes that the intern created,
+        which all have confusing names:
+
+        ```php
+        abstract class OtherClass extends GreatClass
+        {
+        }
+        ```
+
+        ```php
+        abstract class SomeClass extends OtherClass
+        {
+        }
+        ```
+
+        ```php
+        class GreatClass
+        {
+        }
+        ```
+
+        ```php
+        class MyClass extends OtherClass
+        {
+        }
+        ```
+
+        ```php
+        class Puppy extends SomeClass
+        {
+        }
+        ```
+
+        ```php
+        function doSomething(OtherClass $thing)
+        {
+            // ...
+        }
+        ```
+
+        Based on the type-hint, which classes could be passed to the `doSomething()` function?
+    explanation: |
+        Don't let the `abstract` keyword confuse you: it makes
+        no difference here. Since the type-hint is `OtherClass`,
+        any `OtherClass` object or sub-classes are accepted.
+        The sub-classes are `MyClass` and `SomeClass` (directly)
+        and also `Puppy` (though `SomeClass`).
+    features:
+        multiple_choice:
+            choices:
+                a: '`OtherClass` and `SomeClass`'
+                b: '`OtherClass` and `MyClass`'
+                c: '`OtherClass`, `MyClass`, `SomeClass` and `Puppy`'
+                d: '`OtherClass` and `GreatClass`'
+            correct: c
+
+addingabstract_createabstractmethodcoding:
+    question: |
+        When Darth is browsing all the different `DeathStar` models, we want to print
+        out a little description that describes each one. Inside of that description,
+        we want to include the "laser range", but it's different based on the model.
+    question_steps:
+        - Create an abstract method called `getLaserRange()` in `AbstractDeathStar`.
+        - Use that in `getDescription()` to set the `$range` variable.
+        - Make sure the `DeathStar` class has range = 500.
+        - Lastly, make sure the `DeathStarII` class has range = 900.
+    step: adding-abstract-create-abstract-method
+    files:
+        AbstractDeathStar.php: ~
+        DeathStarII.php: ~
+        DeathStar.php: ~
+        index.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        assert:
+            type: php
+            assertTrue: 1 === 0
+            failure: Not implemented yet...
 
 # BrokenShip
 brokenship_createdeathstariiicoding:
