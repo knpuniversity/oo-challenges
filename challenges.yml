@@ -511,10 +511,10 @@ brokenship_createdeathstariiicoding:
     question_steps:
         - Create a new `DeathStarIII` class, make it extend `AbstractDeathStar`, and fill in any missing abstract methods. 
         - Lastly, print out the description in `index.php`.
-    step: ~
+    step: broken-ship-create-deathstartiii-class
     files:
-        DeathStarIII.php: ~
         index.php: ~
+        DeathStarIII.php: ~
         AbstractDeathStar.php:
             read_only: true
     features:
@@ -525,9 +525,17 @@ brokenship_createdeathstariiicoding:
             type: php
             assertTrue: reflection_class('\DeathStarIII').isSubclassOf('\AbstractDeathStar')
             failure: The `DeathStarIII` class should extend the `AbstractDeathStar` one.
+        look_for_variable:
+            type: php
+            assertTrue: variable_exists('deathStar3')
+            failure: I don't see the `$deathStar3` variable in `index.php` - did you create it?
+        assert_instance_of:
+            type: php
+            assertTrue: get_class(variable('deathStar3')) === 'DeathStarIII'
+            failure: The `$deathStar3` variable exists, but is not set to a `DeathStarIII` object.
         look_for_text:
             type: http
-            assertTrue: css('h3') matches /get_variable('deathStar3').getDescription()/
+            assertTrue: css('h3').text() matches '/with a range of 3000./'
             failure: Hmm, did you print the `DeathStarIII` description in `h3` tag?
 
 # PdoShipStorage
@@ -544,7 +552,7 @@ pdoshipstorage_decomposestringtransformercoding:
     question_steps:
         - Creating a new `Cache` class with two methods `fetchFromCache($key)` and `saveToCache($key, $val)`. 
         - Then, pass this into `StringTransformer` and use it to cache, instead of using your own logic.
-    step: ~
+    step: pdo-ship-storage-decompose-string-transformer
     files:
         index.php: ~
         StringTransformer.php: ~
@@ -567,17 +575,19 @@ pdoshipstorage_decomposestringtransformercoding:
             failure: Method `saveToCache()` does not exist in the `Cache` class.
         check_variable:
             type: php
-            # @TODO Implement variable_exists() function
             assertTrue: variable_exists('transformer')
             failure: I don't see the `$transformer` variable in `index.php` anymore - did you delete it?
         assert_variable:
             type: php
-            # @TODO Implement reflection_object() function
-            assertTrue: reflection_object(get_variable('transformer')).hasMethod('__construct')
+            assertTrue: get_class(variable('transformer')) === 'StringTransformer'
+            failure: Make sure you give the `StringTransformer` class a `__construct()`. It should have one argument - a `Cache` object.
+        assert_method:
+            type: php
+            assertTrue: reflection_class('\StringTransformer').hasMethod('__construct')
             failure: Make sure you give the `StringTransformer` class a `__construct()`. It should have one argument - a `Cache` object.
         look_for_function:
             type: http
-            assertFalse: body() matches /file_get_contents(/
+            assertFalse: body() matches '/file_get_contents/'
             failure: I still see `file_get_contents()` inside of `StringTransformer`. Make sure you've moved all of the caching logic into the Cache class.
         # @TODO Create a mocked Cache, pass it into
         # @TODO $transformer and assert that its cache methods are called
@@ -612,10 +622,9 @@ abstractshiploader_createabstractplanetcoding:
         already created two classes to model this: `SolidPlanet` and `GasPlanet`. They look and 
         work differently, but both have `getRadius()` and `getHexColor()` methods. You've built a 
         `PlanetRenderer` class with a `render()` method, but it's not quite working yet.
-
     question_steps:
         - Create an `AbstractPlanet` class and update any other code you need to make these planets render!
-    step: ~
+    step: abstract-ship-loader-create-abstract-planet
     files:
         AbstractPlanet.php: ~
         SolidPlanet.php: ~
@@ -641,7 +650,7 @@ abstractshiploader_createabstractplanetcoding:
             failure: Method `getRadius()` does not exist in the `AbstractPlanet` class.
         assert_method_1_abstract:
             type: php
-            assertTrue: reflection_class('\AbstractPlanet').hasMethod('getRadius').isAbstract()
+            assertTrue: reflection_class('\AbstractPlanet').getMethod('getRadius').isAbstract()
             failure: Method `getRadius()` should be declared as abstract.
         check_method_2:
             type: php
@@ -649,7 +658,7 @@ abstractshiploader_createabstractplanetcoding:
             failure: Method `getHexColor()` does not exist in the `AbstractPlanet` class.
         assert_method_2_abstract:
             type: php
-            assertTrue: reflection_class('\AbstractPlanet').hasMethod('getHexColor').isAbstract()
+            assertTrue: reflection_class('\AbstractPlanet').getMethod('getHexColor').isAbstract()
             failure: Method `getHexColor()` should be declared as abstract.
         check_subclass_of_1:
             type: php
@@ -667,7 +676,7 @@ interfaces_implementplanetinterfacecoding:
         be an interface. I've given you a head start by creating the `PlanetInterface`.
     question_steps:
         - Update all of your code to use it and get these planets rendering again!
-    step: ~
+    step: interfaces-implement-planetinterface
     files:
         SolidPlanet.php: ~
         GasPlanet.php: ~
@@ -680,11 +689,11 @@ interfaces_implementplanetinterfacecoding:
         editor: ~
         browser: ~
     grading:
-        check_implement_1:
+        assert_implementing_1:
             type: php
             assertTrue: reflection_class('\SolidPlanet').implementsInterface('\PlanetInterface')
             failure: Class `SolidPlanet` should implement the `PlanetInterface` interface.
-        check_implement_2:
+        assert_implementing_2:
             type: php
             assertTrue: reflection_class('\GasPlanet').implementsInterface('\PlanetInterface')
             failure: Class `GasPlanet` should implement the `PlanetInterface` interface.
@@ -724,7 +733,7 @@ interfaces_implementweaponinterfacecoding:
           this interface. You can return anything you want from the methods. Just don't let the
           freedom go to your head.
         - Use the class to print out the weapon's range, just to see that things are working.
-    step: ~
+    step: interfaces-implement-weaponinterface
     files:
         index.php: ~
         LaserWeapon.php: ~
@@ -738,13 +747,14 @@ interfaces_implementweaponinterfacecoding:
             type: php
             assertTrue: class_exists('\LaserWeapon')
             failure: Class `LaserWeapon` could not be found. Did you create it?
-        check_implement:
+        check_implementing:
             type: php
             assertTrue: reflection_class('\LaserWeapon').implementsInterface('\WeaponInterface')
             failure: Class `LaserWeapon` should implement the `WeaponInterface` interface.
-        # TODO Wondering how can we get expressions from both http and php types togeather in one assertion?
-        # I think we have a preblem here for now
-        look_for_text:
-            type: http
-            assertTrue: body() matches /get_variable('laserWeapon').getWeaponRange()/
+        look_for_method:
+            type: php
+            # TODO Wondering how can we get expressions from both http and php types togeather in one assertion?
+            # I think we have a preblem here for now:
+            #assertTrue: body() matches /get_variable('laserWeapon').getWeaponRange()/
+            assertTrue: inputContains('index.php', 'getWeaponRange')
             failure: Seems you forgot to output the laser weapon range. Did you print the result of the `getWeaponRange()` method?
