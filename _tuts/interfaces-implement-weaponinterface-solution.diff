@@ -1,0 +1,64 @@
+diff --git a/LaserWeapon.php b/LaserWeapon.php
+index e69de29..f71663e 100644
+--- a/LaserWeapon.php
++++ b/LaserWeapon.php
+@@ -0,0 +1,40 @@
++<?php
++
++class LaserWeapon implements WeaponInterface
++{
++    /**
++     * @return integer The weapon's range in kilometers
++     */
++    public function getWeaponRange()
++    {
++        return 2000;
++    }
++
++    /**
++     * @return bool Is this weapon effective in space
++     */
++    public function canBeUsedInSpace()
++    {
++        return true;
++    }
++
++    /**
++     * @param string $material
++     * @return integer The amount of damage the weapon will cause against the given material
++     */
++    public function getWeaponStrengthAgainstMaterial($material)
++    {
++        switch ($material) {
++            case 'deathstar':
++                $damageAmount = 50;
++                break;
++            case 'spaceship':
++                $damageAmount = 100;
++                break;
++            default:
++                $damageAmount = 200;
++        }
++
++        return $damageAmount;
++    }
++}
+diff --git a/index.php b/index.php
+index 79c6d8a..ec8ae4f 100644
+--- a/index.php
++++ b/index.php
+@@ -3,12 +3,12 @@
+ require 'WeaponInterface.php';
+ require 'LaserWeapon.php';
+ 
+-// instantiate a new LaserWeapon here
++$laserWeapon = new LaserWeapon();
+ 
+ ?>
+ 
+ <h1>
+     Laser weapon range:
+ 
+-    <!-- print your weapon's getWeaponRange() here -->
++    <?php echo $laserWeapon->getWeaponRange(); ?>
+ </h1>

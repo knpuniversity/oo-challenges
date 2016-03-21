@@ -1,0 +1,45 @@
+diff --git a/AbstractDeathStar.php b/AbstractDeathStar.php
+index ce5c7e8..c5e7c3d 100644
+--- a/AbstractDeathStar.php
++++ b/AbstractDeathStar.php
+@@ -2,7 +2,7 @@
+ 
+ abstract class AbstractDeathStar
+ {
+-    abstract public function getLaserRange();
++    abstract protected function getLaserRange();
+ 
+     public function getDescription()
+     {
+diff --git a/DeathStarIII.php b/DeathStarIII.php
+new file mode 100644
+index 0000000..e69de29
+diff --git a/index.php b/index.php
+index 43193c2..b4c8ac6 100644
+--- a/index.php
++++ b/index.php
+@@ -1,20 +1,14 @@
+ <?php
+ 
+ require 'AbstractDeathStar.php';
+-require 'DeathStar.php';
+-require 'DeathStarII.php';
++require 'DeathStarIII.php';
+ 
+-$deathStar = new DeathStar();
+-$deathStar2 = new DeathStarII();
++$deathStar3 = new \DeathStarIII();
+ 
+ ?>
+ 
+ <h3>
+-    Original DeathStar
+-    <span><?php echo $deathStar->getDescription(); ?></span>
+-</h3>
++    The DeathStar 3 -
+ 
+-<h3>
+-    Second DeathStar
+-    <span><?php echo $deathStar2->getDescription(); ?></span>
++    <!-- print the description here -->
+ </h3>

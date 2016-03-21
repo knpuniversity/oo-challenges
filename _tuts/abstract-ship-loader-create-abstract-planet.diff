@@ -1,0 +1,124 @@
+diff --git a/AbstractPlanet.php b/AbstractPlanet.php
+new file mode 100644
+index 0000000..e69de29
+diff --git a/GasPlanet.php b/GasPlanet.php
+new file mode 100644
+index 0000000..a8a1249
+--- /dev/null
++++ b/GasPlanet.php
+@@ -0,0 +1,35 @@
++<?php
++
++class GasPlanet
++{
++    private $diameter;
++
++    private $mainElement;
++
++    public function __construct($mainElement, $diameter)
++    {
++        $this->diameter = $diameter;
++        $this->mainElement = $mainElement;
++    }
++
++    public function getRadius()
++    {
++        return $this->diameter / 2;
++    }
++
++    public function getHexColor()
++    {
++        // a "fake" map of elements to colors
++        switch ($this->mainElement) {
++            case 'ammonia':
++                return '663300';
++            case 'hydrogen':
++            case 'helium':
++                return 'FFFF66';
++            case 'methane':
++                return '0066FF';
++            default:
++                return '464646';
++        }
++    }
++}
+diff --git a/PlanetRenderer.php b/PlanetRenderer.php
+new file mode 100644
+index 0000000..9b2d79e
+--- /dev/null
++++ b/PlanetRenderer.php
+@@ -0,0 +1,15 @@
++<?php
++
++class PlanetRenderer
++{
++    public function render(SolidPlanet $planet)
++    {
++        return sprintf(
++            '<div style="width: %spx; height: %spx; border-radius: %spx; background-color: #%s;"></div>',
++            $planet->getRadius() * 2,
++            $planet->getRadius() * 2,
++            $planet->getRadius(),
++            $planet->getHexColor()
++        );
++    }
++}
+diff --git a/SolidPlanet.php b/SolidPlanet.php
+new file mode 100644
+index 0000000..552b9a0
+--- /dev/null
++++ b/SolidPlanet.php
+@@ -0,0 +1,24 @@
++<?php
++
++class SolidPlanet
++{
++    private $radius;
++
++    private $hexColor;
++
++    public function __construct($radius, $hexColor)
++    {
++        $this->radius = $radius;
++        $this->hexColor = $hexColor;
++    }
++
++    public function getRadius()
++    {
++        return $this->radius;
++    }
++
++    public function getHexColor()
++    {
++        return $this->hexColor;
++    }
++}
+diff --git a/index.php b/index.php
+index cf38fc0..7ae3d33 100644
+--- a/index.php
++++ b/index.php
+@@ -1,9 +1,19 @@
+ <?php
+ 
+-require 'Cache.php';
+-require 'StringTransformer.php';
++require 'AbstractPlanet.php';
++require 'SolidPlanet.php';
++require 'GasPlanet.php';
++require 'PlanetRenderer.php';
+ 
+-$str = 'Judge me by my size, do you?';
++$planets = array(
++    new SolidPlanet(10, 'CC66FF'),
++    new SolidPlanet(50, '00FF99'),
++    new GasPlanet('ammonia', 100),
++    new GasPlanet('methane', 150),
++);
+ 
+-$transformer = new StringTransformer(new Cache());
+-var_dump($transformer->transformString($str));
++$renderer = new PlanetRenderer();
++
++foreach ($planets as $planet) {
++    echo $renderer->render($planet);
++}

@@ -64,7 +64,57 @@
             "id": "adding-abstract-create-abstract-method-solution",
             "name": "Adding abstract: Create abstract method [Solution]",
             "description": null
+        },
+        {
+            "id": "broken-ship-create-deathstartiii-class",
+            "name": "Broken ship: Create DeathStartIII class",
+            "description": null
+        },
+        {
+            "id": "broken-ship-create-deathstartiii-class-solution",
+            "name": "Broken ship: Create DeathStartIII class [Solution]",
+            "description": null
+        },
+        {
+            "id": "pdo-ship-storage-decompose-string-transformer",
+            "name": "PDO ship storage: Decompose string transformer",
+            "description": null
+        },
+        {
+            "id": "pdo-ship-storage-decompose-string-transformer-solution",
+            "name": "PDO ship storage: Decompose string transformer [Solution]",
+            "description": null
+        },
+        {
+            "id": "abstract-ship-loader-create-abstract-planet",
+            "name": "Abstract ship loader: Create abstract planet",
+            "description": null
+        },
+        {
+            "id": "abstract-ship-loader-create-abstract-planet-solution",
+            "name": "Abstract ship loader: Create abstract planet [Solution]",
+            "description": null
+        },
+        {
+            "id": "interfaces-implement-planetinterface",
+            "name": "Interfaces: Implement PlanetInterface",
+            "description": null
+        },
+        {
+            "id": "interfaces-implement-planetinterface-solution",
+            "name": "Interfaces: Implement PlanetInterface [Solution]",
+            "description": null
+        },
+        {
+            "id": "interfaces-implement-weaponinterface",
+            "name": "Interfaces: Implement WeaponInterface",
+            "description": null
+        },
+        {
+            "id": "interfaces-implement-weaponinterface-solution",
+            "name": "Interfaces: Implement WeaponInterface [Solution]",
+            "description": null
         }
     ],
-    "sha": "2f72775b9f3a8e5c8c5ff90a3318d8e1d953c8c9"
+    "sha": "9e018c8bba9b1095c845b99e2c74000e6a97e8ab"
 }

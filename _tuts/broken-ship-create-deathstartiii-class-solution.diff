@@ -1,0 +1,25 @@
+diff --git a/DeathStarIII.php b/DeathStarIII.php
+index e69de29..3a74cf5 100644
+--- a/DeathStarIII.php
++++ b/DeathStarIII.php
+@@ -0,0 +1,9 @@
++<?php
++
++class DeathStarIII extends AbstractDeathStar
++{
++    protected function getLaserRange()
++    {
++        return 3000;
++    }
++}
+diff --git a/index.php b/index.php
+index b4c8ac6..511490b 100644
+--- a/index.php
++++ b/index.php
+@@ -10,5 +10,5 @@ $deathStar3 = new \DeathStarIII();
+ <h3>
+     The DeathStar 3 -
+ 
+-    <!-- print the description here -->
++    <?php echo $deathStar3->getDescription() ?>
+ </h3>

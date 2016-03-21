@@ -1,0 +1,59 @@
+diff --git a/Cache.php b/Cache.php
+new file mode 100644
+index 0000000..e69de29
+diff --git a/StringTransformer.php b/StringTransformer.php
+new file mode 100644
+index 0000000..36a1a30
+--- /dev/null
++++ b/StringTransformer.php
+@@ -0,0 +1,26 @@
++<?php
++
++class StringTransformer
++{
++    public function transformString($str)
++    {
++        $cacheFile = __DIR__.'/cache/'.md5($str);
++
++        if (file_exists($cacheFile)) {
++            return file_get_contents($cacheFile);
++        }
++
++        $newStr = '';
++        foreach (str_split(strrev($str), 2) as $twoChars) {
++            // capitalize the first of 2 characters
++            $newStr .= ucfirst($twoChars);
++        }
++
++        if (!file_exists(dirname($cacheFile))) {
++            mkdir(dirname($cacheFile));
++        }
++        file_put_contents($cacheFile, $newStr);
++
++        return $newStr;
++    }
++}
+diff --git a/index.php b/index.php
+index 511490b..a14ffaa 100644
+--- a/index.php
++++ b/index.php
+@@ -1,14 +1,9 @@
+ <?php
+ 
+-require 'AbstractDeathStar.php';
+-require 'DeathStarIII.php';
++require 'Cache.php';
++require 'StringTransformer.php';
+ 
+-$deathStar3 = new \DeathStarIII();
++$str = 'Judge me by my size, do you?';
+ 
+-?>
+-
+-<h3>
+-    The DeathStar 3 -
+-
+-    <?php echo $deathStar3->getDescription() ?>
+-</h3>
++$transformer = new StringTransformer();
++var_dump($transformer->transformString($str));

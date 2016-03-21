@@ -1,0 +1,88 @@
+diff --git a/Cache.php b/Cache.php
+index e69de29..cdf2f4b 100644
+--- a/Cache.php
++++ b/Cache.php
+@@ -0,0 +1,34 @@
++<?php
++
++class Cache
++{
++    public function fetchFromCache($key)
++    {
++        $cacheFile = $this->getCacheFilename($key);
++
++        if (file_exists($cacheFile)) {
++            return file_get_contents($cacheFile);
++        }
++
++        return false;
++    }
++
++    public function saveToCache($key, $val)
++    {
++        $cacheFile = $this->getCacheFilename($key);
++
++        if (!file_exists(dirname($cacheFile))) {
++            mkdir(dirname($cacheFile));
++        }
++
++        return file_put_contents($cacheFile, $val);
++    }
++
++    /**
++     * Extra credit private method to avoid duplication
++     */
++    private function getCacheFilename($key)
++    {
++        return __DIR__.'/cache/'.md5($key);
++    }
++}
+diff --git a/StringTransformer.php b/StringTransformer.php
+index 36a1a30..af96fbc 100644
+--- a/StringTransformer.php
++++ b/StringTransformer.php
+@@ -2,12 +2,17 @@
+ 
+ class StringTransformer
+ {
+-    public function transformString($str)
++    private $cache;
++
++    public function __construct(Cache $cache)
+     {
+-        $cacheFile = __DIR__.'/cache/'.md5($str);
++        $this->cache = $cache;
++    }
+ 
+-        if (file_exists($cacheFile)) {
+-            return file_get_contents($cacheFile);
++    public function transformString($str)
++    {
++        if ($result = $this->cache->fetchFromCache($str)) {
++            return $result;
+         }
+ 
+         $newStr = '';
+@@ -16,10 +21,7 @@ class StringTransformer
+             $newStr .= ucfirst($twoChars);
+         }
+ 
+-        if (!file_exists(dirname($cacheFile))) {
+-            mkdir(dirname($cacheFile));
+-        }
+-        file_put_contents($cacheFile, $newStr);
++        $this->cache->saveToCache($str, $newStr);
+ 
+         return $newStr;
+     }
+diff --git a/index.php b/index.php
+index a14ffaa..cf38fc0 100644
+--- a/index.php
++++ b/index.php
+@@ -5,5 +5,5 @@ require 'StringTransformer.php';
+ 
+ $str = 'Judge me by my size, do you?';
+ 
+-$transformer = new StringTransformer();
++$transformer = new StringTransformer(new Cache());
+ var_dump($transformer->transformString($str));

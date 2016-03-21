@@ -1,0 +1,50 @@
+diff --git a/AbstractPlanet.php b/AbstractPlanet.php
+index e69de29..e508276 100644
+--- a/AbstractPlanet.php
++++ b/AbstractPlanet.php
+@@ -0,0 +1,8 @@
++<?php
++
++abstract class AbstractPlanet
++{
++    abstract public function getRadius();
++
++    abstract public function getHexColor();
++}
+diff --git a/GasPlanet.php b/GasPlanet.php
+index a8a1249..97ad251 100644
+--- a/GasPlanet.php
++++ b/GasPlanet.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-class GasPlanet
++class GasPlanet extends AbstractPlanet
+ {
+     private $diameter;
+ 
+diff --git a/PlanetRenderer.php b/PlanetRenderer.php
+index 9b2d79e..f77d79e 100644
+--- a/PlanetRenderer.php
++++ b/PlanetRenderer.php
+@@ -2,7 +2,7 @@
+ 
+ class PlanetRenderer
+ {
+-    public function render(SolidPlanet $planet)
++    public function render(AbstractPlanet $planet)
+     {
+         return sprintf(
+             '<div style="width: %spx; height: %spx; border-radius: %spx; background-color: #%s;"></div>',
+diff --git a/SolidPlanet.php b/SolidPlanet.php
+index 552b9a0..b5f11af 100644
+--- a/SolidPlanet.php
++++ b/SolidPlanet.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-class SolidPlanet
++class SolidPlanet extends AbstractPlanet
+ {
+     private $radius;
+ 

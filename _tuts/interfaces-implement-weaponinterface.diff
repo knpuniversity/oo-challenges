@@ -1,0 +1,62 @@
+diff --git a/LaserWeapon.php b/LaserWeapon.php
+new file mode 100644
+index 0000000..e69de29
+diff --git a/WeaponInterface.php b/WeaponInterface.php
+new file mode 100644
+index 0000000..e0c8da6
+--- /dev/null
++++ b/WeaponInterface.php
+@@ -0,0 +1,20 @@
++<?php
++
++interface WeaponInterface
++{
++    /**
++     * @return integer The weapon's range in kilometers
++     */
++    public function getWeaponRange();
++
++    /**
++     * @return bool Is this weapon effective in space
++     */
++    public function canBeUsedInSpace();
++
++    /**
++     * @param string $material
++     * @return integer The amount of damage the weapon will cause against the given material
++     */
++    public function getWeaponStrengthAgainstMaterial($material);
++}
+diff --git a/index.php b/index.php
+index 4f0c671..79c6d8a 100644
+--- a/index.php
++++ b/index.php
+@@ -1,19 +1,14 @@
+ <?php
+ 
+-require 'PlanetInterface.php';
+-require 'SolidPlanet.php';
+-require 'GasPlanet.php';
+-require 'PlanetRenderer.php';
++require 'WeaponInterface.php';
++require 'LaserWeapon.php';
+ 
+-$planets = array(
+-    new SolidPlanet(10, 'CC66FF'),
+-    new SolidPlanet(50, '00FF99'),
+-    new GasPlanet('ammonia', 100),
+-    new GasPlanet('methane', 150),
+-);
++// instantiate a new LaserWeapon here
+ 
+-$renderer = new PlanetRenderer();
++?>
+ 
+-foreach ($planets as $planet) {
+-    echo $renderer->render($planet);
+-}
++<h1>
++    Laser weapon range:
++
++    <!-- print your weapon's getWeaponRange() here -->
++</h1>
