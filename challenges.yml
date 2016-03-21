@@ -486,10 +486,22 @@ addingabstract_createabstractmethodcoding:
         editor: ~
         browser: ~
     grading:
-        assert:
+        look_for_method:
             type: php
-            assertTrue: 1 === 0
-            failure: Not implemented yet...
+            assertTrue: reflection_class('\AbstractDeathStar').hasMethod('getLaserRange')
+            failure: Method `getLaserRange()` does not exist in the `AbstractDeathStar` class. Did you create it?
+        assert_abstract:
+            type: php
+            assertTrue: reflection_class('\AbstractDeathStar').getMethod('getLaserRange').isAbstract()
+            failure: Method `getLaserRange()` declared in the `AbstractDeathStar` class should be abstract.
+        assert_method_value:
+            type: php
+            assertTrue: 500 == variable('deathStar').getLaserRange() and 900 == variable('deathStar2').getLaserRange()
+            failure: Method `getLaserRange()` should return `500` for the `DeathStar` class and `900` for the `DeathStarII`.
+        assert_method_call:
+            type: php
+            assertTrue: inputContains('AbstractDeathStar.php', 'getLaserRange')
+            failure: Did you call `getLaserRange()` method in the `AbstractDeathStar` class?
 
 # BrokenShip
 brokenship_createdeathstariiicoding:
