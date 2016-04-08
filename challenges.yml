@@ -535,8 +535,12 @@ brokenship_createdeathstariiicoding:
             failure: The `$deathStar3` variable exists, but is not set to a `DeathStarIII` object.
         look_for_text:
             type: http
-            assertTrue: css('h3').text() matches '/with a range of 3000./'
+            assertTrue: css('h3').text() matches '/with a range of/'
             failure: Hmm, did you print the `DeathStarIII` description in `h3` tag?
+        assert_number:
+            type: http
+            assertTrue: css('h3').text() matches '/with a range of [0-9]+/'
+            failure: The `getLaserRange()` method on `DeathStarIII` class must returns a number.
 
 # PdoShipStorage
 pdoshipstorage_decomposestringtransformercoding:
