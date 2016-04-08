@@ -536,7 +536,7 @@ brokenship_createdeathstariiicoding:
         look_for_text:
             type: http
             assertTrue: css('h3').text() matches '/with a range of/'
-            failure: Hmm, did you print the `DeathStarIII` description in `h3` tag?
+            failure: Hmm, did you print the `DeathStarIII` description in the `h3` tag?
         assert_number:
             type: http
             assertTrue: css('h3').text() matches '/with a range of [0-9]+/'
