@@ -449,19 +449,20 @@ addingabstract_functiontypehintwithclassnamemc:
         }
         ```
 
-        Based on the type-hint, which classes could be passed to the `doSomething()` function?
+        Based on the type-hint, objects of which classes could be passed
+        to the `doSomething()` function?
     explanation: |
-        Don't let the `abstract` keyword confuse you: it makes
-        no difference here. Since the type-hint is `OtherClass`,
-        any `OtherClass` object or sub-classes are accepted.
-        The sub-classes are `MyClass` and `SomeClass` (directly)
-        and also `Puppy` (though `SomeClass`).
+        Since the type-hint is `OtherClass`, any `OtherClass` object or sub-classes
+        are accepted. The sub-classes are `MyClass` and `SomeClass` (directly)
+        and also `Puppy` (though `SomeClass`). But we can instantiate objects
+        *only* of `MyClass` and `Puppy` classes, because `OtherClass` and `SomeClass`
+        are abstract!
     features:
         multiple_choice:
             choices:
                 a: '`OtherClass` and `SomeClass`'
                 b: '`OtherClass` and `MyClass`'
-                c: '`OtherClass`, `MyClass`, `SomeClass` and `Puppy`'
+                c: '`MyClass` and `Puppy`'
                 d: '`OtherClass` and `GreatClass`'
             correct: c
 
