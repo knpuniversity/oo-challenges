@@ -501,7 +501,7 @@ addingabstract_createabstractmethodcoding:
             failure: Method `getLaserRange()` should return `500` for the `DeathStar` class and `900` for the `DeathStarII`.
         assert_method_call:
             type: php
-            assertTrue: inputContains('AbstractDeathStar.php', 'getLaserRange')
+            assertTrue: inputContains('AbstractDeathStar.php', '->getLaserRange')
             failure: Did you call `getLaserRange()` method in the `AbstractDeathStar` class?
 
 # BrokenShip
