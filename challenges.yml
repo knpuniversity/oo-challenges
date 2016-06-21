@@ -503,6 +503,10 @@ addingabstract_createabstractmethodcoding:
             type: php
             assertTrue: inputContains('AbstractDeathStar.php', '->getLaserRange')
             failure: Did you call `getLaserRange()` method in the `AbstractDeathStar` class?
+        check_output:
+            type: http
+            assertTrue: body() matches '/500/' and body() matches '/900/'
+            failure: I don't see laser ranges in the output - did you print it?
 
 # BrokenShip
 brokenship_createdeathstariiicoding:
