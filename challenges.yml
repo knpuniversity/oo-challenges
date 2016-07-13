@@ -767,3 +767,87 @@ interfaces_implementweaponinterfacecoding:
             #assertTrue: body() matches /get_variable('laserWeapon').getWeaponRange()/
             assertTrue: inputContains('index.php', 'getWeaponRange')
             failure: Seems you forgot to output the laser weapon range. Did you print the result of the `getWeaponRange()` method?
+
+# Episode 4
+# ArrayAccess
+arrayaccess_coding:
+    question: |
+        Our app *also* deals with meteoroids: those cute
+        little flying rocks that occasionally threaten
+        life itself on Earth. Yay!
+
+        Since a meteoroid is just a chunk of different metals,
+        we've given it an `elements` property to hold whatever
+        metals it has. Let's print these... by treating this
+        class like an array!
+    question_steps:
+        - |
+            Implement the `ArrayAccess` interface and add the
+            4 methods you need to your class (sorry, PhpStorm can't
+            help you this one time!)
+        - |
+            Fill in the logic for each method so that we can
+            access the `$elements` property like an array.
+        - |
+            In `metor.php`, print the `Iron`, `Nickel` and `Cobalt`
+            masses in the correct table boxes.
+    step: arrayaccess-implement-arrayaccess
+    files:
+        metor.php: ~
+        Meteoroid.php: ~
+    features:
+        editor: ~
+        browser:
+            default_uri: metor.php
+    grading:
+        assert_implementing:
+            type: php
+            assertTrue: reflection_class('\Meteoroid').implementsInterface('\ArrayAccess')
+            failure: Class `Meteoroid` should implement the `ArrayAccess` interface.
+        search_for_array_call:
+            type: php
+            assertTrue: inputContains('metor.php', '$meteoroid[')
+            failure: Did you call `$meteoroid` variable as array to print each element mass in the table?
+
+arrayaccess_arrayorobjectmc:
+    question: |
+        Challenge! Check out the following code:
+
+        ```php
+        // some code that you can't see!
+
+        echo $planet['radius']; // prints 50
+
+        echo $planet['atmosphere']->getMainElement(); // prints Nitrogen
+
+        echo $blackhole; // prints an empty string
+
+        $solarSystem[] = $planet;
+        ```
+
+        Which of the following is **not** true:
+    explanation: |
+        Things are never as simple as they seem!
+
+        A) `$planet` is used like an array, but we know that this
+        could be because it's an array *or* an object that
+        implements `ArrayAccess`.
+
+        B) `$solarSystem` is *also* used like an array with the
+        `$solarSystem[] = $planet;` syntax. So this might *also*
+        be an object!
+
+        C) If `$blackHole` is an object that has a `__toString()`
+        method, then we could of course print this.
+
+        D) Because of the code `$planet['atmosphere']->getMainElement();`,
+        we know that `$planet['atmosphere']` must be an object. You
+        can *only* call a method on an object.
+    features:
+        multiple_choice:
+            choices:
+                a: "`$planet` could be an array *or* an object"
+                b: "`$solarSystem` is definitely an array"
+                c: "`$blackHole` could be a string or an object"
+                d: "`$planet['atmosphere']` is definitely an object"
+            correct: b
