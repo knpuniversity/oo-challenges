@@ -769,8 +769,158 @@ interfaces_implementweaponinterfacecoding:
             failure: Seems you forgot to output the laser weapon range. Did you print the result of the `getWeaponRange()` method?
 
 # Episode 4
-# ArrayAccess
+
+# class-constants
+classconstants_replacestringswithconstantscoding:
+    question: |
+        Our cool `GasPlanet` class is smart! We tell it what
+        "main element" the planet is made out of (e.g. ammonia),
+        and `getHexColor()` tells us the color of the planet.
+
+        But, it's too easy to make a typo - e.g. `amonia` - when
+        passing in the element.
+    question_steps:
+        - |
+            Add 4 new constants to `GasPlanet` - one for each of
+            the 4 materials. Give them descriptive names, like
+            `MATERIAL_AMMONIA`.
+        - |
+            Ok! Replace the strings in your code with these
+            constants.
+    step: class-constants-replace-strings-with-constants
+    files:
+        index.php: ~
+        GasPlanet.php: ~
+        PlanetInterface.php:
+            read_only: true
+        PlanetRenderer.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        check_constant_1:
+            type: php
+            assertTrue: reflection_class('\GasPlanet').hasConstant('MATERIAL_AMMONIA')
+            failure: Did you add a `MATERIAL_AMMONIA` constant to the `GasPlanet` class?
+        check_constant_2:
+            type: php
+            assertTrue: reflection_class('\GasPlanet').hasConstant('MATERIAL_HYDROGEN')
+            failure: Did you add a `MATERIAL_HYDROGEN` constant to the `GasPlanet` class?
+        check_constant_3:
+            type: php
+            assertTrue: reflection_class('\GasPlanet').hasConstant('MATERIAL_HELIUM')
+            failure: Did you add a `MATERIAL_HELIUM` constant to the `GasPlanet` class?
+        check_constant_4:
+            type: php
+            assertTrue: reflection_class('\GasPlanet').hasConstant('MATERIAL_METHANE')
+            failure: Did you add a `MATERIAL_METHANE` constant to the `GasPlanet` class?
+        check_constant_usage_1:
+            type: php
+            assertTrue: |
+                true
+                and inputContains('GasPlanet.php', '::MATERIAL_METHANE')
+                and inputContains('GasPlanet.php', '::MATERIAL_HYDROGEN')
+                and inputContains('GasPlanet.php', '::MATERIAL_HELIUM')
+                and inputContains('GasPlanet.php', '::MATERIAL_METHANE')
+            failure: Replace all hardcoded strings with new `MATERIAL_*` constants in the `GasPlanet` class.
+        check_constant_usage_2:
+            type: php
+            assertTrue: |
+                true
+                and inputContains('index.php', 'GasPlanet::MATERIAL_AMMONIA')
+                and inputContains('index.php', 'GasPlanet::MATERIAL_METHANE')
+            failure: Replace hardcoded strings with new `MATERIAL_AMMONIA` and `MATERIAL_METHANE` constants in the `input.php`.
+
+# static-vs-non-static-and-self
+
+# static-methods
+
+# namespaces-make-class-names-longer
+
+# autoloading-awesomeness
 arrayaccess_coding:
+    question: |
+        These `require` statements are *really* starting to cramp
+        my style! Start simple:
+    question_steps:
+        - Remove the `require` statement for `RandomlySizedPlanet.php`.
+        - Add an autoloader function (spl_autoload_register) at the top of `index.php`.
+        - Inside that function, if the class equals `RandomlySizedPlanet`, require that file.
+        - |
+            Refresh to see everything working *without* the `require` statement!
+            Fill in the logic for each method so that we can
+            access the `$elements` property like an array.
+    step: autoloading-awesomeness-create-autoloader
+    files:
+        metor.php: ~
+        Meteoroid.php: ~
+    features:
+        editor: ~
+        browser:
+            default_uri: metor.php
+    grading: []
+#TODO Add files and grading!
+
+autoloadingawesomeness_betterperformancemc:
+    question: |
+        Ultimately - whether via a manual `require` statement written
+        by you or via an autoloader function - *something* needs to
+        require/include a file before we can use the class that lives
+        inside of it.
+
+        But, which option will give you better performance?
+    explanation: |
+        Not only are autoloaders going to make your life simpler, they're
+        *faster* than manually writing require statements. Well, most of
+        the time :).
+
+        The big reason is that - with an autoload function - you only
+        include a file *if* you actually need it during a request. If
+        you never reference a class, then you never include its file
+        and never incur the added overhead of loading this class into
+        memory. Yay!
+
+        But to make this a reality, the *logic* inside of your autoloaders
+        needs to be fast! If your logic searches various files to look
+        for a class each time the autoloader is called, that will be *way*
+        slow!
+
+        That's why the autoloader we built in teh tutorial takes advantage
+        of a class's namespace to quickly locate it!
+    features:
+        multiple_choice:
+            choices:
+                a: Autoloaders are *always* faster than manually having many require statements.
+                b: |
+                    Autoloaders are *usually* faster than having require
+                    statements, because you don't need to include files that
+                    you don't use.
+                c: |
+                    Manual require statements are *always* faster than autoloaders.
+                    Yes, they're annoying to write, but there is a lot of extra
+                    overhead for calling the autoload function over and over again.
+                d: |
+                    Manual require statements are *always* faster than an
+                    autoloader function. By requiring all of the files in the
+                    very beginning, your application can quickly reference any
+                    class or function it needs.
+            correct: b
+
+# more-with-use-statements
+
+# namespaces-core-php-classes
+
+# composer-autoloading
+
+# throw-exceptions
+
+# exception-classes
+
+# magic-methods
+
+# array-access
+arrayaccess_implementingarrayaccesscoding:
     question: |
         Our app *also* deals with meteoroids: those cute
         little flying rocks that occasionally threaten
@@ -851,3 +1001,9 @@ arrayaccess_arrayorobjectmc:
                 c: "`$blackHole` could be a string or an object"
                 d: "`$planet['atmosphere']` is definitely an object"
             correct: b
+
+# iterator-aggregate
+
+# traits-reuse
+
+# composition-ftw
