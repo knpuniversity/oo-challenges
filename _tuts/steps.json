@@ -116,6 +116,16 @@
             "description": null
         },
         {
+            "id": "class-constants-replace-strings-with-constants",
+            "name": "Class constants: Replace strings with constants",
+            "description": null
+        },
+        {
+            "id": "class-constants-replace-strings-with-constants-solution",
+            "name": "Class constants: Replace strings with constants [Solution]",
+            "description": null
+        },
+        {
             "id": "arrayaccess-implement-arrayaccess",
             "name": "ArrayAccess: Implement ArrayAccess",
             "description": null
@@ -126,5 +136,5 @@
             "description": null
         }
     ],
-    "sha": "1d7a88c40efe9413422edf21de73de154f77f500"
+    "sha": "fe01262b39ec2e0f0406df31f9234f30b6f14775"
 }

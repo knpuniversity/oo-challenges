@@ -1,0 +1,93 @@
+diff --git a/GasPlanet.php b/GasPlanet.php
+index df9c6b0..410a7a7 100644
+--- a/GasPlanet.php
++++ b/GasPlanet.php
+@@ -2,6 +2,11 @@
+ 
+ class GasPlanet implements PlanetInterface
+ {
++    const MATERIAL_AMMONIA = 'ammonia';
++    const MATERIAL_HYDROGEN = 'hydrogen';
++    const MATERIAL_HELIUM = 'helium';
++    const MATERIAL_METHANE = 'methane';
++
+     private $diameter;
+ 
+     private $mainElement;
+@@ -21,12 +26,12 @@ class GasPlanet implements PlanetInterface
+     {
+         // a "fake" map of elements to colors
+         switch ($this->mainElement) {
+-            case 'ammonia':
++            case GasPlanet::MATERIAL_AMMONIA:
+                 return '663300';
+-            case 'hydrogen':
+-            case 'helium':
++            case GasPlanet::MATERIAL_HYDROGEN:
++            case GasPlanet::MATERIAL_HELIUM:
+                 return 'FFFF66';
+-            case 'methane':
++            case GasPlanet::MATERIAL_METHANE:
+                 return '0066FF';
+             default:
+                 return '464646';
+diff --git a/challenges.yml b/challenges.yml
+index 83b67ee..8ed09c9 100644
+--- a/challenges.yml
++++ b/challenges.yml
+@@ -798,7 +798,39 @@ classconstants_replacestringswithconstantscoding:
+     features:
+         editor: ~
+         browser: ~
+-    grading: []
++    grading:
++        check_constant_1:
++            type: php
++            assertTrue: reflection_class('\GasPlanet').hasConstant('MATERIAL_AMMONIA')
++            failure: Did you add a `MATERIAL_AMMONIA` constant to the `GasPlanet` class?
++        check_constant_2:
++            type: php
++            assertTrue: reflection_class('\GasPlanet').hasConstant('MATERIAL_HYDROGEN')
++            failure: Did you add a `MATERIAL_HYDROGEN` constant to the `GasPlanet` class?
++        check_constant_3:
++            type: php
++            assertTrue: reflection_class('\GasPlanet').hasConstant('MATERIAL_HELIUM')
++            failure: Did you add a `MATERIAL_HELIUM` constant to the `GasPlanet` class?
++        check_constant_4:
++            type: php
++            assertTrue: reflection_class('\GasPlanet').hasConstant('MATERIAL_METHANE')
++            failure: Did you add a `MATERIAL_METHANE` constant to the `GasPlanet` class?
++        check_constant_usage_1:
++            type: php
++            assertTrue: |
++                true
++                and inputContains('GasPlanet.php', '::MATERIAL_METHANE')
++                and inputContains('GasPlanet.php', '::MATERIAL_HYDROGEN')
++                and inputContains('GasPlanet.php', '::MATERIAL_HELIUM')
++                and inputContains('GasPlanet.php', '::MATERIAL_METHANE')
++            failure: Replace all hardcoded strings with new `MATERIAL_*` constants in the `GasPlanet` class.
++        check_constant_usage_2:
++            type: php
++            assertTrue: |
++                true
++                and inputContains('index.php', 'GasPlanet::MATERIAL_AMMONIA')
++                and inputContains('index.php', 'GasPlanet::MATERIAL_METHANE')
++            failure: Replace hardcoded strings with new `MATERIAL_AMMONIA` and `MATERIAL_METHANE` constants in the `input.php`.
+ 
+ # static-vs-non-static-and-self
+ 
+diff --git a/index.php b/index.php
+index c5000ed..01e239f 100644
+--- a/index.php
++++ b/index.php
+@@ -4,8 +4,8 @@ require __DIR__ . '/PlanetRenderer.php';
+ require __DIR__ . '/PlanetInterface.php';
+ require __DIR__ . '/GasPlanet.php';
+ 
+-$planet1 = new GasPlanet('ammonia', 85);
+-$planet2 = new GasPlanet('methane', 72);
++$planet1 = new GasPlanet(GasPlanet::MATERIAL_AMMONIA, 85);
++$planet2 = new GasPlanet(GasPlanet::MATERIAL_METHANE, 72);
+ 
+ $renderer = new PlanetRenderer();
+ 
