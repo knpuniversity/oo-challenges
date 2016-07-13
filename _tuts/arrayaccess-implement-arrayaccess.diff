@@ -1,0 +1,62 @@
+diff --git a/Meteoroid.php b/Meteoroid.php
+new file mode 100644
+index 0000000..cce8bbe
+--- /dev/null
++++ b/Meteoroid.php
+@@ -0,0 +1,23 @@
++<?php
++
++class Meteoroid
++{
++    private $elements = [];
++
++    private $name;
++
++    public function __construct($name)
++    {
++        $this->name = $name;
++    }
++
++    public function addElement($name, $mass)
++    {
++        $this->elements[$name] = $mass;
++    }
++
++    public function getName()
++    {
++        return $this->name;
++    }
++}
+diff --git a/metor.php b/metor.php
+new file mode 100644
+index 0000000..65a107d
+--- /dev/null
++++ b/metor.php
+@@ -0,0 +1,27 @@
++<?php
++
++require_once __DIR__ . '/Meteoroid.php';
++
++$meteoroid = new Meteoroid('Hoba');
++$meteoroid->addElement('Iron', 45712);
++$meteoroid->addElement('Nickel', 8707);
++$meteoroid->addElement('Cobalt', 55);
++
++?>
++
++<table>
++    <thead>
++        <tr>
++            <th>Iron</th>
++            <th>Nickel</th>
++            <th>Cobalt</th>
++        </tr>
++    </thead>
++    <tbody>
++        <tr>
++            <td><!-- print iron --></td>
++            <td><!-- print nickel --></td>
++            <td><!-- print cobalt --></td>
++        </tr>
++    </tbody>
++</table>

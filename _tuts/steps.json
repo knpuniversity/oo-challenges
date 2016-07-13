@@ -114,7 +114,17 @@
             "id": "interfaces-implement-weaponinterface-solution",
             "name": "Interfaces: Implement WeaponInterface [Solution]",
             "description": null
+        },
+        {
+            "id": "arrayaccess-implement-arrayaccess",
+            "name": "ArrayAccess: Implement ArrayAccess",
+            "description": null
+        },
+        {
+            "id": "arrayaccess-implement-arrayaccess-solution",
+            "name": "ArrayAccess: Implement ArrayAccess [Solution]",
+            "description": null
         }
     ],
-    "sha": "9e018c8bba9b1095c845b99e2c74000e6a97e8ab"
+    "sha": "1d7a88c40efe9413422edf21de73de154f77f500"
 }

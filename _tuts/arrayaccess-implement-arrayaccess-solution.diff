@@ -1,0 +1,58 @@
+diff --git a/Meteoroid.php b/Meteoroid.php
+index cce8bbe..193e459 100644
+--- a/Meteoroid.php
++++ b/Meteoroid.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-class Meteoroid
++class Meteoroid implements ArrayAccess
+ {
+     private $elements = [];
+ 
+@@ -20,4 +20,28 @@ class Meteoroid
+     {
+         return $this->name;
+     }
++
++    public function offsetExists($offset)
++    {
++        return isset($this->elements[$offset]);
++    }
++
++    public function offsetGet($offset)
++    {
++        if ($this->offsetExists($offset)) {
++            return $this->elements[$offset];
++        }
++
++        return null;
++    }
++
++    public function offsetSet($offset, $value)
++    {
++        $this->elements[$offset] = $value;
++    }
++
++    public function offsetUnset($offset)
++    {
++        unset($this->elements[$offset]);
++    }
+ }
+diff --git a/metor.php b/metor.php
+index 65a107d..7eb2983 100644
+--- a/metor.php
++++ b/metor.php
+@@ -19,9 +19,9 @@ $meteoroid->addElement('Cobalt', 55);
+     </thead>
+     <tbody>
+         <tr>
+-            <td><!-- print iron --></td>
+-            <td><!-- print nickel --></td>
+-            <td><!-- print cobalt --></td>
++            <td><?php echo $meteoroid['Iron'] ?></td>
++            <td><?php echo $meteoroid['Nickel'] ?></td>
++            <td><?php echo $meteoroid['Cobalt'] ?></td>
+         </tr>
+     </tbody>
+ </table>
