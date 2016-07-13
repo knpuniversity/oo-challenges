@@ -31,51 +31,6 @@ index df9c6b0..410a7a7 100644
                  return '0066FF';
              default:
                  return '464646';
-diff --git a/challenges.yml b/challenges.yml
-index 83b67ee..8ed09c9 100644
---- a/challenges.yml
-+++ b/challenges.yml
-@@ -798,7 +798,39 @@ classconstants_replacestringswithconstantscoding:
-     features:
-         editor: ~
-         browser: ~
--    grading: []
-+    grading:
-+        check_constant_1:
-+            type: php
-+            assertTrue: reflection_class('\GasPlanet').hasConstant('MATERIAL_AMMONIA')
-+            failure: Did you add a `MATERIAL_AMMONIA` constant to the `GasPlanet` class?
-+        check_constant_2:
-+            type: php
-+            assertTrue: reflection_class('\GasPlanet').hasConstant('MATERIAL_HYDROGEN')
-+            failure: Did you add a `MATERIAL_HYDROGEN` constant to the `GasPlanet` class?
-+        check_constant_3:
-+            type: php
-+            assertTrue: reflection_class('\GasPlanet').hasConstant('MATERIAL_HELIUM')
-+            failure: Did you add a `MATERIAL_HELIUM` constant to the `GasPlanet` class?
-+        check_constant_4:
-+            type: php
-+            assertTrue: reflection_class('\GasPlanet').hasConstant('MATERIAL_METHANE')
-+            failure: Did you add a `MATERIAL_METHANE` constant to the `GasPlanet` class?
-+        check_constant_usage_1:
-+            type: php
-+            assertTrue: |
-+                true
-+                and inputContains('GasPlanet.php', '::MATERIAL_METHANE')
-+                and inputContains('GasPlanet.php', '::MATERIAL_HYDROGEN')
-+                and inputContains('GasPlanet.php', '::MATERIAL_HELIUM')
-+                and inputContains('GasPlanet.php', '::MATERIAL_METHANE')
-+            failure: Replace all hardcoded strings with new `MATERIAL_*` constants in the `GasPlanet` class.
-+        check_constant_usage_2:
-+            type: php
-+            assertTrue: |
-+                true
-+                and inputContains('index.php', 'GasPlanet::MATERIAL_AMMONIA')
-+                and inputContains('index.php', 'GasPlanet::MATERIAL_METHANE')
-+            failure: Replace hardcoded strings with new `MATERIAL_AMMONIA` and `MATERIAL_METHANE` constants in the `input.php`.
- 
- # static-vs-non-static-and-self
- 
 diff --git a/index.php b/index.php
 index c5000ed..01e239f 100644
 --- a/index.php
