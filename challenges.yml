@@ -832,6 +832,120 @@ classconstants_replacestringswithconstantscoding:
                 and inputContains('index.php', 'GasPlanet::MATERIAL_METHANE')
             failure: Replace hardcoded strings with new `MATERIAL_AMMONIA` and `MATERIAL_METHANE` constants in the `input.php`.
 
+classconstants_uppercaseconstantsmc:
+    question: Why are constants always upper-case (e.g. `MATERIAL_AMMONIA`)?
+    explanation: |
+        The upper-casing of constants is just a standard, but standards
+        are good to following! A constant is distinguished from a property
+        by their keyword and the use of a `$`: `const PIZZA` versus `private $pizza`.
+    features:
+        multiple_choice:
+            choices:
+                a: "It's just a standard: constants don't *need* to be upper-case"
+                b: The upper-case characters distinguishes them from normal properties
+                c: Upper-case class constants are used so that they don't conflict with core PHP constants
+                d: The upper-case characters help keep memory usage lower
+            correct: a
+
+classconstants_setconstantmc:
+    question: |
+        Suppose you want to change the value of a constant.
+        Check out the following code:
+
+        ```php
+        class GasPlanet
+        {
+            const MATERIAL_AMMONIA = 'ammonia';
+        }
+        ```
+
+        ```php
+        <?php
+        // ...
+
+        GasPlanet::MATERIAL_AMMONIA = 'helium';
+        ```
+
+        Is this legal?
+    explanation: |
+        Constants can *never* be changed - that's the whole point! And
+        they *must* be declared inside of the class with the `const` keyword.
+
+        If you need a value that *changes*, then you don't need a constant,
+        you need a *property*. And as you'll learn in a few minutes, properties
+        can be static (like constants) or non-static (stay-tuned!).
+    features:
+        multiple_choice:
+            choices:
+                a: |
+                    Yes, but it's not recommended. Constants are values that
+                    are not *meant* to be modified.
+                b: |
+                    No, unless you removed the `const MATERIAL_AMMONIA = 'ammonia';`
+                    from `GasPlanet`. Constants can only be set *once* either via
+                    the `const` keyword, or by setting them from outside the class.
+                c: Nope - changing constants is totally *not* allowed, ever.
+                d: |
+                    Yes, though it's recommended to change constants from inside
+                    the class where they are declared (i.e. `GasPlanet`).
+            correct: c
+
+classconstants_hexcolorconstantsmc:
+    question: |
+        The intern has gone *crazy* with constants, by even making the
+        hex strings into constants:
+
+        ```php
+        class GasPlanet implements PlanetInterface
+        {
+            // ...
+
+            const COLOR_BROWN_ISH = '663300';
+            const COLOR_BLUE_BRIGHT = '0066FF';
+            const COLOR_GRAY_DARK = '464646';
+            // ...
+
+            public function getHexColor()
+            {
+                // a "fake" map of elements to colors
+                switch ($this->mainElement) {
+                    case GasPlanet::MATERIAL_AMMONIA:
+                        return GasPlanet::COLOR_BROWN_ISH;
+                    case GasPlanet::MATERIAL_METHANE:
+                        return GasPlanet::COLOR_BLUE_BRIGHT;
+                    default:
+                        return GasPlanet::COLOR_GRAY_DARK;
+                }
+            }
+        }
+        ```
+
+        Is this a good step forward?
+    explanation: |
+        Not *all* strings or numbers should be turned into constants.
+        If you're thinking about making something a constant, ask yourself:
+
+        * Are these strings used multiple times?
+        * Are these strings used from *outside* of the class?
+        * If someone makes a minor typo, will the result be drastically different?
+        * Is it important for us to have a list of all of these possible values in one spot.
+
+        In this case, the answer is no to *all* of these questions. For
+        example, if we typo `ammonia` as `amonia`, the planet would have
+        a drastically different color. But if we typo `663300` as `663301`,
+        that won't make much difference, because the hex values are not
+        being used as *exact keys* to decide how the code behaves.
+    features:
+        multiple_choice:
+            choices:
+                a: |
+                    Not really. These hex colors aren't used outside of this
+                    class ever (or even multiple times *inside* of this class),
+                    so there's no advantage to making these constants.
+                b: "Absolutely: it's important to make all static strings into constants."
+                c: "No: the hex colors shouldn't be constants, in case we need to change them later."
+            correct: a
+
 # static-vs-non-static-and-self
 
 # static-methods
