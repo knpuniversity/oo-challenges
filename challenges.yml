@@ -1023,6 +1023,163 @@ staticvsnonstaticandself_useselfkeywordcoding:
             failure: Replace all `GasPlanet::MATERIAL_*` with `self::MATERIAL_*` in the `GasPlanet` class.
 
 # static-methods
+staticmethods_staticgetallelementscoding:
+    question: |
+        The gas planets are kind of pretty, so we want to render
+        *all* of them for the user to enjoy. Simple! By creating
+        one `GasPlanet` object for each possible element, we've
+        done it!
+
+        But, you know the problem: if we add *more* elements to
+        `GasPlanet`, we'll need to remember to come here and create
+        another object. Lame!
+    question_steps:
+        - |
+            Create a new *static* method called `getAllElements()`
+            that returns the 4 possible gas planet elements.
+        - |
+            Call this from `index.php` and use a `foreach` to
+            render the 4 different gas planets.
+    step: static-methods-get-all-elements
+    files:
+        GasPlanet.php: ~
+        index.php: ~
+        PlanetInterface.php:
+            read_only: true
+        PlanetRenderer.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        search_for_method:
+            type: php
+            assertTrue: reflection_class('\GasPlanet').hasMethod('getAllElements')
+            failure: Did you add `getAllElements()` method in the `GasPlanet.php` class?
+        assert_method_is_static:
+            type: php
+            assertTrue: reflection_class('\GasPlanet').getMethod('getAllElements').isStatic()
+            failure: Did you make the `getAllElements()` method static?
+        search_for_method_call:
+            type: php
+            assertTrue: inputContains('index.php', 'GasPlanet::getAllElements()')
+            failure: Did you iterate over `GasPlanet::getAllElements()` static method in the `index.php`?
+        search_for_foreach:
+            type: php
+            assertTrue: inputContains('index.php', 'foreach')
+            failure: Did you iterate all elements with a `foreach` loop in the `index.php`?
+        search_for_new_object:
+            type: php
+            assertTrue: inputContains('index.php', 'new GasPlanet')
+            failure: Did you create a `new GasPlanet` object in the `foreach` loop?
+
+staticmethods_fixerrorscoding:
+    question: |
+        You take *one* day for a holiday, and the intern experimented
+        in the code and broke things! Now that you're back, well-rested
+        and with a nice tan, see if you can get the code working again.
+    question_steps:
+        - Render the page to see what the error is
+        - Find the bug and squash it!
+    explanation: |
+        When deciding between making a method static or non-static,
+        one easy question to ask is:
+
+        > Does this method need to use the `$this` variable?
+
+        If it *does*, then it should *not* be static. Simple!
+    step: static-methods-create-randomlycoloredplanet-class
+    files:
+        RandomlyColoredPlanet.php: ~
+        index.php:
+            read_only: true
+        PlanetInterface.php:
+            read_only: true
+        PlanetRenderer.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        assert_method_is_not_static:
+            type: php
+            assertFalse: reflection_class('\RandomlyColoredPlanet').getMethod('getRandomColor').isStatic()
+            failure: You should make the `getRandomColor()` method **not** static.
+        check_method_call_with_this:
+            type: php
+            assertFalse: inputContains('RandomlyColoredPlanet.php', 'self::getRandomColor')
+            failure: You can call non-static `getRandomColor()` method with `self::`, but let's use `$this->` instead.
+        check_argument_name:
+            type: php
+            assertTrue: inputContains('RandomlyColoredPlanet.php', '__construct($color1, $color2)')
+            failure: There's one more typo with the second argument name in the constructor. Did you see it?
+
+staticmethods_mc:
+    question: |
+        We're building a new class of planets that *always* have the
+        same radius. We're in a heated (geeky) debate over whether or
+        not to make a method static. Here are the two options:
+
+        ```php
+        // OPTION 1
+        class StaticallySizedPlanet
+        {
+            public function getRadius()
+            {
+                return 250;
+            }
+        }
+        ```
+
+        ```php
+        // OPTION 2
+        class StaticallySizedPlanet
+        {
+            public static function getRadius()
+            {
+                return 250;
+            }
+        }
+        ```
+
+        Which would you recommend?
+    explanation: |
+        This one is tough :).
+
+        Deciding whether or not to make a method static has *nothing*
+        to do with whether or not that method will return a "static"
+        (or constant value). And just because you *don't* need the
+        `$this` keyword does *not* automatically mean that you should
+        make something static (though the opposite *is* true: if you
+        need `$this`, make it non-static).
+
+        Instead, you need to ask yourself:
+
+        > When I call this method, am I calling this method on one
+        > individual "planet" object or on the StaticallySizedPlanet
+        > class in general?
+
+        In those case, both sound pretty reasonable: so both static
+        and non-static are *good* answers. However, if you're ever
+        not sure - or both options make sense - choose non-static.
+        Put simply: this will give you more flexibility in the future.
+    features:
+        multiple_choice:
+            choices:
+                a: |
+                    OPTION 1 (non-static): The "radius" of a planet is a
+                    property that should really belong to each, individual planet.
+                b: |
+                    OPTION 1 (non-static): "getter" functions like this
+                    (e.g. `getRadius()`, `getName()`, etc) should always be non-static.
+                c: |
+                    OPTION 2 (static): The method does not rely on the
+                    `$this` variable, so we should make it static.
+                d: |
+                    OPTION 2 (static): The method always returns a static,
+                    or constant value. This is precisely when you should use
+                    a static method.
+            correct: a
 
 # namespaces-make-class-names-longer
 
