@@ -1,0 +1,21 @@
+diff --git a/GasPlanet.php b/GasPlanet.php
+index 410a7a7..5460774 100644
+--- a/GasPlanet.php
++++ b/GasPlanet.php
+@@ -26,12 +26,12 @@ class GasPlanet implements PlanetInterface
+     {
+         // a "fake" map of elements to colors
+         switch ($this->mainElement) {
+-            case GasPlanet::MATERIAL_AMMONIA:
++            case self::MATERIAL_AMMONIA:
+                 return '663300';
+-            case GasPlanet::MATERIAL_HYDROGEN:
+-            case GasPlanet::MATERIAL_HELIUM:
++            case self::MATERIAL_HYDROGEN:
++            case self::MATERIAL_HELIUM:
+                 return 'FFFF66';
+-            case GasPlanet::MATERIAL_METHANE:
++            case self::MATERIAL_METHANE:
+                 return '0066FF';
+             default:
+                 return '464646';

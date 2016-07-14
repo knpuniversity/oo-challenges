@@ -126,6 +126,36 @@
             "description": null
         },
         {
+            "id": "static-vs-non-static-and-self-replace-class-name-with-self",
+            "name": "Static vs non-static and self: Replace class name with self",
+            "description": null
+        },
+        {
+            "id": "static-vs-non-static-and-self-replace-class-name-with-self-solution",
+            "name": "Static vs non-static and self: Replace class name with self [Solution]",
+            "description": null
+        },
+        {
+            "id": "static-methods-get-all-elements",
+            "name": "Static methods: Get all elements",
+            "description": null
+        },
+        {
+            "id": "static-methods-get-all-elements-solution",
+            "name": "Static methods: Get all elements [Solution]",
+            "description": null
+        },
+        {
+            "id": "static-methods-create-randomlycoloredplanet-class",
+            "name": "Static methods: Create RandomlyColoredPlanet class",
+            "description": null
+        },
+        {
+            "id": "static-methods-create-randomlycoloredplanet-class-solution",
+            "name": "Static methods: Create RandomlyColoredPlanet class [Solution]",
+            "description": null
+        },
+        {
             "id": "arrayaccess-implement-arrayaccess",
             "name": "ArrayAccess: Implement ArrayAccess",
             "description": null
@@ -136,5 +166,5 @@
             "description": null
         }
     ],
-    "sha": "aaca806703e211afae7bb3a1801d7860241b6f36"
+    "sha": "84830530ec5532e462327356223b9d1d6a8fe51b"
 }

@@ -1,0 +1,58 @@
+diff --git a/RandomlyColoredPlanet.php b/RandomlyColoredPlanet.php
+new file mode 100644
+index 0000000..ee07c5e
+--- /dev/null
++++ b/RandomlyColoredPlanet.php
+@@ -0,0 +1,32 @@
++<?php
++
++class RandomlyColoredPlanet implements PlanetInterface
++{
++    private $color1;
++    private $color2;
++
++    public function __construct($color1, $color1)
++    {
++        $this->color1 = $color1;
++        $this->color2 = $color2;
++    }
++
++    public static function getRandomColor()
++    {
++        $colors = [$this->color1, $this->color2];
++
++        $randomKey = array_rand($colors);
++
++        return $colors[$randomKey];
++    }
++
++    public function getHexColor()
++    {
++        return self::getRandomColor();
++    }
++
++    public function getRadius()
++    {
++        return 100;
++    }
++}
+diff --git a/index.php b/index.php
+index 4149e0d..6783b91 100644
+--- a/index.php
++++ b/index.php
+@@ -2,11 +2,9 @@
+ 
+ require __DIR__ . '/PlanetRenderer.php';
+ require __DIR__ . '/PlanetInterface.php';
+-require __DIR__ . '/GasPlanet.php';
++require __DIR__ . '/RandomlyColoredPlanet.php';
+ 
+-$renderer = new PlanetRenderer();
++$planet = new RandomlyColoredPlanet('0969F9', 'F96909');
+ 
+-foreach (GasPlanet::getAllElements() as $element) {
+-    $planet = new GasPlanet($element, rand(30, 90));
+-    echo $renderer->render($planet);
+-}
++$renderer = new PlanetRenderer();
++echo $renderer->render($planet);

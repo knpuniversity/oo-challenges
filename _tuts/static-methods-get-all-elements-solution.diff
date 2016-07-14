@@ -1,0 +1,46 @@
+diff --git a/GasPlanet.php b/GasPlanet.php
+index 5460774..045e0be 100644
+--- a/GasPlanet.php
++++ b/GasPlanet.php
+@@ -17,6 +17,16 @@ class GasPlanet implements PlanetInterface
+         $this->mainElement = $mainElement;
+     }
+ 
++    public static function getAllElements()
++    {
++        return [
++            self::MATERIAL_AMMONIA,
++            self::MATERIAL_HYDROGEN,
++            self::MATERIAL_HELIUM,
++            self::MATERIAL_METHANE,
++        ];
++    }
++
+     public function getRadius()
+     {
+         return $this->diameter / 2;
+diff --git a/index.php b/index.php
+index 01e239f..4149e0d 100644
+--- a/index.php
++++ b/index.php
+@@ -4,16 +4,9 @@ require __DIR__ . '/PlanetRenderer.php';
+ require __DIR__ . '/PlanetInterface.php';
+ require __DIR__ . '/GasPlanet.php';
+ 
+-$planet1 = new GasPlanet(GasPlanet::MATERIAL_AMMONIA, 85);
+-$planet2 = new GasPlanet(GasPlanet::MATERIAL_METHANE, 72);
+-
+ $renderer = new PlanetRenderer();
+ 
+-?>
+-
+-<h1>
+-    Gas Planets
+-</h1>
+-
+-<?php echo $renderer->render($planet1); ?>
+-<?php echo $renderer->render($planet2); ?>
++foreach (GasPlanet::getAllElements() as $element) {
++    $planet = new GasPlanet($element, rand(30, 90));
++    echo $renderer->render($planet);
++}

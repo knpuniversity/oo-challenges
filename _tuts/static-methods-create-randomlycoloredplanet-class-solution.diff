@@ -1,0 +1,29 @@
+diff --git a/RandomlyColoredPlanet.php b/RandomlyColoredPlanet.php
+index ee07c5e..9f887da 100644
+--- a/RandomlyColoredPlanet.php
++++ b/RandomlyColoredPlanet.php
+@@ -5,13 +5,13 @@ class RandomlyColoredPlanet implements PlanetInterface
+     private $color1;
+     private $color2;
+ 
+-    public function __construct($color1, $color1)
++    public function __construct($color1, $color2)
+     {
+         $this->color1 = $color1;
+         $this->color2 = $color2;
+     }
+ 
+-    public static function getRandomColor()
++    public function getRandomColor()
+     {
+         $colors = [$this->color1, $this->color2];
+ 
+@@ -22,7 +22,7 @@ class RandomlyColoredPlanet implements PlanetInterface
+ 
+     public function getHexColor()
+     {
+-        return self::getRandomColor();
++        return $this->getRandomColor();
+     }
+ 
+     public function getRadius()
