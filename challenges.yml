@@ -947,6 +947,80 @@ classconstants_hexcolorconstantsmc:
             correct: a
 
 # static-vs-non-static-and-self
+staticvsnonstaticandself_staticpropertymc:
+    question: |
+        The intern is *loving* the idea of static properties, but I feel
+        like he's a little confused. But, he's got a good spirit! Let's
+        check out his code and offer him some advice:
+
+        ```php
+        class SolidPlanet
+        {
+            private $radius;
+
+            private static $hexColor;
+
+            private $hasBeenVisitedByAliens;
+
+            private $numberOfHabitablePlanetsInUniverse;
+        }
+        ```
+
+        Which of the following are true:
+    explanation: |
+        When determining static or non-static, ask yourself this question:
+
+        > Does *each* individual planet have its own value for this
+        > property? Or is there just one value for *all* planets?
+
+        Looking at each property, here's how it looks:
+
+        * `radius`: Each planet has a different radius: *not static*
+        * `hexColor`: Each planet also has its own color: *non static*
+        * `hasBeenVisitedByAliens`: Some planets may have been visited by aliens
+          and others not: *non static*
+        * `$numberOfHabitablePlanetsInUniverse`: This is a global number,
+          it applies to *all* planets: it's not a property of just one
+          planet: *static*
+
+        When in doubt, use non-static!
+    features:
+        multiple_choice:
+            choices:
+                a: The `$hexColor` property should *not* be static
+                b: The `$radius` property should be static
+                c: The `$numberOfHabitablePlanetsInUniverse` should be static
+                d: Both (A) and (C) are true!
+                e: Both (B) and (C) are true!
+            correct: d
+
+staticvsnonstaticandself_useselfkeywordcoding:
+    question: |
+        We're doing to much work by using the whole class name `GasPlanet`!
+    question_steps:
+        - Refactor `GasPlanet` to use `self` to reference the constants.
+    step: static-vs-non-static-and-self-replace-class-name-with-self
+    files:
+        GasPlanet.php: ~
+        index.php:
+            read_only: true
+        PlanetInterface.php:
+            read_only: true
+        PlanetRenderer.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        check_constant_usage:
+            type: php
+            assertTrue: |
+                true
+                and inputContains('GasPlanet.php', 'self::MATERIAL_METHANE')
+                and inputContains('GasPlanet.php', 'self::MATERIAL_HYDROGEN')
+                and inputContains('GasPlanet.php', 'self::MATERIAL_HELIUM')
+                and inputContains('GasPlanet.php', 'self::MATERIAL_METHANE')
+            failure: Replace all `GasPlanet::MATERIAL_*` with `self::MATERIAL_*` in the `GasPlanet` class.
 
 # static-methods
 
