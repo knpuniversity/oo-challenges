@@ -1426,6 +1426,76 @@ autoloadingawesomeness_betterperformancemc:
             correct: b
 
 # more-with-use-statements
+morewithusestatements_usesmartautoloadercoding:
+    question: |
+        Time to remove *all* of the `require` statements! YES!
+
+        We made the intern work late last night, and he got us off
+        to a nice start: the classes now live in different directories
+        *and* our `spl_autoload_register` function is smart!
+    question_steps:
+        - Remove all of the require statements
+        - Give each class a proper namespace so that the autoload function can find them!
+        - Fix anything else needed in the code after giving the classes namespaces
+    step: more-with-use-statements-use-smart-autoloader
+    files:
+        index.php: ~
+        src/Model/Planet/PlanetInterface.php: ~
+        src/Model/Planet/GasPlanet.php: ~
+        src/Model/Planet/SolidPlanet.php: ~
+        src/Model/Planet/RandomlyColoredPlanet.php: ~
+        src/Service/PlanetRenderer.php: ~
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        search_for_require:
+            type: php
+            assertFalse: |
+                false
+                or inputContains('index.php', 'PlanetRenderer.php')
+                or inputContains('index.php', 'GasPlanet.php')
+                or inputContains('index.php', 'SolidPlanet.php')
+                or inputContains('index.php', 'RandomlyColoredPlanet.php')
+            failure: You should remove all of the `require` statements in `index.php` except one in the `spl_autoload_register`.
+        assert_namespace:
+            type: php
+            assertTrue: |
+                true
+                and class_exists('\\Service\\PlanetRenderer')
+                and class_exists('\\Model\\Planet\\GasPlanet')
+                and class_exists('\\Model\\Planet\\SolidPlanet')
+                and class_exists('\\Model\\Planet\\RandomlyColoredPlanet')
+            failure: A namespace of all classes should match the directory structure.
+
+morewithusestatements_fixnamespacecoding:
+    question: |
+        We *thought* we were done converting everything to have a
+        namespace, but now we're stuck on this error!
+    question_steps:
+        - Reload the page to see the error
+        - Find the bug and squash it!
+    step: more-with-use-statements-fix-invalid-namespace
+    files:
+        src/Model/Planet/GasPlanet.php: ~
+        index.php:
+            read_only: true
+        src/Model/Planet/SolidPlanet.php:
+            read_only: true
+        src/Model/Planet/RandomlyColoredPlanet.php:
+            read_only: true
+        src/Service/PlanetRenderer.php:
+            read_only: true
+        src/Model/Planet/PlanetInterface.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        assert_namespace:
+            type: php
+            assertTrue: class_exists('\\Model\\Planet\\GasPlanet')
+            failure: A namespace of the `GasPlanet` class should match the directory structure.
 
 # namespaces-core-php-classes
 
