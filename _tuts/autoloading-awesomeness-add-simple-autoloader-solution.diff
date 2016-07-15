@@ -1,0 +1,19 @@
+diff --git a/index.php b/index.php
+index 4781c08..a56751e 100644
+--- a/index.php
++++ b/index.php
+@@ -1,8 +1,13 @@
+ <?php
+ 
++spl_autoload_register(function ($class) {
++    if ($class === 'Model\Planet\RandomlyColoredPlanet') {
++        require __DIR__ . '/RandomlyColoredPlanet.php';
++    }
++});
++
+ require __DIR__ . '/PlanetRenderer.php';
+ require __DIR__ . '/PlanetInterface.php';
+-require __DIR__ . '/RandomlyColoredPlanet.php';
+ 
+ use Model\Planet\RandomlyColoredPlanet;
+ use Service\PlanetRenderer;

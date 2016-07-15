@@ -186,6 +186,16 @@
             "description": null
         },
         {
+            "id": "autoloading-awesomeness-add-simple-autoloader",
+            "name": "Autoloading awesomeness: Add simple autoloader",
+            "description": null
+        },
+        {
+            "id": "autoloading-awesomeness-add-simple-autoloader-solution",
+            "name": "Autoloading awesomeness: Add simple autoloader [Solution]",
+            "description": null
+        },
+        {
             "id": "arrayaccess-implement-arrayaccess",
             "name": "ArrayAccess: Implement ArrayAccess",
             "description": null
@@ -196,5 +206,5 @@
             "description": null
         }
     ],
-    "sha": "f134cce8288fb93dd0d8341ea5b9135dfb6c457e"
+    "sha": "fa424ae44cf030f4ea4d0c8c1c0fd17a08a17982"
 }
