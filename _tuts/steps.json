@@ -216,6 +216,16 @@
             "description": null
         },
         {
+            "id": "namespaces-core-php-classes-use-planet-day-length",
+            "name": "Namespaces core PHP classes: Use planet day length",
+            "description": null
+        },
+        {
+            "id": "namespaces-core-php-classes-use-planet-day-length-solution",
+            "name": "Namespaces core PHP classes: Use planet day length [Solution]",
+            "description": null
+        },
+        {
             "id": "arrayaccess-implement-arrayaccess",
             "name": "ArrayAccess: Implement ArrayAccess",
             "description": null
@@ -226,5 +236,5 @@
             "description": null
         }
     ],
-    "sha": "db47260b37d6897168896e948d9d54af4df66e3d"
+    "sha": "66293cb0ff2ac3bea29148857085401c1c20d5c9"
 }
