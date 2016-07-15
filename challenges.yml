@@ -1345,28 +1345,40 @@ namespacesmakeclassnameslonger_namespaceusagemc:
             correct: b
 
 # autoloading-awesomeness
-arrayaccess_coding:
+autoloadingawesomeness_addautoloadercoding:
     question: |
         These `require` statements are *really* starting to cramp
         my style! Start simple:
     question_steps:
-        - Remove the `require` statement for `RandomlySizedPlanet.php`.
-        - Add an autoloader function (spl_autoload_register) at the top of `index.php`.
-        - Inside that function, if the class equals `RandomlySizedPlanet`, require that file.
-        - |
-            Refresh to see everything working *without* the `require` statement!
-            Fill in the logic for each method so that we can
-            access the `$elements` property like an array.
-    step: autoloading-awesomeness-create-autoloader
+        - Remove the `require` statement for `RandomlyColoredPlanet.php`.
+        - Add an autoloader function (`spl_autoload_register`) at the top of `index.php`.
+        - Inside that function, if the class equals `RandomlyColoredPlanet`, require that file.
+        - Refresh to see everything working *without* the `require` statement!
+    step: autoloading-awesomeness-add-simple-autoloader
     files:
-        metor.php: ~
-        Meteoroid.php: ~
+        index.php: ~
+        RandomlyColoredPlanet.php:
+            read_only: true
+        PlanetInterface.php:
+            read_only: true
+        PlanetRenderer.php:
+            read_only: true
     features:
         editor: ~
-        browser:
-            default_uri: metor.php
-    grading: []
-#TODO Add files and grading!
+        browser: ~
+    grading:
+        search_for_function:
+            type: php
+            assertTrue: inputContains('index.php', 'spl_autoload_register')
+            failure: You should register your autoloader function with the `spl_autoload_register`.
+        search_for_if:
+            type: php
+            assertTrue: inputContains('index.php', 'if')
+            failure: You should require file only if a class name is equal to `Model\Planet\RandomlyColoredPlanet`.
+        search_for_file:
+            type: php
+            assertTrue: inputContains('index.php', 'RandomlyColoredPlanet.php')
+            failure: You should require the `RandomlyColoredPlanet.php` file inside a registered autoloader function.
 
 autoloadingawesomeness_betterperformancemc:
     question: |
