@@ -1498,6 +1498,99 @@ morewithusestatements_fixnamespacecoding:
             failure: A namespace of the `GasPlanet` class should match the directory structure.
 
 # namespaces-core-php-classes
+namespacescorephpclasses_addplanetdaylengthcoding:
+    question: |
+        The length of a day on Earth is 24 hours, but other planets have
+        *drastically* different day lengths! No problem! We've already
+        added a new property to `SolidPlanet` - `dayLengthInHours` - to
+        help control this.
+
+        Now, we want to be able to print *when* one day from now will
+        be for a specific planet.
+    question_steps:
+        - Add a new method to `SolidPlanet` called `getDateTimeOneDayFromNow()`.
+        - |
+            Inside, create a new `DateTime` object and add X hours to it,
+            where X is the value of the `dayLengthInHours` property. You can
+            use the commented-out `DateTime` code in `index.php` as a guide!
+        - |
+            In `index.php`, call the new `getDateTimeOneDayFromNow()` method
+            and set it to a variable called `$tomorrow` so that it will be
+            rendered in the `h3` tag.
+    step: namespaces-core-php-classes-use-planet-day-length
+    files:
+        index.php: ~
+        src/Model/Planet/SolidPlanet.php: ~
+        src/Service/PlanetRenderer.php:
+            read_only: true
+        src/Model/Planet/PlanetInterface.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        search_for_method:
+            type: php
+            assertTrue: reflection_class('\\Model\\Planet\\SolidPlanet').hasMethod('getDateTimeOneDayFromNow')
+            failure: You should add a `getDateTimeOneDayFromNow()` method to the `SolidPlanet`.
+        assert_datetime:
+            type: php
+            assertTrue: get_class(variable('planet').getDateTimeOneDayFromNow()) === 'DateTime'
+            failure: You should return a `DateTime` object in the `getDateTimeOneDayFromNow()` method.
+        search_for_method_usage:
+            type: php
+            assertTrue: inputContains('index.php', '->getDateTimeOneDayFromNow()')
+            failure: Did you use the `getDateTimeOneDayFromNow()` method in the `index.php`?
+
+namespacescorephpclasses_datetimemc:
+    question: |
+        Which of the following pieces of code would **not** work:
+    explanation: |
+        The best code is probably (A): `new \DateTime()`. This
+        wil *always* work, whether you're in a file with a namespace
+        or not.
+
+        If you simply say `new DateTime()`, this only *might* work.
+        If you're in a file whose namespace is `Foo`, then PHP thinks
+        you're referring to a class called `Foo\DateTime` (wrong!).
+        That's why adding the `\` in front is always best.
+
+        The final answer - with the `use DateTime` - looks a little
+        funky, but is also technically valid. A `use` statement always
+        anchors from the *root* of the namespace. In other words, even
+        though we type `use DateTime`, it means `use \DateTime`. So yes,
+        you actually *can* use `use` statements with core PHP classes.
+    features:
+        multiple_choice:
+            choices:
+                a: |
+                    ```php
+                    namespace Foo;
+
+                    new \DateTime();
+                    ```
+                b: |
+                    ```php
+                    // not in a namespaced file
+
+                    new DateTime();
+                    ```
+                c: |
+                    ```php
+                    namespace Foo;
+
+                    new DateTime();
+                    ```
+                d: |
+                    ```php
+                    namespace Foo;
+
+                    use DateTime;
+
+                    new DateTime();
+                    ```
+                e: These would all work!
+            correct: c
 
 # composer-autoloading
 
