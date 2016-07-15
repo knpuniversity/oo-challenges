@@ -196,6 +196,26 @@
             "description": null
         },
         {
+            "id": "more-with-use-statements-use-smart-autoloader",
+            "name": "More with use statements: Use smart autoloader",
+            "description": null
+        },
+        {
+            "id": "more-with-use-statements-use-smart-autoloader-solution",
+            "name": "More with use statements: Use smart autoloader [Solution]",
+            "description": null
+        },
+        {
+            "id": "more-with-use-statements-fix-invalid-namespace",
+            "name": "More with use statements: Fix invalid namespace",
+            "description": null
+        },
+        {
+            "id": "more-with-use-statements-fix-invalid-namespace-solution",
+            "name": "More with use statements: Fix invalid namespace [Solution]",
+            "description": null
+        },
+        {
             "id": "arrayaccess-implement-arrayaccess",
             "name": "ArrayAccess: Implement ArrayAccess",
             "description": null
@@ -206,5 +226,5 @@
             "description": null
         }
     ],
-    "sha": "fa424ae44cf030f4ea4d0c8c1c0fd17a08a17982"
+    "sha": "db47260b37d6897168896e948d9d54af4df66e3d"
 }

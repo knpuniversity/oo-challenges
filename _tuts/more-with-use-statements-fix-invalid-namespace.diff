@@ -1,0 +1,12 @@
+diff --git a/src/Model/Planet/GasPlanet.php b/src/Model/Planet/GasPlanet.php
+index 5265fca..fa7ed8c 100644
+--- a/src/Model/Planet/GasPlanet.php
++++ b/src/Model/Planet/GasPlanet.php
+@@ -1,6 +1,6 @@
+ <?php
+ 
+-namespace Model\Planet;
++namespace Model;
+ 
+ class GasPlanet implements PlanetInterface
+ {

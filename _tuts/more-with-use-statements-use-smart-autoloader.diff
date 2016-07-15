@@ -1,0 +1,72 @@
+diff --git a/index.php b/index.php
+index a56751e..87872bf 100644
+--- a/index.php
++++ b/index.php
+@@ -1,18 +1,22 @@
+ <?php
+ 
+ spl_autoload_register(function ($class) {
+-    if ($class === 'Model\Planet\RandomlyColoredPlanet') {
+-        require __DIR__ . '/RandomlyColoredPlanet.php';
+-    }
++    require __DIR__ . '/src/' . str_replace('\\', '/', $class) . '.php';
+ });
+ 
+-require __DIR__ . '/PlanetRenderer.php';
+-require __DIR__ . '/PlanetInterface.php';
++require __DIR__ . '/src/Service/PlanetRenderer.php';
++require __DIR__ . '/src/Model/Planet/PlanetInterface.php';
++require __DIR__ . '/src/Model/Planet/GasPlanet.php';
++require __DIR__ . '/src/Model/Planet/SolidPlanet.php';
++require __DIR__ . '/src/Model/Planet/RandomlyColoredPlanet.php';
+ 
+-use Model\Planet\RandomlyColoredPlanet;
+ use Service\PlanetRenderer;
+ 
+-$planet = new RandomlyColoredPlanet('0969F9', 'F96909');
++$planet1 = new GasPlanet(GasPlanet::MATERIAL_AMMONIA, 49);
++$planet2 = new SolidPlanet(27, '353535');
++$planet3 = new RandomlyColoredPlanet('0969F9', 'F96909');
+ 
+ $renderer = new PlanetRenderer();
+-echo $renderer->render($planet);
++echo $renderer->render($planet1);
++echo $renderer->render($planet2);
++echo $renderer->render($planet3);
+diff --git a/AbstractPlanet.php b/src/Model/Planet/AbstractPlanet.php
+similarity index 100%
+rename from AbstractPlanet.php
+rename to src/Model/Planet/AbstractPlanet.php
+diff --git a/GasPlanet.php b/src/Model/Planet/GasPlanet.php
+similarity index 100%
+rename from GasPlanet.php
+rename to src/Model/Planet/GasPlanet.php
+diff --git a/PlanetInterface.php b/src/Model/Planet/PlanetInterface.php
+similarity index 100%
+rename from PlanetInterface.php
+rename to src/Model/Planet/PlanetInterface.php
+diff --git a/RandomlyColoredPlanet.php b/src/Model/Planet/RandomlyColoredPlanet.php
+similarity index 92%
+rename from RandomlyColoredPlanet.php
+rename to src/Model/Planet/RandomlyColoredPlanet.php
+index 989e691..9f887da 100644
+--- a/RandomlyColoredPlanet.php
++++ b/src/Model/Planet/RandomlyColoredPlanet.php
+@@ -1,9 +1,5 @@
+ <?php
+ 
+-namespace Model\Planet;
+-
+-use PlanetInterface;
+-
+ class RandomlyColoredPlanet implements PlanetInterface
+ {
+     private $color1;
+diff --git a/SolidPlanet.php b/src/Model/Planet/SolidPlanet.php
+similarity index 100%
+rename from SolidPlanet.php
+rename to src/Model/Planet/SolidPlanet.php
+diff --git a/PlanetRenderer.php b/src/Service/PlanetRenderer.php
+similarity index 100%
+rename from PlanetRenderer.php
+rename to src/Service/PlanetRenderer.php
