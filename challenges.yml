@@ -1114,7 +1114,7 @@ staticmethods_fixerrorscoding:
             assertTrue: inputContains('RandomlyColoredPlanet.php', '__construct($color1, $color2)')
             failure: There's one more typo with the second argument name in the constructor. Did you see it?
 
-staticmethods_mc:
+staticmethods_staticvsnonstaticmc:
     question: |
         We're building a new class of planets that *always* have the
         same radius. We're in a heated (geeky) debate over whether or
@@ -1182,6 +1182,167 @@ staticmethods_mc:
             correct: a
 
 # namespaces-make-class-names-longer
+namespacesmakeclassnameslonger_addnamespacecoding:
+    question: |
+        Since we *love* long class names, so we're going to start giving
+        our classes namespaces?
+
+        (But seriously, I'll show you why namespaces are *actually* awesome soon).
+    question_steps:
+        - Give `RandomlyColoredPlanet` a namespace of `Model\Planet`
+        - |
+          **Without** using a `use` statement, update `index.php` so
+          that everything still works.
+    step: namespaces-make-class-names-longer-add-namespace
+    files:
+        index.php: ~
+        RandomlyColoredPlanet.php: ~
+        PlanetInterface.php:
+            read_only: true
+        PlanetRenderer.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        assert_namespace:
+            type: php
+            assertTrue: class_exists('Model\\Planet\\RandomlyColoredPlanet')
+            failure: You should add `Model\Planet` namespace for the `RandomlyColoredPlanet` class.
+        check_fqcn_usage:
+            type: php
+            assertTrue: inputContains('index.php', 'Model\\Planet\\RandomlyColoredPlanet')
+            failure: Did you use the fully qualified class name `Model\Planet\RandomlyColoredPlanet` in the `index.php`?
+        search_for_use:
+            type: php
+            assertFalse: inputContains('index.php', 'use ')
+            failure: You shouldn't add a `use` statement to complete this challenge.
+
+namespacesmakeclassnameslonger_usenamespacecoding:
+    question: |
+        Even though we don't *need* to use `use` statements, we almost
+        always do.
+    question_steps:
+        - Update `index.php` to use a `use` statement for the `RandomlyColoredPlanet` class.
+    step: namespaces-make-class-names-longer-add-use-statement
+    files:
+        index.php: ~
+        RandomlyColoredPlanet.php:
+            read_only: true
+        PlanetInterface.php:
+            read_only: true
+        PlanetRenderer.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        search_for_use_with_slash:
+            type: php
+            assertFalse: inputContains('index.php', 'use \\Model\\Planet\\RandomlyColoredPlanet;')
+            failure: You don't have to use a start slash `\` when use a namespace. Let's remove it!
+        search_for_use_without_slash:
+            type: php
+            assertTrue: inputContains('index.php', 'use Model\\Planet\\RandomlyColoredPlanet;')
+            failure: You should add a `use` statement for `RandomlyColoredPlanet` class namespace.
+        search_for_use:
+            type: php
+            assertTrue: inputContains('index.php', 'new RandomlyColoredPlanet')
+            failure: You don't have to use a full namespace when add it with a use statement - just use `new RandomlyColoredPlanet`.
+
+namespacesmakeclassnameslonger_useonemorenamespacecoding:
+    question: |
+        Since you're feeling pretty comfortable with namespaces, you
+        decide to delegate the rest of the work to the intern. Nice
+        management move!
+
+        But, when you get the code back, things aren't *quite* right.
+    question_steps:
+        - Load the page to see the error
+        - Find the problem and fix it!
+    step: namespaces-make-class-names-longer-add-namespace-to-the-planetrenderer
+    files:
+        index.php: ~
+        RandomlyColoredPlanet.php:
+            read_only: true
+        PlanetInterface.php:
+            read_only: true
+        PlanetRenderer.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        search_for_use_with_slash:
+            type: php
+            assertFalse: inputContains('index.php', 'use \\Service\\PlanetRenderer;')
+            failure: You don't have to use a start slash `\` when use a namespace. Let's remove it!
+        search_for_use_without_slash:
+            type: php
+            assertTrue: inputContains('index.php', 'use Service\\PlanetRenderer;')
+            failure: You should add a `use` statement for `PlanetRenderer` class namespace.
+        search_for_use:
+            type: php
+            assertTrue: inputContains('index.php', 'new PlanetRenderer')
+            failure: You don't have to use a full namespace when add it with a use statement - just use `new PlanetRenderer`.
+
+namespacesmakeclassnameslonger_namespaceusagemc:
+    question: |
+        Look at the following class:
+
+        ```php
+        namespace Model\Planet.
+
+        class RandomlyColoredPlanet
+        {
+            // ...
+        }
+        ```
+
+        Which of the following is *not* a valid way to reference
+        this class from inside `index.php`:
+    explanation: |
+        Trick question! Well, sort of :).
+
+        One of the most common errors with `use` statements is
+        to forget that you need to include the namespace *and* the
+        class name:
+
+        ```php
+        use Model\Planet; // wrong
+        use Model\Planet\RandomlyColoredPlanet; // correct!
+
+        new RandomlyColoredPlanet();
+        ```
+
+        This is because PHP sees `RandomlyColoredPlanet` and looks
+        for a `use` statement that *ends* with this string.
+
+        If you *do* forget the last part of the `use` statement
+        (e.g. `use Model\Planet`), you can technically get your
+        code to work by saying `new Planet\RandomlyColoredPlanet()`.
+        This is pretty rare to see in the wild.
+    features:
+        multiple_choice:
+            choices:
+                a: |
+                    ```php
+                    new Model\Planet\RandomlyColoredPlanet();
+                    ```
+                b: |
+                    ```php
+                    use Model\Planet;
+
+                    new RandomlyColoredPlanet();
+                    ```
+                c: |
+                    ```php
+                    use Model\Planet;
+
+                    new Planet\RandomlyColoredPlanet();
+                    ```
+                d: All of these are correct!
+            correct: b
 
 # autoloading-awesomeness
 arrayaccess_coding:
