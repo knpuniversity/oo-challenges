@@ -39,6 +39,14 @@ index cce8bbe..193e459 100644
 +        unset($this->elements[$offset]);
 +    }
  }
+diff --git a/README.md b/README.md
+index 1f93e7f..f02711c 100644
+--- a/README.md
++++ b/README.md
+@@ -1,2 +1,3 @@
+ # oo-challenges
++
+ Challenges for the OOP Series
 diff --git a/metor.php b/metor.php
 index 65a107d..7eb2983 100644
 --- a/metor.php

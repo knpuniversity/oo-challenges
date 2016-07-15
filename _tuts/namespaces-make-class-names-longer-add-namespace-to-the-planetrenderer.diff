@@ -1,0 +1,14 @@
+diff --git a/PlanetRenderer.php b/PlanetRenderer.php
+index f8bcf68..12a5a3d 100644
+--- a/PlanetRenderer.php
++++ b/PlanetRenderer.php
+@@ -1,5 +1,9 @@
+ <?php
+ 
++namespace Service;
++
++use PlanetInterface;
++
+ class PlanetRenderer
+ {
+     public function render(PlanetInterface $planet)

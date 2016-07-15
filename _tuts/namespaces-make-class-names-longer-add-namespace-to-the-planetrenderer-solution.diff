@@ -1,0 +1,12 @@
+diff --git a/index.php b/index.php
+index 6029a30..4781c08 100644
+--- a/index.php
++++ b/index.php
+@@ -5,6 +5,7 @@ require __DIR__ . '/PlanetInterface.php';
+ require __DIR__ . '/RandomlyColoredPlanet.php';
+ 
+ use Model\Planet\RandomlyColoredPlanet;
++use Service\PlanetRenderer;
+ 
+ $planet = new RandomlyColoredPlanet('0969F9', 'F96909');
+ 

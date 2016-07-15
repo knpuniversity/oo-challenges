@@ -156,6 +156,36 @@
             "description": null
         },
         {
+            "id": "namespaces-make-class-names-longer-add-namespace",
+            "name": "Namespaces make class names longer: Add namespace",
+            "description": null
+        },
+        {
+            "id": "namespaces-make-class-names-longer-add-namespace-solution",
+            "name": "Namespaces make class names longer: Add namespace [Solution]",
+            "description": null
+        },
+        {
+            "id": "namespaces-make-class-names-longer-add-use-statement",
+            "name": "Namespaces make class names longer: Add use statement",
+            "description": null
+        },
+        {
+            "id": "namespaces-make-class-names-longer-add-use-statement-solution",
+            "name": "Namespaces make class names longer: Add use statement [Solution]",
+            "description": null
+        },
+        {
+            "id": "namespaces-make-class-names-longer-add-namespace-to-the-planetrenderer",
+            "name": "Namespaces make class names longer: Add namespace to the PlanetRenderer",
+            "description": null
+        },
+        {
+            "id": "namespaces-make-class-names-longer-add-namespace-to-the-planetrenderer-solution",
+            "name": "Namespaces make class names longer: Add namespace to the PlanetRenderer [Solution]",
+            "description": null
+        },
+        {
             "id": "arrayaccess-implement-arrayaccess",
             "name": "ArrayAccess: Implement ArrayAccess",
             "description": null
@@ -166,5 +196,5 @@
             "description": null
         }
     ],
-    "sha": "84830530ec5532e462327356223b9d1d6a8fe51b"
+    "sha": "f134cce8288fb93dd0d8341ea5b9135dfb6c457e"
 }

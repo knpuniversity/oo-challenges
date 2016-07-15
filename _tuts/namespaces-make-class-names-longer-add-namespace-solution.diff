@@ -1,0 +1,27 @@
+diff --git a/RandomlyColoredPlanet.php b/RandomlyColoredPlanet.php
+index 9f887da..989e691 100644
+--- a/RandomlyColoredPlanet.php
++++ b/RandomlyColoredPlanet.php
+@@ -1,5 +1,9 @@
+ <?php
+ 
++namespace Model\Planet;
++
++use PlanetInterface;
++
+ class RandomlyColoredPlanet implements PlanetInterface
+ {
+     private $color1;
+diff --git a/index.php b/index.php
+index 6783b91..34df129 100644
+--- a/index.php
++++ b/index.php
+@@ -4,7 +4,7 @@ require __DIR__ . '/PlanetRenderer.php';
+ require __DIR__ . '/PlanetInterface.php';
+ require __DIR__ . '/RandomlyColoredPlanet.php';
+ 
+-$planet = new RandomlyColoredPlanet('0969F9', 'F96909');
++$planet = new \Model\Planet\RandomlyColoredPlanet('0969F9', 'F96909');
+ 
+ $renderer = new PlanetRenderer();
+ echo $renderer->render($planet);
