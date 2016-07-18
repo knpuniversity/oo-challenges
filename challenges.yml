@@ -823,26 +823,26 @@ classconstants_replacestringswithconstantscoding:
                 and inputContains('GasPlanet.php', '::MATERIAL_HYDROGEN')
                 and inputContains('GasPlanet.php', '::MATERIAL_HELIUM')
                 and inputContains('GasPlanet.php', '::MATERIAL_METHANE')
-            failure: Replace all hardcoded strings with new `MATERIAL_*` constants in the `GasPlanet` class.
+            failure: Replace all hardcoded strings with the new `MATERIAL_*` constants in the `GasPlanet` class.
         check_constant_usage_2:
             type: php
             assertTrue: |
                 true
                 and inputContains('index.php', 'GasPlanet::MATERIAL_AMMONIA')
                 and inputContains('index.php', 'GasPlanet::MATERIAL_METHANE')
-            failure: Replace hardcoded strings with new `MATERIAL_AMMONIA` and `MATERIAL_METHANE` constants in the `input.php`.
+            failure: Replace the hardcoded strings with the new `MATERIAL_AMMONIA` and `MATERIAL_METHANE` constants in the `index.php`.
 
 classconstants_uppercaseconstantsmc:
     question: Why are constants always upper-case (e.g. `MATERIAL_AMMONIA`)?
     explanation: |
         The upper-casing of constants is just a standard, but standards
-        are good to following! A constant is distinguished from a property
+        are good to follow! A constant is distinguished from a property
         by their keyword and the use of a `$`: `const PIZZA` versus `private $pizza`.
     features:
         multiple_choice:
             choices:
                 a: "It's just a standard: constants don't *need* to be upper-case"
-                b: The upper-case characters distinguishes them from normal properties
+                b: The upper-case characters distinguish them from normal properties
                 c: Upper-case class constants are used so that they don't conflict with core PHP constants
                 d: The upper-case characters help keep memory usage lower
             correct: a
@@ -996,7 +996,7 @@ staticvsnonstaticandself_staticpropertymc:
 
 staticvsnonstaticandself_useselfkeywordcoding:
     question: |
-        We're doing to much work by using the whole class name `GasPlanet`!
+        We're doing too much work by using the whole class name `GasPlanet`!
     question_steps:
         - Refactor `GasPlanet` to use `self` to reference the constants.
     step: static-vs-non-static-and-self-replace-class-name-with-self
@@ -1020,7 +1020,7 @@ staticvsnonstaticandself_useselfkeywordcoding:
                 and inputContains('GasPlanet.php', 'self::MATERIAL_HYDROGEN')
                 and inputContains('GasPlanet.php', 'self::MATERIAL_HELIUM')
                 and inputContains('GasPlanet.php', 'self::MATERIAL_METHANE')
-            failure: Replace all `GasPlanet::MATERIAL_*` with `self::MATERIAL_*` in the `GasPlanet` class.
+            failure: Replace all `GasPlanet::MATERIAL_*` code with `self::MATERIAL_*` in the `GasPlanet` class.
 
 # static-methods
 staticmethods_staticgetallelementscoding:
@@ -1055,7 +1055,7 @@ staticmethods_staticgetallelementscoding:
         search_for_method:
             type: php
             assertTrue: reflection_class('\GasPlanet').hasMethod('getAllElements')
-            failure: Did you add `getAllElements()` method in the `GasPlanet.php` class?
+            failure: Did you add the `getAllElements()` method to the `GasPlanet.php` class?
         assert_method_is_static:
             type: php
             assertTrue: reflection_class('\GasPlanet').getMethod('getAllElements').isStatic()
@@ -1063,11 +1063,11 @@ staticmethods_staticgetallelementscoding:
         search_for_method_call:
             type: php
             assertTrue: inputContains('index.php', 'GasPlanet::getAllElements()')
-            failure: Did you iterate over `GasPlanet::getAllElements()` static method in the `index.php`?
+            failure: Did you call and loop over the `GasPlanet::getAllElements()` method from inside `index.php`?
         search_for_foreach:
             type: php
             assertTrue: inputContains('index.php', 'foreach')
-            failure: Did you iterate all elements with a `foreach` loop in the `index.php`?
+            failure: Did you iterate over all elements with a `foreach` loop in `index.php`?
         search_for_new_object:
             type: php
             assertTrue: inputContains('index.php', 'new GasPlanet')
@@ -1077,7 +1077,7 @@ staticmethods_fixerrorscoding:
     question: |
         You take *one* day for a holiday, and the intern experimented
         in the code and broke things! Now that you're back, well-rested
-        and with a nice tan, see if you can get the code working again.
+        and with a nice tan. See if you can get the code working again.
     question_steps:
         - Render the page to see what the error is
         - Find the bug and squash it!
@@ -1108,7 +1108,7 @@ staticmethods_fixerrorscoding:
         check_method_call_with_this:
             type: php
             assertFalse: inputContains('RandomlyColoredPlanet.php', 'self::getRandomColor')
-            failure: You can call non-static `getRandomColor()` method with `self::`, but let's use `$this->` instead.
+            failure: You can call *technically* call the non-static `getRandomColor()` method with `self::`, but it's improper. Use `$this->` instead.
         check_argument_name:
             type: php
             assertTrue: inputContains('RandomlyColoredPlanet.php', '__construct($color1, $color2)')
@@ -1159,7 +1159,7 @@ staticmethods_staticvsnonstaticmc:
         > individual "planet" object or on the StaticallySizedPlanet
         > class in general?
 
-        In those case, both sound pretty reasonable: so both static
+        In this case, both sound pretty reasonable: so both static
         and non-static are *good* answers. However, if you're ever
         not sure - or both options make sense - choose non-static.
         Put simply: this will give you more flexibility in the future.
@@ -1184,8 +1184,8 @@ staticmethods_staticvsnonstaticmc:
 # namespaces-make-class-names-longer
 namespacesmakeclassnameslonger_addnamespacecoding:
     question: |
-        Since we *love* long class names, so we're going to start giving
-        our classes namespaces?
+        Since we *love* long class names, we're going to start giving
+        our classes namespaces!
 
         (But seriously, I'll show you why namespaces are *actually* awesome soon).
     question_steps:
@@ -1208,7 +1208,7 @@ namespacesmakeclassnameslonger_addnamespacecoding:
         assert_namespace:
             type: php
             assertTrue: class_exists('Model\\Planet\\RandomlyColoredPlanet')
-            failure: You should add `Model\Planet` namespace for the `RandomlyColoredPlanet` class.
+            failure: You should add the `Model\Planet` namespace to the `RandomlyColoredPlanet` class.
         check_fqcn_usage:
             type: php
             assertTrue: inputContains('index.php', 'Model\\Planet\\RandomlyColoredPlanet')
@@ -1216,7 +1216,7 @@ namespacesmakeclassnameslonger_addnamespacecoding:
         search_for_use:
             type: php
             assertFalse: inputContains('index.php', 'use ')
-            failure: You shouldn't add a `use` statement to complete this challenge.
+            failure: "You shouldn't add a `use` statement to complete this challenge. It's legal, but try getting the code to work without it!"
 
 namespacesmakeclassnameslonger_usenamespacecoding:
     question: |
@@ -1240,15 +1240,15 @@ namespacesmakeclassnameslonger_usenamespacecoding:
         search_for_use_with_slash:
             type: php
             assertFalse: inputContains('index.php', 'use \\Model\\Planet\\RandomlyColoredPlanet;')
-            failure: You don't have to use a start slash `\` when use a namespace. Let's remove it!
+            failure: You don't have to use a starting slash `\` when using a namespace. Let's remove it!
         search_for_use_without_slash:
             type: php
             assertTrue: inputContains('index.php', 'use Model\\Planet\\RandomlyColoredPlanet;')
-            failure: You should add a `use` statement for `RandomlyColoredPlanet` class namespace.
+            failure: You should add a `use` statement for the `RandomlyColoredPlanet` class namespace in `index.php`.
         search_for_use:
             type: php
             assertTrue: inputContains('index.php', 'new RandomlyColoredPlanet')
-            failure: You don't have to use a full namespace when add it with a use statement - just use `new RandomlyColoredPlanet`.
+            failure: You don't have to use the full namespace to reference the class after you add the `use` statement - just say `new RandomlyColoredPlanet()`.
 
 namespacesmakeclassnameslonger_useonemorenamespacecoding:
     question: |
@@ -1276,15 +1276,15 @@ namespacesmakeclassnameslonger_useonemorenamespacecoding:
         search_for_use_with_slash:
             type: php
             assertFalse: inputContains('index.php', 'use \\Service\\PlanetRenderer;')
-            failure: You don't have to use a start slash `\` when use a namespace. Let's remove it!
+            failure: You don't have to use a starting slash `\` when using a namespace. Let's remove it!
         search_for_use_without_slash:
             type: php
             assertTrue: inputContains('index.php', 'use Service\\PlanetRenderer;')
-            failure: You should add a `use` statement for `PlanetRenderer` class namespace.
+            failure: You should add a `use` statement for the `PlanetRenderer` class.
         search_for_use:
             type: php
             assertTrue: inputContains('index.php', 'new PlanetRenderer')
-            failure: You don't have to use a full namespace when add it with a use statement - just use `new PlanetRenderer`.
+            failure: You don't have to use the full namespace to reference the class after you add the `use` statement - just say `new PlanetRenderer()`.
 
 namespacesmakeclassnameslonger_namespaceusagemc:
     question: |
