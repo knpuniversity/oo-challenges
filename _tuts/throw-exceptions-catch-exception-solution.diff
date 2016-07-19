@@ -1,0 +1,15 @@
+diff --git a/index.php b/index.php
+index b0da681..f48bf39 100644
+--- a/index.php
++++ b/index.php
+@@ -13,5 +13,9 @@ $planets = [
+     new GasPlanet(GasPlanet::MATERIAL_HYDROGEN, 63),
+ ];
+ foreach ($planets as $planet) {
+-    echo $renderer->render($planet);
++    try {
++        echo $renderer->render($planet);
++    } catch (\Exception $e) {
++        echo $e->getMessage();
++    }
+ }

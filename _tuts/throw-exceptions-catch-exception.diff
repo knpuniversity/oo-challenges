@@ -1,0 +1,43 @@
+diff --git a/index.php b/index.php
+index ca1c2bc..b0da681 100644
+--- a/index.php
++++ b/index.php
+@@ -5,7 +5,13 @@ require __DIR__ . '/vendor/autoload.php';
+ use Model\Planet\GasPlanet;
+ use Service\PlanetRenderer;
+ 
+-$planet = new GasPlanet('gold', 88);
+-
+ $renderer = new PlanetRenderer();
+-echo $renderer->render($planet);
++
++$planets = [
++    new GasPlanet(GasPlanet::MATERIAL_AMMONIA, 47),
++    new GasPlanet(GasPlanet::MATERIAL_HELIUM, -56),
++    new GasPlanet(GasPlanet::MATERIAL_HYDROGEN, 63),
++];
++foreach ($planets as $planet) {
++    echo $renderer->render($planet);
++}
+diff --git a/src/Service/PlanetRenderer.php b/src/Service/PlanetRenderer.php
+index 3142ec1..9ad59f6 100644
+--- a/src/Service/PlanetRenderer.php
++++ b/src/Service/PlanetRenderer.php
+@@ -8,6 +8,16 @@ class PlanetRenderer
+ {
+     public function render(PlanetInterface $planet)
+     {
+-        return \LegacyHelper::createPlanetMarkup($planet->getRadius(), $planet->getHexColor());
++        if (0 >= $planet->getRadius()) {
++            throw new \Exception('The radius of a planet should be greater than 0!');
++        }
++
++        return sprintf(
++            '<div style="width: %spx; height: %spx; border-radius: %spx; background-color: #%s;"></div>',
++            $planet->getRadius() * 2,
++            $planet->getRadius() * 2,
++            $planet->getRadius(),
++            $planet->getHexColor()
++        );
+     }
+ }

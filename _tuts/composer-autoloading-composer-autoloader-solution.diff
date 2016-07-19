@@ -1,0 +1,25 @@
+diff --git a/composer.json b/composer.json
+new file mode 100644
+index 0000000..d12ddac
+--- /dev/null
++++ b/composer.json
+@@ -0,0 +1,5 @@
++{
++    "autoload": {
++        "psr-0": { "": "src/" }
++    }
++}
+diff --git a/index.php b/index.php
+index a4e940b..4ad1d48 100644
+--- a/index.php
++++ b/index.php
+@@ -1,8 +1,6 @@
+ <?php
+ 
+-spl_autoload_register(function ($class) {
+-    require __DIR__ . '/src/' . str_replace('\\', '/', $class) . '.php';
+-});
++require __DIR__ . '/vendor/autoload.php';
+ 
+ use Model\Planet\SolidPlanet;
+ 

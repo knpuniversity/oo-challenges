@@ -226,6 +226,46 @@
             "description": null
         },
         {
+            "id": "composer-autoloading-composer-autoloader",
+            "name": "Composer autoloading: Composer autoloader",
+            "description": null
+        },
+        {
+            "id": "composer-autoloading-composer-autoloader-solution",
+            "name": "Composer autoloading: Composer autoloader [Solution]",
+            "description": null
+        },
+        {
+            "id": "composer-autoloading-autoload-legacy-code",
+            "name": "Composer autoloading: Autoload legacy code",
+            "description": null
+        },
+        {
+            "id": "composer-autoloading-autoload-legacy-code-solution",
+            "name": "Composer autoloading: Autoload legacy code [Solution]",
+            "description": null
+        },
+        {
+            "id": "throw-exceptions-validate-element",
+            "name": "Throw exceptions: Validate element",
+            "description": null
+        },
+        {
+            "id": "throw-exceptions-validate-element-solution",
+            "name": "Throw exceptions: Validate element [Solution]",
+            "description": null
+        },
+        {
+            "id": "throw-exceptions-catch-exception",
+            "name": "Throw exceptions: Catch exception",
+            "description": null
+        },
+        {
+            "id": "throw-exceptions-catch-exception-solution",
+            "name": "Throw exceptions: Catch exception [Solution]",
+            "description": null
+        },
+        {
             "id": "arrayaccess-implement-arrayaccess",
             "name": "ArrayAccess: Implement ArrayAccess",
             "description": null
@@ -236,5 +276,5 @@
             "description": null
         }
     ],
-    "sha": "66293cb0ff2ac3bea29148857085401c1c20d5c9"
+    "sha": "918a100064b511deec57268084f2fd3b207aec78"
 }

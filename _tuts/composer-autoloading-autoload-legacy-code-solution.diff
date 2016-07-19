@@ -1,0 +1,11 @@
+diff --git a/composer.json b/composer.json
+index d12ddac..4f3f14a 100644
+--- a/composer.json
++++ b/composer.json
+@@ -1,5 +1,5 @@
+ {
+     "autoload": {
+-        "psr-0": { "": "src/" }
++        "psr-0": { "": ["src/", "includes/"] }
+     }
+ }

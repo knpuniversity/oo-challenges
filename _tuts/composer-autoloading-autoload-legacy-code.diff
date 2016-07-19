@@ -1,0 +1,60 @@
+diff --git a/includes/LegacyHelper.php b/includes/LegacyHelper.php
+new file mode 100644
+index 0000000..5f2f49f
+--- /dev/null
++++ b/includes/LegacyHelper.php
+@@ -0,0 +1,15 @@
++<?php
++
++class LegacyHelper
++{
++    public static function createPlanetMarkup($radius, $hexColor)
++    {
++        return sprintf(
++            '<div style="width: %spx; height: %spx; border-radius: %spx; background-color: #%s;"></div>',
++            $radius * 2,
++            $radius * 2,
++            $radius,
++            $hexColor
++        );
++    }
++}
+diff --git a/index.php b/index.php
+index 4ad1d48..29da82a 100644
+--- a/index.php
++++ b/index.php
+@@ -3,13 +3,9 @@
+ require __DIR__ . '/vendor/autoload.php';
+ 
+ use Model\Planet\SolidPlanet;
++use Service\PlanetRenderer;
+ 
+ $planet = new SolidPlanet(100, 'ff00ff', 12);
+-$tomorrow = $planet->getDateTimeOneDayFromNow();
+ 
+-?>
+-
+-<h3>
+-    1 day from now:
+-    <?php echo $tomorrow->format('Y-m-d H:i:s'); ?>
+-</h3>
++$renderer = new PlanetRenderer();
++echo $renderer->render($planet);
+diff --git a/src/Service/PlanetRenderer.php b/src/Service/PlanetRenderer.php
+index 4b96de6..3142ec1 100644
+--- a/src/Service/PlanetRenderer.php
++++ b/src/Service/PlanetRenderer.php
+@@ -8,12 +8,6 @@ class PlanetRenderer
+ {
+     public function render(PlanetInterface $planet)
+     {
+-        return sprintf(
+-            '<div style="width: %spx; height: %spx; border-radius: %spx; background-color: #%s;"></div>',
+-            $planet->getRadius() * 2,
+-            $planet->getRadius() * 2,
+-            $planet->getRadius(),
+-            $planet->getHexColor()
+-        );
++        return \LegacyHelper::createPlanetMarkup($planet->getRadius(), $planet->getHexColor());
+     }
+ }

@@ -1,0 +1,30 @@
+diff --git a/index.php b/index.php
+index 29da82a..a49c9d2 100644
+--- a/index.php
++++ b/index.php
+@@ -2,10 +2,10 @@
+ 
+ require __DIR__ . '/vendor/autoload.php';
+ 
+-use Model\Planet\SolidPlanet;
++use Model\Planet\GasPlanet;
+ use Service\PlanetRenderer;
+ 
+-$planet = new SolidPlanet(100, 'ff00ff', 12);
++$planet = new GasPlanet(GasPlanet::MATERIAL_METHANE, 88);
+ 
+ $renderer = new PlanetRenderer();
+ echo $renderer->render($planet);
+diff --git a/src/Model/Planet/GasPlanet.php b/src/Model/Planet/GasPlanet.php
+index 5265fca..dce3a0e 100644
+--- a/src/Model/Planet/GasPlanet.php
++++ b/src/Model/Planet/GasPlanet.php
+@@ -45,8 +45,6 @@ class GasPlanet implements PlanetInterface
+                 return 'FFFF66';
+             case self::MATERIAL_METHANE:
+                 return '0066FF';
+-            default:
+-                return '464646';
+         }
+     }
+ }
