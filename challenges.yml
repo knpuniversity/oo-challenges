@@ -1825,6 +1825,119 @@ throwexceptions_throwexceptiontmc:
             correct: a
 
 # exception-classes
+exceptionclasses_catchcertainexceptionmc:
+    question: |
+        We've improved the `PlanetRenderer` to throw an exception if
+        a planet has no hex color. Rejoice!
+
+        ```php
+        // ...
+
+        class PlanetRenderer
+        {
+            public function render(PlanetInterface $planet)
+            {
+                if ($planet->getRadius() < 0) {
+                    throw new \Exception('Invalid radius!');
+                }
+
+                if (!$planet->getHexColor()) {
+                    throw new \Exception('Missing hex color');
+                }
+            }
+        }
+        ```
+
+        Can you use a `try-catch` block to *only* catch the
+        "Invalid radius!" exception?
+    explanation: |
+        Answer (A) is just ridiculous - that's *not* real code :).
+
+        You can catch different exception *classes*, but if 2 situations
+        both throw the *same* exception class, then it's basically
+        *not* possible to catch one exception, but not the other
+        (besides checking the exception message... which you should
+        *not* do - someone will eventually update that exception message
+        and break your code).
+
+        This is why it's sometimes important to throw different exception
+        classes in different situations. Let's try that in the next challenge...
+    features:
+        multiple_choice:
+            choices:
+                a: |
+                    Yes! Just mark that you want to catch the `(first)`
+                    exception only:
+
+                    ```php
+                    try {
+                        echo $renderer->render($planet);
+                    } catch (\Exception (first) $e) {
+                        // here!
+                    }
+                    ```
+
+                b: |
+                    No. Well, only by checking the exception message,
+                    which is really ugly and error-prone;
+
+                    ```php
+                    try {
+                        echo $renderer->render($planet);
+                    } catch (\Exception $e) {
+                        if ($e->getMessage() == 'Invalid radius!') {
+                            // here!
+                        }
+                    }
+                    ```
+            correct: b
+
+exceptionclasses_throwcustomexceptionscoding:
+    question: |
+        Oh yea! We just made the `PlanetRenderer` even smarter! By
+        creating our *own* 2 exception classes (yep, this is legal!),
+        we are throwing a different exception when the radius is negative
+        versus when the hex color is missing.
+    question_steps:
+        - Update `index.php` to *only* catch the `InvalidRadiusException`
+        - |
+            Add a *second* `catch` after the first `catch` (yes, this is
+            possible!) that will catch the `MissingHexException`. If this
+            happens, print the message "Planet has no color".
+        - Reload the page to see it all working!
+    step: exception-classes-throw-custom-exceptions
+    files:
+        index.php: ~
+        src/Exception/InvalidRadiusException.php:
+            read_only: true
+        src/Exception/MissingHexException.php:
+            read_only: true
+        src/Model/Planet/GasPlanet.php:
+            read_only: true
+        src/Service/PlanetRenderer.php:
+            read_only: true
+        src/Model/Planet/PlanetInterface.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        search_exception_1:
+            type: php
+            assertTrue: inputContains('index.php', 'Exception\InvalidRadiusException')
+            failure: Did you catch an `InvalidRadiusException` exception?
+        search_exception_2:
+            type: php
+            assertTrue: inputContains('index.php', 'Exception\MissingHexException')
+            failure: Did you catch a `MissingHexException` exception?
+        search_for_message_1:
+            type: http
+            assertTrue: body() matches '/greater than 0/'
+            failure: Did you print a message of `InvalidRadiusException` exception in the output.
+        search_for_message_2:
+            type: http
+            assertTrue: body() matches '/Planet has no color/'
+            failure: Did you print a `Planet has no color` message when `MissingHexException` exception is thrown.
 
 # magic-methods
 
