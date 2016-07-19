@@ -1593,8 +1593,236 @@ namespacescorephpclasses_datetimemc:
             correct: c
 
 # composer-autoloading
+composerautoloading_composerautoloadercoding:
+    question: |
+        Ok! Let's use Composer's autoloader instead of our, home-grown
+        code. Yay to less code!
+    question_steps:
+        - Delete our `spl_autoload_register()` function
+        - |
+          Give `composer.json` the proper `autoload` section so
+          that it knows to find our classes in the `src/` directory
+        - |
+          Run `composer install` so that it generates the
+          `vendor/autoload.php` file
+        - |
+          Require `vendor/autoload.php` from `index.php` and make
+          sure everything still works!
+    step: composer-autoloading-composer-autoloader
+    files:
+        index.php: ~
+        composer.json: ~
+        src/Model/Planet/SolidPlanet.php:
+            read_only: true
+        src/Service/PlanetRenderer.php:
+            read_only: true
+        src/Model/Planet/PlanetInterface.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        pending:
+            type: php
+            assertTrue: 1 == 0
+            failure: This can only be done when we have the terminal ability
+        search_for_function:
+            type: php
+            assertFalse: inputContains('index.php', 'spl_autoload_register')
+            failure: You should remove your custom autoloader.
+        search_for_require:
+            type: php
+            assertTrue: inputContains('index.php', 'vendor/autoload.php')
+            failure: You should require a Composer autoloader.
+        search_for_text:
+            type: php
+            assertTrue: inputContains('composer.json', '"autoload"') and inputContains('composer.json', '"src/"')
+            failure: Did you add an `autoload` section which is looking to the `src/` directory in your `composer.json`?
+
+composerautoloading_autoloadlegacycodecoding:
+    question: |
+        Oh no, we have a problem! Pretend that we're updating an old,
+        ugly, legacy application. This code contains a class called
+        `LegacyHelper`, but it doesn't have a namespace and doesn't
+        live in the `src/` directory. This means that the Composer
+        autoloader can't find it! And since we're trying to use it
+        from inside `PlanetRenderer`, our code is broke!
+
+        This *should* be easy to fix (just move the file and give the
+        class a namespace), but we *can't* modify the class: it's still
+        being used by an old legacy application that we can't touch.
+        Dang!
+
+        No problem - the Composer autoloader can still help us!
+    question_steps:
+        - |
+          If you have some classes that do *not* follow the nice
+          PSR-0 naming standard, Composer *can* still autoload these.
+          Google for "Composer classmap" to find out how.
+        - |
+          Add the new `classmap` key in `composer.json` to
+          autoload all classes in the `include` directory.
+        - Run `composer install` again to update the autoloader.
+        - Refresh to see that we're using the new autoloading code!
+    step: composer-autoloading-autoload-legacy-code
+    files:
+        index.php: ~
+        composer.json: ~
+        includes/LegacyHelper.php:
+            read_only: true
+        src/Model/Planet/SolidPlanet.php:
+            read_only: true
+        src/Service/PlanetRenderer.php:
+            read_only: true
+        src/Model/Planet/PlanetInterface.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        pending:
+            type: php
+            assertTrue: 1 == 0
+            failure: This can only be done when we have the terminal ability
+        search_for_function:
+            type: php
+            assertFalse: inputContains('index.php', 'spl_autoload_register')
+            failure: Did you add your old custom autoloader back?
+        search_for_require:
+            type: php
+            assertTrue: inputContains('index.php', 'vendor/autoload.php')
+            failure: Did you remove requiring a Composer autoloader?
+        search_for_text:
+            type: php
+            assertTrue: inputContains('composer.json', '"autoload"') and inputContains('composer.json', '"src/"')
+            failure: Did you remove an `autoload` section which is looking to the `src/` directory from your `composer.json`?
+        search_for_require_legacy:
+            type: php
+            assertFalse: inputContains('index.php', 'LegacyHelper.php')
+            failure: Hey, use Composer autoloader to require `LegacyHelper.php`!
+        search_for_text_legacy:
+            type: php
+            assertTrue: inputContains('composer.json', '"autoload"') and inputContains('composer.json', '"includes/"')
+            failure: Did you add an `autoload` section which is looking to the `includes/` directory to your `composer.json`?
 
 # throw-exceptions
+throwexceptions_validateelementcoding:
+    question: |
+        When you create a `GasPlanet`, you now *must* pass in one of
+        the 4 valid elements. If you don't, `getHexColor()` will fail
+        to return a color and weird things will happen!
+
+        Let's not let that weirdness happen.
+    question_steps:
+        - |
+            In `GasPlanet::__construct()`, add an `if` statement to check
+            if the `$mainElement` argument is *not* one of the 4 valid values
+            (hint, you can use the `getAllElements()` methods to help)
+        - |
+            If it is *not* valid, throw a new `Exception` object with
+            the message: `This is not a valid element!`.
+        - |
+            In `index.php`, change the `$planet` variable to use am
+            invalid element - like `gold` (but wouldn't it be cool if
+            a planet were entirely gold!?).
+        - Refresh to see the error!
+    step: throw-exceptions-validate-element
+    files:
+        index.php: ~
+        src/Model/Planet/GasPlanet.php: ~
+        src/Service/PlanetRenderer.php:
+            read_only: true
+        src/Model/Planet/PlanetInterface.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        search_for_exception:
+            type: php
+            assertTrue: inputContains('src/Model/Planet/GasPlanet.php', 'Exception')
+            failure: You should throw an instance of `Exception` class from `GasPlanet::__construct()`.
+        assert_exception:
+            type: http
+            assertTrue: |
+                body() matches "/Fatal error: Uncaught exception 'Exception'/"
+            failure: You should throw an instance of `Exception` class.
+        search_for_message:
+            type: php
+            assertTrue: inputContains('src/Model/Planet/GasPlanet.php', 'This is not a valid element!')
+            failure: Check you throw exception with exactly `This is not a valid element!` message from `GasPlanet::__construct()`.
+        look_for_message:
+            type: http
+            assertTrue: body() matches '/with message 'This is not a valid element!'/'
+            failure: Check your exception message - it should be exactly `This is not a valid element!`.
+
+throwexceptions_catchexceptioncoding:
+    question: |
+        We've been having a problem with people creating planet objects
+        with a *negative* radius. At least as far as we humans understand
+        things like gravity and the space-time continuum, that's crazy!
+
+        To help, we've made the PlanetRenderer smarter: if a planet has
+        a negative radius, it will throw an exception. Currently, one
+        of our 3 planets is causing this exception to be thrown!
+
+        Instead of seeing this error, let's render a little error
+        message instead of the planet.
+    question_steps:
+        - |
+            In `index.php`, surround the line that may cause an exception
+            with a try-catch block
+        - |
+            If rendering a planet causes an `Exception` to be thrown,
+            just print this message: `Planet cannot be rendered`.
+    step: throw-exceptions-catch-exception
+    files:
+        index.php: ~
+        src/Model/Planet/GasPlanet.php:
+            read_only: true
+        src/Service/PlanetRenderer.php:
+            read_only: true
+        src/Model/Planet/PlanetInterface.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        search_for_try_catch:
+            type: php
+            assertTrue: inputContains('index.php', 'try') and inputContains('index.php', 'catch')
+            failure: Did you wrap the code which could throw an exception with a try-catch block?
+        search_exception:
+            type: http
+            assertFalse: |
+                body() matches "/Fatal error: Uncaught exception 'Exception'/"
+            failure: You should throw an instance of `Exception` class.
+        search_for_message:
+            type: http
+            assertTrue: body() matches '/greater than 0/'
+            failure: Did you print an exception message in the output.
+
+throwexceptions_throwexceptiontmc:
+    question: |
+        Is this code valid?
+
+        ```php
+        throw new \DateTime();
+        ```
+    explanation: |
+        Plain and simple: the Exception class is special: it is the
+        *only* class that you can `throw`. Well, actually, you can
+        throw an `Exception` object or any class that extends it.
+    features:
+        multiple_choice:
+            choices:
+                a: |
+                    No: you can only use `throw` with the `Exception` class
+                    or one of its sub-classes.
+                b: |
+                    Yes: you can use `throw` with any object to stop execution
+                    and show an error.
+            correct: a
 
 # exception-classes
 
