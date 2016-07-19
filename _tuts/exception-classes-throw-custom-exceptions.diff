@@ -1,0 +1,71 @@
+diff --git a/index.php b/index.php
+index f48bf39..5b71296 100644
+--- a/index.php
++++ b/index.php
+@@ -3,6 +3,7 @@
+ require __DIR__ . '/vendor/autoload.php';
+ 
+ use Model\Planet\GasPlanet;
++use Model\Planet\SolidPlanet;
+ use Service\PlanetRenderer;
+ 
+ $renderer = new PlanetRenderer();
+@@ -11,6 +12,7 @@ $planets = [
+     new GasPlanet(GasPlanet::MATERIAL_AMMONIA, 47),
+     new GasPlanet(GasPlanet::MATERIAL_HELIUM, -56),
+     new GasPlanet(GasPlanet::MATERIAL_HYDROGEN, 63),
++    new SolidPlanet(39, ''),
+ ];
+ foreach ($planets as $planet) {
+     try {
+diff --git a/src/Exception/InvalidRadiusException.php b/src/Exception/InvalidRadiusException.php
+new file mode 100644
+index 0000000..ddda4e9
+--- /dev/null
++++ b/src/Exception/InvalidRadiusException.php
+@@ -0,0 +1,7 @@
++<?php
++
++namespace Exception;
++
++class InvalidRadiusException extends \Exception
++{
++}
+diff --git a/src/Exception/MissingHexException.php b/src/Exception/MissingHexException.php
+new file mode 100644
+index 0000000..e7d4054
+--- /dev/null
++++ b/src/Exception/MissingHexException.php
+@@ -0,0 +1,7 @@
++<?php
++
++namespace Exception;
++
++class MissingHexException extends \Exception
++{
++}
+diff --git a/src/Service/PlanetRenderer.php b/src/Service/PlanetRenderer.php
+index 9ad59f6..78d0786 100644
+--- a/src/Service/PlanetRenderer.php
++++ b/src/Service/PlanetRenderer.php
+@@ -2,6 +2,8 @@
+ 
+ namespace Service;
+ 
++use Exception\InvalidRadiusException;
++use Exception\MissingHexException;
+ use Model\Planet\PlanetInterface;
+ 
+ class PlanetRenderer
+@@ -9,7 +11,10 @@ class PlanetRenderer
+     public function render(PlanetInterface $planet)
+     {
+         if (0 >= $planet->getRadius()) {
+-            throw new \Exception('The radius of a planet should be greater than 0!');
++            throw new InvalidRadiusException('The radius of a planet should be greater than 0!');
++        }
++        if (!$planet->getHexColor()) {
++            throw new MissingHexException('The hex color is missing!');
+         }
+ 
+         return sprintf(

@@ -266,6 +266,16 @@
             "description": null
         },
         {
+            "id": "exception-classes-throw-custom-exceptions",
+            "name": "Exception classes: Throw custom exceptions",
+            "description": null
+        },
+        {
+            "id": "exception-classes-throw-custom-exceptions-solution",
+            "name": "Exception classes: Throw custom exceptions [Solution]",
+            "description": null
+        },
+        {
             "id": "arrayaccess-implement-arrayaccess",
             "name": "ArrayAccess: Implement ArrayAccess",
             "description": null
@@ -276,5 +286,5 @@
             "description": null
         }
     ],
-    "sha": "918a100064b511deec57268084f2fd3b207aec78"
+    "sha": "f2d846dccb81c81699fab1c712846b8d99c9956d"
 }

@@ -1,0 +1,15 @@
+diff --git a/index.php b/index.php
+index 5b71296..89f795b 100644
+--- a/index.php
++++ b/index.php
+@@ -17,7 +17,9 @@ $planets = [
+ foreach ($planets as $planet) {
+     try {
+         echo $renderer->render($planet);
+-    } catch (\Exception $e) {
++    } catch (\Exception\InvalidRadiusException $e) {
+         echo $e->getMessage();
++    } catch (\Exception\MissingHexException $e) {
++        echo 'Planet has no color';
+     }
+ }
