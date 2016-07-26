@@ -1370,15 +1370,15 @@ autoloadingawesomeness_addautoloadercoding:
         search_for_function:
             type: php
             assertTrue: inputContains('index.php', 'spl_autoload_register')
-            failure: You should register your autoloader function with the `spl_autoload_register`.
+            failure: You should register your autoloader function by calling `spl_autoload_register`.
         search_for_if:
             type: php
             assertTrue: inputContains('index.php', 'if')
-            failure: You should require file only if a class name is equal to `Model\Planet\RandomlyColoredPlanet`.
+            failure: You should require the file only if the class name is equal to `Model\Planet\RandomlyColoredPlanet`.
         search_for_file:
             type: php
             assertTrue: inputContains('index.php', 'RandomlyColoredPlanet.php')
-            failure: You should require the `RandomlyColoredPlanet.php` file inside a registered autoloader function.
+            failure: You should require the `RandomlyColoredPlanet.php` file inside of your autoloader function.
 
 autoloadingawesomeness_betterperformancemc:
     question: |
@@ -1404,7 +1404,7 @@ autoloadingawesomeness_betterperformancemc:
         for a class each time the autoloader is called, that will be *way*
         slow!
 
-        That's why the autoloader we built in teh tutorial takes advantage
+        That's why the autoloader we built in the tutorial takes advantage
         of a class's namespace to quickly locate it!
     features:
         multiple_choice:
@@ -1457,7 +1457,7 @@ morewithusestatements_usesmartautoloadercoding:
                 or inputContains('index.php', 'GasPlanet.php')
                 or inputContains('index.php', 'SolidPlanet.php')
                 or inputContains('index.php', 'RandomlyColoredPlanet.php')
-            failure: You should remove all of the `require` statements in `index.php` except one in the `spl_autoload_register`.
+            failure: You should remove all of the `require` statements in `index.php` except the one in the `spl_autoload_register` function.
         assert_namespace:
             type: php
             assertTrue: |
@@ -1466,7 +1466,7 @@ morewithusestatements_usesmartautoloadercoding:
                 and class_exists('\\Model\\Planet\\GasPlanet')
                 and class_exists('\\Model\\Planet\\SolidPlanet')
                 and class_exists('\\Model\\Planet\\RandomlyColoredPlanet')
-            failure: A namespace of all classes should match the directory structure.
+            failure: Make sure that *every* class has a namespace (and that the namespace matches the directory structure!)
 
 morewithusestatements_fixnamespacecoding:
     question: |
@@ -1495,7 +1495,7 @@ morewithusestatements_fixnamespacecoding:
         assert_namespace:
             type: php
             assertTrue: class_exists('\\Model\\Planet\\GasPlanet')
-            failure: A namespace of the `GasPlanet` class should match the directory structure.
+            failure: The namespace inside `GasPlanet` *must* match its directory structure.
 
 # namespaces-core-php-classes
 namespacescorephpclasses_addplanetdaylengthcoding:
@@ -1532,7 +1532,7 @@ namespacescorephpclasses_addplanetdaylengthcoding:
         search_for_method:
             type: php
             assertTrue: reflection_class('\\Model\\Planet\\SolidPlanet').hasMethod('getDateTimeOneDayFromNow')
-            failure: You should add a `getDateTimeOneDayFromNow()` method to the `SolidPlanet`.
+            failure: You should add a `getDateTimeOneDayFromNow()` method to the `SolidPlanet` class.
         assert_datetime:
             type: php
             assertTrue: get_class(variable('planet').getDateTimeOneDayFromNow()) === 'DateTime'
@@ -1540,14 +1540,14 @@ namespacescorephpclasses_addplanetdaylengthcoding:
         search_for_method_usage:
             type: php
             assertTrue: inputContains('index.php', '->getDateTimeOneDayFromNow()')
-            failure: Did you use the `getDateTimeOneDayFromNow()` method in the `index.php`?
+            failure: Did you use the `getDateTimeOneDayFromNow()` method in `index.php`?
 
 namespacescorephpclasses_datetimemc:
     question: |
         Which of the following pieces of code would **not** work:
     explanation: |
         The best code is probably (A): `new \DateTime()`. This
-        wil *always* work, whether you're in a file with a namespace
+        will *always* work, whether you're in a file with a namespace
         or not.
 
         If you simply say `new DateTime()`, this only *might* work.
@@ -1593,117 +1593,119 @@ namespacescorephpclasses_datetimemc:
             correct: c
 
 # composer-autoloading
-composerautoloading_composerautoloadercoding:
-    question: |
-        Ok! Let's use Composer's autoloader instead of our, home-grown
-        code. Yay to less code!
-    question_steps:
-        - Delete our `spl_autoload_register()` function
-        - |
-          Give `composer.json` the proper `autoload` section so
-          that it knows to find our classes in the `src/` directory
-        - |
-          Run `composer install` so that it generates the
-          `vendor/autoload.php` file
-        - |
-          Require `vendor/autoload.php` from `index.php` and make
-          sure everything still works!
-    step: composer-autoloading-composer-autoloader
-    files:
-        index.php: ~
-        composer.json: ~
-        src/Model/Planet/SolidPlanet.php:
-            read_only: true
-        src/Service/PlanetRenderer.php:
-            read_only: true
-        src/Model/Planet/PlanetInterface.php:
-            read_only: true
-    features:
-        editor: ~
-        browser: ~
-    grading:
-        pending:
-            type: php
-            assertTrue: 1 == 0
-            failure: This can only be done when we have the terminal ability
-        search_for_function:
-            type: php
-            assertFalse: inputContains('index.php', 'spl_autoload_register')
-            failure: You should remove your custom autoloader.
-        search_for_require:
-            type: php
-            assertTrue: inputContains('index.php', 'vendor/autoload.php')
-            failure: You should require a Composer autoloader.
-        search_for_text:
-            type: php
-            assertTrue: inputContains('composer.json', '"autoload"') and inputContains('composer.json', '"src/"')
-            failure: Did you add an `autoload` section which is looking to the `src/` directory in your `composer.json`?
+# not ready - requires a terminal in the challenge!
+# composerautoloading_composerautoloadercoding:
+#     question: |
+#         Ok! Let's use Composer's autoloader instead of our, home-grown
+#         code. Yay to less code!
+#     question_steps:
+#         - Delete our `spl_autoload_register()` function
+#         - |
+#           Give `composer.json` the proper `autoload` section so
+#           that it knows to find our classes in the `src/` directory
+#         - |
+#           Run `composer install` so that it generates the
+#           `vendor/autoload.php` file
+#         - |
+#           Require `vendor/autoload.php` from `index.php` and make
+#           sure everything still works!
+#     step: composer-autoloading-composer-autoloader
+#     files:
+#         index.php: ~
+#         composer.json: ~
+#         src/Model/Planet/SolidPlanet.php:
+#             read_only: true
+#         src/Service/PlanetRenderer.php:
+#             read_only: true
+#         src/Model/Planet/PlanetInterface.php:
+#             read_only: true
+#     features:
+#         editor: ~
+#         browser: ~
+#     grading:
+#         pending:
+#             type: php
+#             assertTrue: 1 == 0
+#             failure: This can only be done when we have terminal ability
+#         search_for_function:
+#             type: php
+#             assertFalse: inputContains('index.php', 'spl_autoload_register')
+#             failure: You should remove your custom autoloader function.
+#         search_for_require:
+#             type: php
+#             assertTrue: inputContains('index.php', 'vendor/autoload.php')
+#             failure: You should require the Composer autoloader (`vendor/autoload.php`).
+#         search_for_text:
+#             type: php
+#             assertTrue: inputContains('composer.json', '"autoload"') and inputContains('composer.json', '"src/"')
+#             failure: Did you add an `autoload` section in `composer.json` that points to the `src/` directory of your project?
 
-composerautoloading_autoloadlegacycodecoding:
-    question: |
-        Oh no, we have a problem! Pretend that we're updating an old,
-        ugly, legacy application. This code contains a class called
-        `LegacyHelper`, but it doesn't have a namespace and doesn't
-        live in the `src/` directory. This means that the Composer
-        autoloader can't find it! And since we're trying to use it
-        from inside `PlanetRenderer`, our code is broke!
-
-        This *should* be easy to fix (just move the file and give the
-        class a namespace), but we *can't* modify the class: it's still
-        being used by an old legacy application that we can't touch.
-        Dang!
-
-        No problem - the Composer autoloader can still help us!
-    question_steps:
-        - |
-          If you have some classes that do *not* follow the nice
-          PSR-0 naming standard, Composer *can* still autoload these.
-          Google for "Composer classmap" to find out how.
-        - |
-          Add the new `classmap` key in `composer.json` to
-          autoload all classes in the `include` directory.
-        - Run `composer install` again to update the autoloader.
-        - Refresh to see that we're using the new autoloading code!
-    step: composer-autoloading-autoload-legacy-code
-    files:
-        index.php: ~
-        composer.json: ~
-        includes/LegacyHelper.php:
-            read_only: true
-        src/Model/Planet/SolidPlanet.php:
-            read_only: true
-        src/Service/PlanetRenderer.php:
-            read_only: true
-        src/Model/Planet/PlanetInterface.php:
-            read_only: true
-    features:
-        editor: ~
-        browser: ~
-    grading:
-        pending:
-            type: php
-            assertTrue: 1 == 0
-            failure: This can only be done when we have the terminal ability
-        search_for_function:
-            type: php
-            assertFalse: inputContains('index.php', 'spl_autoload_register')
-            failure: Did you add your old custom autoloader back?
-        search_for_require:
-            type: php
-            assertTrue: inputContains('index.php', 'vendor/autoload.php')
-            failure: Did you remove requiring a Composer autoloader?
-        search_for_text:
-            type: php
-            assertTrue: inputContains('composer.json', '"autoload"') and inputContains('composer.json', '"src/"')
-            failure: Did you remove an `autoload` section which is looking to the `src/` directory from your `composer.json`?
-        search_for_require_legacy:
-            type: php
-            assertFalse: inputContains('index.php', 'LegacyHelper.php')
-            failure: Hey, use Composer autoloader to require `LegacyHelper.php`!
-        search_for_text_legacy:
-            type: php
-            assertTrue: inputContains('composer.json', '"autoload"') and inputContains('composer.json', '"includes/"')
-            failure: Did you add an `autoload` section which is looking to the `includes/` directory to your `composer.json`?
+# boo - not ready yet :(
+# composerautoloading_autoloadlegacycodecoding:
+#     question: |
+#         Oh no, we have a problem! Pretend that we're updating an old,
+#         ugly, legacy application. This code contains a class called
+#         `LegacyHelper`, but it doesn't have a namespace and doesn't
+#         live in the `src/` directory. This means that the Composer
+#         autoloader can't find it! And since we're trying to use it
+#         from inside `PlanetRenderer`, our code is broke!
+#
+#         This *should* be easy to fix (just move the file and give the
+#         class a namespace), but we *can't* modify the class: it's still
+#         being used by an old legacy application that we can't touch.
+#         Dang!
+#
+#         No problem - the Composer autoloader can still help us!
+#     question_steps:
+#         - |
+#           If you have some classes that do *not* follow the nice
+#           PSR-0 naming standard, Composer *can* still autoload these.
+#           Google for "Composer classmap" to find out how.
+#         - |
+#           Add the new `classmap` key in `composer.json` to
+#           autoload all classes in the `include` directory.
+#         - Run `composer install` again to update the autoloader.
+#         - Refresh to see that we're using the new autoloading code!
+#     step: composer-autoloading-autoload-legacy-code
+#     files:
+#         index.php: ~
+#         composer.json: ~
+#         includes/LegacyHelper.php:
+#             read_only: true
+#         src/Model/Planet/SolidPlanet.php:
+#             read_only: true
+#         src/Service/PlanetRenderer.php:
+#             read_only: true
+#         src/Model/Planet/PlanetInterface.php:
+#             read_only: true
+#     features:
+#         editor: ~
+#         browser: ~
+#     grading:
+#         pending:
+#             type: php
+#             assertTrue: 1 == 0
+#             failure: This can only be done when we have the terminal ability
+#         search_for_function:
+#             type: php
+#             assertFalse: inputContains('index.php', 'spl_autoload_register')
+#             failure: Did you add your old custom autoloader back?
+#         search_for_require:
+#             type: php
+#             assertTrue: inputContains('index.php', 'vendor/autoload.php')
+#             failure: Did you remove the line that required Composer autoloader? If so, put it back - you still need it!
+#         search_for_text:
+#             type: php
+#             assertTrue: inputContains('composer.json', '"autoload"') and inputContains('composer.json', '"src/"')
+#             failure: Did you remove the `autoload` section in `composer.json` that is looking at the `src/` directory of your project? Put that back - you still need it!
+#         search_for_require_legacy:
+#             type: php
+#             assertFalse: inputContains('index.php', 'LegacyHelper.php')
+#             failure: Hey, use Composer's autoloader to require `LegacyHelper.php`. This means that you should *not* need to require it in `index.php`.
+#         search_for_text_legacy:
+#             type: php
+#             assertTrue: inputContains('composer.json', '"autoload"') and inputContains('composer.json', '"includes/"')
+#             failure: Did you add an `autoload` section to `composer.json` that looks at the `includes/` directory?
 
 # throw-exceptions
 throwexceptions_validateelementcoding:
@@ -1717,12 +1719,12 @@ throwexceptions_validateelementcoding:
         - |
             In `GasPlanet::__construct()`, add an `if` statement to check
             if the `$mainElement` argument is *not* one of the 4 valid values
-            (hint, you can use the `getAllElements()` methods to help)
+            (hint, you can use the `getAllElements()` method to help)
         - |
             If it is *not* valid, throw a new `Exception` object with
             the message: `This is not a valid element!`.
         - |
-            In `index.php`, change the `$planet` variable to use am
+            In `index.php`, change the `$planet` variable to use an
             invalid element - like `gold` (but wouldn't it be cool if
             a planet were entirely gold!?).
         - Refresh to see the error!
@@ -1741,20 +1743,20 @@ throwexceptions_validateelementcoding:
         search_for_exception:
             type: php
             assertTrue: inputContains('src/Model/Planet/GasPlanet.php', 'Exception')
-            failure: You should throw an instance of `Exception` class from `GasPlanet::__construct()`.
+            failure: You should throw a new `Exception` object from `GasPlanet::__construct()`.
         assert_exception:
             type: http
             assertTrue: |
                 body() matches "/Fatal error: Uncaught exception 'Exception'/"
-            failure: You should throw an instance of `Exception` class.
+            failure: I don't see the error! Make sure that you're passing an *invalid* element to the `$planet` variable in index.php - like `'gold'`.
         search_for_message:
             type: php
             assertTrue: inputContains('src/Model/Planet/GasPlanet.php', 'This is not a valid element!')
-            failure: Check you throw exception with exactly `This is not a valid element!` message from `GasPlanet::__construct()`.
+            failure: "Make sure that your Exception will have the message: `This is not a valid element!` inside of `GasPlanet::__construct()`."
         look_for_message:
             type: http
             assertTrue: body() matches '/with message 'This is not a valid element!'/'
-            failure: Check your exception message - it should be exactly `This is not a valid element!`.
+            failure: "Everything looks ok, but somehow, I don't see the exception message: `This is not a valid element!`."
 
 throwexceptions_catchexceptioncoding:
     question: |
@@ -1766,8 +1768,8 @@ throwexceptions_catchexceptioncoding:
         a negative radius, it will throw an exception. Currently, one
         of our 3 planets is causing this exception to be thrown!
 
-        Instead of seeing this error, let's render a little error
-        message instead of the planet.
+        Instead of seeing this error, let's print a little error
+        message when that planet is rendered.
     question_steps:
         - |
             In `index.php`, surround the line that may cause an exception
@@ -1791,16 +1793,16 @@ throwexceptions_catchexceptioncoding:
         search_for_try_catch:
             type: php
             assertTrue: inputContains('index.php', 'try') and inputContains('index.php', 'catch')
-            failure: Did you wrap the code which could throw an exception with a try-catch block?
+            failure: Did you wrap the code which might throw an exception with a try-catch block?
         search_exception:
             type: http
             assertFalse: |
                 body() matches "/Fatal error: Uncaught exception 'Exception'/"
-            failure: You should throw an instance of `Exception` class.
+            failure: Hmm, I still see the exception. Did you use a try-catch block to catch the Exception?
         search_for_message:
             type: http
-            assertTrue: body() matches '/greater than 0/'
-            failure: Did you print an exception message in the output.
+            assertTrue: body() matches '/Planet cannot be rendered/'
+            failure: I don't see the text `Planet cannot be rendered` - print that if there is a problem rendering the planet!
 
 throwexceptions_throwexceptiontmc:
     question: |
