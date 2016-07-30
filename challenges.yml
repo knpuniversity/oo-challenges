@@ -2330,3 +2330,153 @@ traitsreuse_inheritancevstraitsmc:
             correct: c
 
 # composition-ftw
+compositionftw_overrideclasscoding:
+    question: |
+        Remember our trusty `PlanetRenderer` class? For this challenge,
+        pretend that you *cannot* edit it: because this is a class
+        from an external library that you're using.
+
+        But here's the challenge: the existing `PlanetRenderer` returns
+        a `div` with the planet inside of it. But to allow for some
+        styling, *we* need to add a class to this div `rendered-planet`.
+        Unfortunately, it doesn't look like there's any easy way to
+        configure this.
+
+        Let's fix this by overriding the class!
+    question_steps:
+        - |
+            Create a new `CustomPlanetRenderer` and make it extend
+            `PlanetRenderer`.
+        - |
+            Call the [parent](http://knpuniversity.com/screencast/oo-ep3/parent)
+            method, but then wrap the string in a new div - something like this:
+
+            ```php
+            $html = parent::render($planet);
+
+            return sprintf('<div class="rendered-planet">%s</div>', $html);
+            ```
+        - |
+            Change `index.php` to instantiate *our* class instead of the
+            normal one.
+    step: composition-ftw-create-custom-planet-renderer
+    files:
+        index.php: ~
+        src/Service/CustomPlanetRenderer.php: ~
+        src/Service/PlanetRenderer.php:
+            read_only: true
+        src/Model/Planet/PlanetInterface.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        check_class:
+            type: php
+            assertTrue: class_exists('\\Service\\CustomPlanetRenderer')
+            failure: The `Service\CustomPlanetRenderer` class does not exist! Did you create it?
+        assert_subclass_of:
+            type: php
+            assertTrue: reflection_class('\\Service\\CustomPlanetRenderer').isSubclassOf('\\Service\\PlanetRenderer')
+            failure: The `CustomPlanetRenderer` class should extend `PlanetRenderer` one.
+        search_for_parent_call:
+            type: php
+            assertTrue: inputContains('src/Service/CustomPlanetRenderer.php', 'parent::render')
+            failure: You should call a parent method inside of `render()`.
+        assert_class:
+            type: php
+            assertTrue: get_class(variable('renderer')) === 'Service\\CustomPlanetRenderer'
+            failure: Use our new `CustomPlanetRenderer` class instead of `PlanetRenderer` in `index.php`
+        search_css_class:
+            type: http
+            assertTrue: body() matches '/rendered-planet/'
+            failure: Did you render each planet in a div class with `rendered-planet` CSS class? Check our output.
+
+compositionftw_usecompositioncoding:
+    question: |
+        Extending the class worked *just* fine. But let's try composition!
+        *If* the class you want to replace implements an interface or extends
+        a base class, then you can implement/extend *that* instead and
+        *wrap* the object you want to fake.
+
+        This is much more difficult at first - but is a great skill to
+        understand and master.
+    question_steps:
+        - |
+            Instead of extending `PlanetRenderer`, make `CustomPlanetRenderer`
+            implement the new `PlanetRendererInterface`
+        - |
+            Allow the other `PlanetRenderer` object to be passed into
+            the `__construct()` method of `CustomPlanetRenderer`. In other
+            words, add a `__construct()` method that has a single `PlanetRendererInterface`
+            object and set this on a new `planetRenderer` property.
+        - |
+            Update `CustomPlanetRenderer` to call `render()` on the new
+            `planetRenderer` property and *then* add the new div with
+            `rendered-planet` CSS class like before.
+        - |
+            Update `index.php`: When you instantiate your `CustomPlanetRenderer`,
+            you will now need to instantiate and pass the normal one to it.
+    step: composition-ftw-use-composition
+    files:
+        index.php: ~
+        src/Service/CustomPlanetRenderer.php: ~
+        src/Service/PlanetRenderer.php:
+            read_only: true
+        src/Service/PlanetRendererInterface.php:
+            read_only: true
+        src/Model/Planet/PlanetInterface.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        check_class:
+            type: php
+            assertTrue: class_exists('\\Service\\CustomPlanetRenderer')
+            failure: The `Service\CustomPlanetRenderer` class does not exist! Did you rename it?
+        assert_subclass_of:
+            type: php
+            assertFalse: reflection_class('\\Service\\CustomPlanetRenderer').isSubclassOf('\\Service\\PlanetRenderer')
+            failure: The `CustomPlanetRenderer` class should NOT extend `PlanetRenderer` anymore.
+        assert_implementing:
+            type: php
+            assertTrue: reflection_class('\\Service\\CustomPlanetRenderer').implementsInterface('\\Service\\PlanetRendererInterface')
+            failure: The `CustomPlanetRenderer` class should implement `PlanetRendererInterface`.
+        assert_class:
+            type: php
+            assertTrue: get_class(variable('renderer')) === 'Service\\CustomPlanetRenderer'
+            failure: The `$renderer` variable should be an instance of `CustomPlanetRenderer` class instead of `PlanetRenderer` in `index.php`
+        search_css_class:
+            type: http
+            assertTrue: body() matches '/rendered-planet/'
+            failure: Did you render each planet in a div class with `rendered-planet` CSS class? Check our output.
+
+compositionftw_compositionmc:
+    question: |
+        In the previous challenge, we changed from overriding a class
+        to using composition. It was honestly a bit more work! What
+        are the advantages?
+    explanation: |
+        Don't get too excited or worried about composition. In most
+        cases, the advantages are small, and are most enjoyed by
+        third-party library creators, who use composition to add
+        extra flexiblity to their libraries that we may never need
+        in our application!
+
+        Just get used to seeing the pattern and understanding what
+        it means.
+    features:
+        multiple_choice:
+            choices:
+                a: |
+                    Composition makes your execute faster: because calling
+                    parent methods can be slow
+                b: |
+                    There aren't any real advantages: both are valid ways
+                    to override functionality.
+                c: |
+                    With composition, your new class - `CustomPlanetRenderer`
+                    can be used to decorate/enhance *any* other classes that
+                    implement `PlanetRendererInterface`.
+            correct: c
