@@ -1942,6 +1942,115 @@ exceptionclasses_throwcustomexceptionscoding:
             failure: Did you print a `Planet has no color` message when `MissingHexException` exception is thrown.
 
 # magic-methods
+magicmethods_printobjectscoding:
+    question: |
+        Let's take our planet classes out for a real test drive: and
+        render the 8 (sorry Pluto) planets in our solar system!
+
+        Before doing this, we've given each class a `$name` property
+        so we can print it before rendering the planet. Everything
+        is *almost* working, but when we print the `$planet` variable,
+        it gives us an error!
+    question_steps:
+        - |
+            Update both `GasPlanet` and `SolidPlanet` so that
+            when you print them, it prints the planet's name.
+        - Refresh and enjoy the solar system :p
+    step: magic-methods-print-objects
+    files:
+        src/Model/Planet/SolidPlanet.php: ~
+        src/Model/Planet/GasPlanet.php: ~
+        index.php:
+            read_only: true
+        src/Model/Planet/PlanetInterface.php:
+            read_only: true
+        src/Service/PlanetRenderer.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        search_method_1:
+            type: php
+            assertTrue: reflection_class('\\Model\\Planet\\SolidPlanet').hasMethod('__toString')
+            failure: The `Model\Planet\SolidPlanet` class should have the magic method which allow printing objects.
+        search_method_2:
+            type: php
+            assertTrue: reflection_class('\\Model\\Planet\\GasPlanet').hasMethod('__toString')
+            failure: The `Model\Planet\GasPlanet` class should have the magic method which allows printing objects.
+
+magicmethods_setprivatepropertycoding:
+    question: |
+        The `GasPlanet` has a private `$name` property, but it does *not*
+        have a `setName()` method. This means that the `$name` property
+        cannot be modified, which normally, is probably OK!
+
+        But, let's challenge ourselves! In `index.php`, we've added some
+        code that tries to change Neptune's name by referencing the property
+        directly. That won't work! Yet... Let's make this possible!
+    question_steps:
+        - |
+            Keep the `$name` property private, but add
+            a magic `__set()` method that makes the code
+            in `index.php` work!
+        - Reload and make sure it works!
+    step: magic-methods-set-method
+    files:
+        src/Model/Planet/GasPlanet.php: ~
+        src/Model/Planet/SolidPlanet.php:
+            read_only: true
+        index.php:
+            read_only: true
+        src/Model/Planet/PlanetInterface.php:
+            read_only: true
+        src/Service/PlanetRenderer.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        search_method:
+            type: php
+            assertTrue: reflection_class('\\Model\\Planet\\GasPlanet').hasMethod('__set')
+            failure: The `Model\Planet\GasPlanet` class should have the magic method which allows set private property.
+        check_output:
+            type: http
+            assertTrue: body() matches '/Nep-Toon/'
+            failure: I don't see `Nep-Toon` name in the output - did you set it right in the `__set()` magic method?
+
+magicmethods_adddesctructmethodcoding:
+    question: |
+        We already know that you can create a method that will
+        be called whenever an object is instantiated/constructed.
+        This is called `__construct()`.
+
+        And while it's much less common, you can *also* create a
+        method whenever an object is *destructed*  - it's called
+        `__destruct()`. This is usually called at the very end of
+        your script, but made be called earlier - once you're done
+        working with your object.
+    question_steps:
+        - Add a `__destruct()` method to `GasPlanet`. Inside, just `echo $this->name`.
+        - Refresh to see if this method is called!
+    step: magic-methods-add-destruct-method
+    files:
+        src/Model/Planet/GasPlanet.php: ~
+        src/Model/Planet/SolidPlanet.php:
+            read_only: true
+        index.php:
+            read_only: true
+        src/Model/Planet/PlanetInterface.php:
+            read_only: true
+        src/Service/PlanetRenderer.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        search_method:
+            type: php
+            assertTrue: reflection_class('\\Model\\Planet\\GasPlanet').hasMethod('__destruct')
+            failure: I don't see `__destruct()` magic method in `Model\Planet\GasPlanet` class.
 
 # array-access
 arrayaccess_implementingarrayaccesscoding:
