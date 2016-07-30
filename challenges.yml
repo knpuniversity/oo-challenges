@@ -2136,6 +2136,95 @@ arrayaccess_arrayorobjectmc:
             correct: b
 
 # iterator-aggregate
+iteratoraggregate_implementinterfacecoding:
+    question: |
+        Hey hey! Someone got fancy and created a new `SolarSystem`
+        class that holds all of the planets. Cool!
+
+        Just one problem: the page isn't working anymore! We're trying
+        to loop over the `$solarSystem` object, and that just isn't working.
+    question_steps:
+        - Add the `IteratorAggregate` interface to `SolarSystem`
+        - |
+            Add the `getIterator()` method so that we can loop
+            over the `$planets` property.
+        - Reload and enjoy the planets again!
+    step: iteratoraggregate-implement-interface
+    files:
+        src/Model/Planet/SolarSystem.php: ~
+        index.php:
+            read_only: true
+        src/Model/Planet/GasPlanet.php:
+            read_only: true
+        src/Model/Planet/SolidPlanet.php:
+            read_only: true
+        src/Model/Planet/PlanetInterface.php:
+            read_only: true
+        src/Service/PlanetRenderer.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        assert_implementing:
+            type: php
+            assertTrue: reflection_class('\\Model\\Planet\\SolarSystem').implementsInterface('\IteratorAggregate')
+            failure: Class `SolarSystem` should implement the `IteratorAggregate` interface.
+        assert_object:
+            type: php
+            assertTrue: get_class(variable('solarSystem').getIterator()) === 'ArrayIterator'
+            failure: The `getIterator()` method should return the `ArrayIterator` object.
+        assert_value:
+            type: php
+            assertTrue: inputContains('src/Model/Planet/SolarSystem.php', 'ArrayIterator($this->planets)')
+            failure: Pass planets of our solar system to the `ArrayIterator` object in `SolarSystem.php`.
+
+iteratoraggregate_countplanetscoding:
+    question: |
+        Since the number of planets apparently changes sometimes, we
+        want to print the current number of planets at the top of the
+        page.
+
+        We asked the intern to do it, but he couldn't figure it out.
+        Sure, we can *loop* over the `SolarSystem` object, but we can't
+        seem to count it (he tried in `index.php`).
+    question_steps:
+        - |
+            Add a new interface: `Countable`. This will allow
+            you to "count" an object.
+        - |
+            Implement any method(s) that you need for this
+            interface (put on your Googling/Binging hat and research
+            the answer!)
+    step: iteratoraggregate-count-planets
+    files:
+        src/Model/Planet/SolarSystem.php: ~
+        index.php:
+            read_only: true
+        src/Model/Planet/GasPlanet.php:
+            read_only: true
+        src/Model/Planet/SolidPlanet.php:
+            read_only: true
+        src/Model/Planet/PlanetInterface.php:
+            read_only: true
+        src/Service/PlanetRenderer.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        assert_implementing_1:
+            type: php
+            assertTrue: reflection_class('\\Model\\Planet\\SolarSystem').implementsInterface('\IteratorAggregate')
+            failure: Class `SolarSystem` still should implement the `IteratorAggregate` interface - bring him back.
+        assert_implementing_2:
+            type: php
+            assertTrue: reflection_class('\\Model\\Planet\\SolarSystem').implementsInterface('\Countable')
+            failure: Class `SolarSystem` should implement one more interface - the `Countable` interface.
+        assert_value:
+            type: php
+            assertTrue: variable('solarSystem').count() === 8
+            failure: Hm, looks like we have 8 planets in our solar system. Did you implement the `Countable` interface right?
 
 # traits-reuse
 
