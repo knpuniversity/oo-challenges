@@ -2227,5 +2227,106 @@ iteratoraggregate_countplanetscoding:
             failure: Hm, looks like we have 8 planets in our solar system. Did you implement the `Countable` interface right?
 
 # traits-reuse
+traitsreuse_reusenamecoding:
+    question: |
+        Check out `GasPlanet` and `SolidPlanet`: they have a bit
+        of duplication! Each has a `$name` property, a `getName()`
+        function and a `setName()` function.
+
+        I hate duplication!
+    question_steps:
+        - |
+            Create a new trait: `NameableItemTrait`.
+        - |
+            Move the `$name` property and the 2 duplicated methods
+            into this trait.
+        - |
+            Use the trait from both planet classes and delete that
+            duplicated code!
+    step: traits-reuse-reuse-name
+    files:
+        src/Model/Planet/NameableItemTrait.php: ~
+        src/Model/Planet/GasPlanet.php: ~
+        src/Model/Planet/SolidPlanet.php: ~
+        src/Model/Planet/SolarSystem.php:
+            read_only: true
+        index.php:
+            read_only: true
+        src/Model/Planet/PlanetInterface.php:
+            read_only: true
+        src/Service/PlanetRenderer.php:
+            read_only: true
+    features:
+        editor: ~
+        browser: ~
+    grading:
+        # @TODO Add trait_exists() support to the PHP provider
+        #        assert_class_exist:
+        #            type: php
+        #            assertTrue: trait_exists('\\Model\\Planet\\NameableItemTrait')
+        #            failure: The `Model\Planet\NameableItemTrait` trait does not exist! Did you create it?
+        assert_is_trait:
+            type: php
+            assertTrue: reflection_class('\\Model\\Planet\\NameableItemTrait').isTrait()
+            failure: Class `Model\Planet\NameableItemTrait` should be declared as a trait.
+        search_methods:
+            type: php
+            assertTrue: reflection_class('\\Model\\Planet\\NameableItemTrait').hasMethod('setName') and reflection_class('\\Model\\Planet\\NameableItemTrait').hasMethod('getName')
+            failure: Move `setName()` and `getName()` methods inside `Model\Planet\NameableItemTrait` trait.
+        search_property:
+            type: php
+            assertTrue: reflection_class('\\Model\\Planet\\NameableItemTrait').hasProperty('name')
+            failure: Move `$name` property inside `Model\Planet\NameableItemTrait` trait.
+        search_trait:
+            type: php
+            assertTrue: inputContains('src/Model/Planet/SolidPlanet.php', 'NameableItemTrait') and inputContains('src/Model/Planet/GasPlanet.php', 'NameableItemTrait')
+            failure: Ensure `SolidPlanet` and `GasPlanet` classes use `NameableItemTrait` trait.
+        search_moved_methods_1:
+            type: php
+            assertFalse: inputContains('src/Model/Planet/SolidPlanet.php', 'function setName') or inputContains('src/Model/Planet/SolidPlanet.php', 'function getName')
+            failure: Ensure `SolidPlanet` class don't have `setName()` and `getName()` methods inside anymore.
+        search_moved_methods_2:
+            type: php
+            assertFalse: inputContains('src/Model/Planet/GasPlanet.php', 'function setName') or inputContains('src/Model/Planet/GasPlanet.php', 'function getName')
+            failure: Ensure `GasPlanet` class don't have `setName()` and `getName()` methods inside anymore.
+
+traitsreuse_inheritancevstraitsmc:
+    question: |
+        In the previous challenge, we created a `NameableItemTrait`
+        and used it inside of `GasPlanet` and `SolidPlanet`.
+
+        But, there was another option: create a new `AbstractPlanet`
+        class, move the logic there, and then *extend* this class.
+
+        In this situation, what was a better option: using a `trait`
+        or extending a base `class`?
+    explanation: |
+        Traits versus extending a class: the correct answer always depends
+        on your situation. If both classes are modeling the same type
+        of thing (e.g. a `Planet`), then extending a base class may make
+        sense. If not, definitely use a `trait`.
+
+        And if you want, you could do both! Use a trait inside of the
+        base class!
+
+        ```php
+        abstract class AbstractPlanet implements PlanetInterface
+        {
+            use NameableItemTrait;
+        }
+        ```
+    features:
+        multiple_choice:
+            choices:
+                a: |
+                    The trait is better because it would allow us to add
+                    this trait to *other* future classes that have a name, but
+                    aren't planets (e.g. the `Meteoroid` class).
+                b: |
+                    The abstract class is better: these are both *planets*,
+                    so it makes sense to give these the same base `AbstractPlanet`
+                    class.
+                c: Both of these are correct!
+            correct: c
 
 # composition-ftw
