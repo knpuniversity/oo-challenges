@@ -1,0 +1,99 @@
+diff --git a/src/Model/Planet/GasPlanet.php b/src/Model/Planet/GasPlanet.php
+index bcc919b..660aa5d 100644
+--- a/src/Model/Planet/GasPlanet.php
++++ b/src/Model/Planet/GasPlanet.php
+@@ -4,13 +4,13 @@ namespace Model\Planet;
+ 
+ class GasPlanet implements PlanetInterface
+ {
++    use NameableItemTrait;
++
+     const MATERIAL_AMMONIA = 'ammonia';
+     const MATERIAL_HYDROGEN = 'hydrogen';
+     const MATERIAL_HELIUM = 'helium';
+     const MATERIAL_METHANE = 'methane';
+ 
+-    private $name;
+-
+     private $diameter;
+ 
+     private $mainElement;
+@@ -45,16 +45,6 @@ class GasPlanet implements PlanetInterface
+         ];
+     }
+ 
+-    public function setName($name)
+-    {
+-        $this->name = $name;
+-    }
+-
+-    public function getName()
+-    {
+-        return $this->name;
+-    }
+-
+     public function getRadius()
+     {
+         return $this->diameter / 2;
+diff --git a/src/Model/Planet/NameableItemTrait.php b/src/Model/Planet/NameableItemTrait.php
+index e69de29..80e9d96 100644
+--- a/src/Model/Planet/NameableItemTrait.php
++++ b/src/Model/Planet/NameableItemTrait.php
+@@ -0,0 +1,27 @@
++<?php
++
++namespace Model\Planet;
++
++trait NameableItemTrait
++{
++    /**
++     * @var string
++     */
++    private $name;
++
++    /**
++     * @param string $name
++     */
++    public function setName($name)
++    {
++        $this->name = $name;
++    }
++
++    /**
++     * @return string
++     */
++    public function getName()
++    {
++        return $this->name;
++    }
++}
+diff --git a/src/Model/Planet/SolidPlanet.php b/src/Model/Planet/SolidPlanet.php
+index c13fbf3..ca1f5c4 100644
+--- a/src/Model/Planet/SolidPlanet.php
++++ b/src/Model/Planet/SolidPlanet.php
+@@ -4,7 +4,7 @@ namespace Model\Planet;
+ 
+ class SolidPlanet implements PlanetInterface
+ {
+-    private $name;
++    use NameableItemTrait;
+ 
+     private $radius;
+ 
+@@ -33,16 +33,6 @@ class SolidPlanet implements PlanetInterface
+         return $tomorrow;
+     }
+ 
+-    public function setName($name)
+-    {
+-        $this->name = $name;
+-    }
+-
+-    public function getName()
+-    {
+-        return $this->name;
+-    }
+-
+     public function getRadius()
+     {
+         return $this->radius;

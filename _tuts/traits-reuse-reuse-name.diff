@@ -11,25 +11,9 @@ index 6893922..c35846d 100644
  
  $solarSystem = new SolarSystem($planets);
 diff --git a/src/Model/Planet/GasPlanet.php b/src/Model/Planet/GasPlanet.php
-index cc82e1c..660aa5d 100644
+index cc82e1c..bcc919b 100644
 --- a/src/Model/Planet/GasPlanet.php
 +++ b/src/Model/Planet/GasPlanet.php
-@@ -4,13 +4,13 @@ namespace Model\Planet;
- 
- class GasPlanet implements PlanetInterface
- {
-+    use NameableItemTrait;
-+
-     const MATERIAL_AMMONIA = 'ammonia';
-     const MATERIAL_HYDROGEN = 'hydrogen';
-     const MATERIAL_HELIUM = 'helium';
-     const MATERIAL_METHANE = 'methane';
- 
--    private $name;
--
-     private $diameter;
- 
-     private $mainElement;
 @@ -35,13 +35,6 @@ class GasPlanet implements PlanetInterface
          return $this->getName();
      }
@@ -44,73 +28,34 @@ index cc82e1c..660aa5d 100644
      public static function getAllElements()
      {
          return [
-@@ -52,11 +45,6 @@ class GasPlanet implements PlanetInterface
+@@ -52,6 +45,11 @@ class GasPlanet implements PlanetInterface
          ];
      }
  
--    public function getName()
--    {
--        return $this->name;
--    }
--
-     public function getRadius()
-     {
-         return $this->diameter / 2;
-diff --git a/src/Model/Planet/NameableItemTrait.php b/src/Model/Planet/NameableItemTrait.php
-new file mode 100644
-index 0000000..80e9d96
---- /dev/null
-+++ b/src/Model/Planet/NameableItemTrait.php
-@@ -0,0 +1,27 @@
-+<?php
-+
-+namespace Model\Planet;
-+
-+trait NameableItemTrait
-+{
-+    /**
-+     * @var string
-+     */
-+    private $name;
-+
-+    /**
-+     * @param string $name
-+     */
 +    public function setName($name)
 +    {
 +        $this->name = $name;
 +    }
 +
-+    /**
-+     * @return string
-+     */
-+    public function getName()
-+    {
-+        return $this->name;
-+    }
-+}
+     public function getName()
+     {
+         return $this->name;
+diff --git a/src/Model/Planet/NameableItemTrait.php b/src/Model/Planet/NameableItemTrait.php
+new file mode 100644
+index 0000000..e69de29
 diff --git a/src/Model/Planet/SolidPlanet.php b/src/Model/Planet/SolidPlanet.php
-index e53196a..ca1f5c4 100644
+index e53196a..c13fbf3 100644
 --- a/src/Model/Planet/SolidPlanet.php
 +++ b/src/Model/Planet/SolidPlanet.php
-@@ -4,7 +4,7 @@ namespace Model\Planet;
- 
- class SolidPlanet implements PlanetInterface
- {
--    private $name;
-+    use NameableItemTrait;
- 
-     private $radius;
- 
-@@ -33,11 +33,6 @@ class SolidPlanet implements PlanetInterface
+@@ -33,6 +33,11 @@ class SolidPlanet implements PlanetInterface
          return $tomorrow;
      }
  
--    public function getName()
--    {
--        return $this->name;
--    }
--
-     public function getRadius()
++    public function setName($name)
++    {
++        $this->name = $name;
++    }
++
+     public function getName()
      {
-         return $this->radius;
+         return $this->name;

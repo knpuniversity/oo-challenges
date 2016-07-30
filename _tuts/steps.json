@@ -339,7 +339,12 @@
             "id": "traits-reuse-reuse-name",
             "name": "Traits reuse: Reuse name",
             "description": null
+        },
+        {
+            "id": "traits-reuse-reuse-name-solution",
+            "name": "Traits reuse: Reuse name [Solution]",
+            "description": null
         }
     ],
-    "sha": "5ce254d855a250af26bbcf87ebcf685b55db2129"
+    "sha": "ca939bc50621c886f9b767504cb7512545ee1956"
 }
