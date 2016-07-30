@@ -1,0 +1,32 @@
+diff --git a/src/Model/Planet/GasPlanet.php b/src/Model/Planet/GasPlanet.php
+index e105217..e934b37 100644
+--- a/src/Model/Planet/GasPlanet.php
++++ b/src/Model/Planet/GasPlanet.php
+@@ -25,6 +25,11 @@ class GasPlanet implements PlanetInterface
+         $this->mainElement = $mainElement;
+     }
+ 
++    public function __toString()
++    {
++        return $this->getName();
++    }
++
+     public static function getAllElements()
+     {
+         return [
+diff --git a/src/Model/Planet/SolidPlanet.php b/src/Model/Planet/SolidPlanet.php
+index 6ecc693..e53196a 100644
+--- a/src/Model/Planet/SolidPlanet.php
++++ b/src/Model/Planet/SolidPlanet.php
+@@ -20,6 +20,11 @@ class SolidPlanet implements PlanetInterface
+         $this->dayLengthInHours = $dayLengthInHours;
+     }
+ 
++    public function __toString()
++    {
++        return $this->getName();
++    }
++
+     public function getDateTimeOneDayFromNow()
+     {
+         $tomorrow = new \DateTime();

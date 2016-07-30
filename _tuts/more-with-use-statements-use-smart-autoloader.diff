@@ -33,40 +33,190 @@ index a56751e..87872bf 100644
 +echo $renderer->render($planet1);
 +echo $renderer->render($planet2);
 +echo $renderer->render($planet3);
-diff --git a/AbstractPlanet.php b/src/Model/Planet/AbstractPlanet.php
-similarity index 100%
-rename from AbstractPlanet.php
-rename to src/Model/Planet/AbstractPlanet.php
-diff --git a/GasPlanet.php b/src/Model/Planet/GasPlanet.php
-similarity index 100%
-rename from GasPlanet.php
-rename to src/Model/Planet/GasPlanet.php
-diff --git a/PlanetInterface.php b/src/Model/Planet/PlanetInterface.php
-similarity index 100%
-rename from PlanetInterface.php
-rename to src/Model/Planet/PlanetInterface.php
-diff --git a/RandomlyColoredPlanet.php b/src/Model/Planet/RandomlyColoredPlanet.php
-similarity index 92%
-rename from RandomlyColoredPlanet.php
-rename to src/Model/Planet/RandomlyColoredPlanet.php
-index 989e691..9f887da 100644
---- a/RandomlyColoredPlanet.php
+diff --git a/src/Model/Planet/AbstractPlanet.php b/src/Model/Planet/AbstractPlanet.php
+new file mode 100644
+index 0000000..e508276
+--- /dev/null
++++ b/src/Model/Planet/AbstractPlanet.php
+@@ -0,0 +1,8 @@
++<?php
++
++abstract class AbstractPlanet
++{
++    abstract public function getRadius();
++
++    abstract public function getHexColor();
++}
+diff --git a/src/Model/Planet/GasPlanet.php b/src/Model/Planet/GasPlanet.php
+new file mode 100644
+index 0000000..045e0be
+--- /dev/null
++++ b/src/Model/Planet/GasPlanet.php
+@@ -0,0 +1,50 @@
++<?php
++
++class GasPlanet implements PlanetInterface
++{
++    const MATERIAL_AMMONIA = 'ammonia';
++    const MATERIAL_HYDROGEN = 'hydrogen';
++    const MATERIAL_HELIUM = 'helium';
++    const MATERIAL_METHANE = 'methane';
++
++    private $diameter;
++
++    private $mainElement;
++
++    public function __construct($mainElement, $diameter)
++    {
++        $this->diameter = $diameter;
++        $this->mainElement = $mainElement;
++    }
++
++    public static function getAllElements()
++    {
++        return [
++            self::MATERIAL_AMMONIA,
++            self::MATERIAL_HYDROGEN,
++            self::MATERIAL_HELIUM,
++            self::MATERIAL_METHANE,
++        ];
++    }
++
++    public function getRadius()
++    {
++        return $this->diameter / 2;
++    }
++
++    public function getHexColor()
++    {
++        // a "fake" map of elements to colors
++        switch ($this->mainElement) {
++            case self::MATERIAL_AMMONIA:
++                return '663300';
++            case self::MATERIAL_HYDROGEN:
++            case self::MATERIAL_HELIUM:
++                return 'FFFF66';
++            case self::MATERIAL_METHANE:
++                return '0066FF';
++            default:
++                return '464646';
++        }
++    }
++}
+diff --git a/src/Model/Planet/PlanetInterface.php b/src/Model/Planet/PlanetInterface.php
+new file mode 100644
+index 0000000..160b4d9
+--- /dev/null
++++ b/src/Model/Planet/PlanetInterface.php
+@@ -0,0 +1,18 @@
++<?php
++
++interface PlanetInterface
++{
++    /**
++     * Return the radius if the planet, in thousands of kilometers.
++     *
++     * @return integer
++     */
++    public function getRadius();
++
++    /**
++     * Return the hex color (without the #) for the planet.
++     *
++     * @return string
++     */
++    public function getHexColor();
++}
+diff --git a/src/Model/Planet/RandomlyColoredPlanet.php b/src/Model/Planet/RandomlyColoredPlanet.php
+new file mode 100644
+index 0000000..9f887da
+--- /dev/null
 +++ b/src/Model/Planet/RandomlyColoredPlanet.php
-@@ -1,9 +1,5 @@
- <?php
- 
--namespace Model\Planet;
--
--use PlanetInterface;
--
- class RandomlyColoredPlanet implements PlanetInterface
- {
-     private $color1;
-diff --git a/SolidPlanet.php b/src/Model/Planet/SolidPlanet.php
-similarity index 100%
-rename from SolidPlanet.php
-rename to src/Model/Planet/SolidPlanet.php
-diff --git a/PlanetRenderer.php b/src/Service/PlanetRenderer.php
-similarity index 100%
-rename from PlanetRenderer.php
-rename to src/Service/PlanetRenderer.php
+@@ -0,0 +1,32 @@
++<?php
++
++class RandomlyColoredPlanet implements PlanetInterface
++{
++    private $color1;
++    private $color2;
++
++    public function __construct($color1, $color2)
++    {
++        $this->color1 = $color1;
++        $this->color2 = $color2;
++    }
++
++    public function getRandomColor()
++    {
++        $colors = [$this->color1, $this->color2];
++
++        $randomKey = array_rand($colors);
++
++        return $colors[$randomKey];
++    }
++
++    public function getHexColor()
++    {
++        return $this->getRandomColor();
++    }
++
++    public function getRadius()
++    {
++        return 100;
++    }
++}
+diff --git a/src/Model/Planet/SolidPlanet.php b/src/Model/Planet/SolidPlanet.php
+new file mode 100644
+index 0000000..da5767e
+--- /dev/null
++++ b/src/Model/Planet/SolidPlanet.php
+@@ -0,0 +1,24 @@
++<?php
++
++class SolidPlanet implements PlanetInterface
++{
++    private $radius;
++
++    private $hexColor;
++
++    public function __construct($radius, $hexColor)
++    {
++        $this->radius = $radius;
++        $this->hexColor = $hexColor;
++    }
++
++    public function getRadius()
++    {
++        return $this->radius;
++    }
++
++    public function getHexColor()
++    {
++        return $this->hexColor;
++    }
++}
+diff --git a/src/Service/PlanetRenderer.php b/src/Service/PlanetRenderer.php
+new file mode 100644
+index 0000000..12a5a3d
+--- /dev/null
++++ b/src/Service/PlanetRenderer.php
+@@ -0,0 +1,19 @@
++<?php
++
++namespace Service;
++
++use PlanetInterface;
++
++class PlanetRenderer
++{
++    public function render(PlanetInterface $planet)
++    {
++        return sprintf(
++            '<div style="width: %spx; height: %spx; border-radius: %spx; background-color: #%s;"></div>',
++            $planet->getRadius() * 2,
++            $planet->getRadius() * 2,
++            $planet->getRadius(),
++            $planet->getHexColor()
++        );
++    }
++}

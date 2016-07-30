@@ -276,6 +276,36 @@
             "description": null
         },
         {
+            "id": "magic-methods-print-objects",
+            "name": "Magic methods: Print objects",
+            "description": null
+        },
+        {
+            "id": "magic-methods-print-objects-solution",
+            "name": "Magic methods: Print objects [Solution]",
+            "description": null
+        },
+        {
+            "id": "magic-methods-set-method",
+            "name": "Magic methods: __set() method",
+            "description": null
+        },
+        {
+            "id": "magic-methods-set-method-solution",
+            "name": "Magic methods: __set() method [Solution]",
+            "description": null
+        },
+        {
+            "id": "magic-methods-add-destruct-method",
+            "name": "Magic methods: Add __destruct() method",
+            "description": null
+        },
+        {
+            "id": "magic-methods-add-destruct-method-solution",
+            "name": "Magic methods: Add __destruct() method [Solution]",
+            "description": null
+        },
+        {
             "id": "arrayaccess-implement-arrayaccess",
             "name": "ArrayAccess: Implement ArrayAccess",
             "description": null
@@ -286,5 +316,5 @@
             "description": null
         }
     ],
-    "sha": "f2d846dccb81c81699fab1c712846b8d99c9956d"
+    "sha": "e977535195533d184944b8df1a84e8fe011e568e"
 }

@@ -1,0 +1,126 @@
+diff --git a/index.php b/index.php
+index 89f795b..971cb4e 100644
+--- a/index.php
++++ b/index.php
+@@ -9,17 +9,22 @@ use Service\PlanetRenderer;
+ $renderer = new PlanetRenderer();
+ 
+ $planets = [
+-    new GasPlanet(GasPlanet::MATERIAL_AMMONIA, 47),
+-    new GasPlanet(GasPlanet::MATERIAL_HELIUM, -56),
+-    new GasPlanet(GasPlanet::MATERIAL_HYDROGEN, 63),
+-    new SolidPlanet(39, ''),
++    new SolidPlanet('Mercury', 10, 'cccccc'),
++    new SolidPlanet('Venus', 30, '29A1FF'),
++    new SolidPlanet('Earth', 30, '0E1338'),
++    new SolidPlanet('Mars', 15, 'DAA18A'),
++    new GasPlanet('Jupiter', GasPlanet::MATERIAL_HYDROGEN, 139),
++    new GasPlanet('Saturn', GasPlanet::MATERIAL_HYDROGEN, 120),
++    new GasPlanet('Uranus', GasPlanet::MATERIAL_METHANE, 51),
+ ];
+-foreach ($planets as $planet) {
+-    try {
+-        echo $renderer->render($planet);
+-    } catch (\Exception\InvalidRadiusException $e) {
+-        echo $e->getMessage();
+-    } catch (\Exception\MissingHexException $e) {
+-        echo 'Planet has no color';
+-    }
+-}
++$neptune = new GasPlanet('Neptune', GasPlanet::MATERIAL_HYDROGEN, 49);
++$planets[] = $neptune;
++
++?>
++<?php foreach ($planets as $planet) : ?>
++    <h3><?php echo $planet; ?></h3>
++    <div>
++        <?php echo $renderer->render($planet); ?>
++    </div>
++<?php endforeach; ?>
++
+diff --git a/src/Model/Planet/GasPlanet.php b/src/Model/Planet/GasPlanet.php
+index bdc2c5b..e105217 100644
+--- a/src/Model/Planet/GasPlanet.php
++++ b/src/Model/Planet/GasPlanet.php
+@@ -9,12 +9,15 @@ class GasPlanet implements PlanetInterface
+     const MATERIAL_HELIUM = 'helium';
+     const MATERIAL_METHANE = 'methane';
+ 
++    private $name;
++
+     private $diameter;
+ 
+     private $mainElement;
+ 
+-    public function __construct($mainElement, $diameter)
++    public function __construct($name, $mainElement, $diameter)
+     {
++        $this->name = $name;
+         $this->diameter = $diameter;
+         if (!in_array($mainElement, $this->getAllElements())) {
+             throw new \Exception('This is not a valid element!');
+@@ -32,6 +35,11 @@ class GasPlanet implements PlanetInterface
+         ];
+     }
+ 
++    public function getName()
++    {
++        return $this->name;
++    }
++
+     public function getRadius()
+     {
+         return $this->diameter / 2;
+diff --git a/src/Model/Planet/PlanetInterface.php b/src/Model/Planet/PlanetInterface.php
+index 8c44a5a..3d09db8 100644
+--- a/src/Model/Planet/PlanetInterface.php
++++ b/src/Model/Planet/PlanetInterface.php
+@@ -5,6 +5,13 @@ namespace Model\Planet;
+ interface PlanetInterface
+ {
+     /**
++     * Return name of the planet
++     *
++     * @return string
++     */
++    public function getName();
++
++    /**
+      * Return the radius if the planet, in thousands of kilometers.
+      *
+      * @return integer
+diff --git a/src/Model/Planet/SolidPlanet.php b/src/Model/Planet/SolidPlanet.php
+index 5b7a3a8..6ecc693 100644
+--- a/src/Model/Planet/SolidPlanet.php
++++ b/src/Model/Planet/SolidPlanet.php
+@@ -4,14 +4,17 @@ namespace Model\Planet;
+ 
+ class SolidPlanet implements PlanetInterface
+ {
++    private $name;
++
+     private $radius;
+ 
+     private $hexColor;
+ 
+     private $dayLengthInHours;
+ 
+-    public function __construct($radius, $hexColor, $dayLengthInHours = 24)
++    public function __construct($name, $radius, $hexColor, $dayLengthInHours = 24)
+     {
++        $this->name = $name;
+         $this->radius = $radius;
+         $this->hexColor = $hexColor;
+         $this->dayLengthInHours = $dayLengthInHours;
+@@ -25,6 +28,11 @@ class SolidPlanet implements PlanetInterface
+         return $tomorrow;
+     }
+ 
++    public function getName()
++    {
++        return $this->name;
++    }
++
+     public function getRadius()
+     {
+         return $this->radius;
