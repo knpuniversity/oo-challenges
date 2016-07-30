@@ -314,7 +314,27 @@
             "id": "arrayaccess-implement-arrayaccess-solution",
             "name": "ArrayAccess: Implement ArrayAccess [Solution]",
             "description": null
+        },
+        {
+            "id": "iteratoraggregate-implement-interface",
+            "name": "IteratorAggregate: Implement interface",
+            "description": null
+        },
+        {
+            "id": "iteratoraggregate-implement-interface-solution",
+            "name": "IteratorAggregate: Implement interface [Solution]",
+            "description": null
+        },
+        {
+            "id": "iteratoraggregate-count-planets",
+            "name": "IteratorAggregate: Count planets",
+            "description": null
+        },
+        {
+            "id": "iteratoraggregate-count-planets-solution",
+            "name": "IteratorAggregate: Count planets [Solution]",
+            "description": null
         }
     ],
-    "sha": "e977535195533d184944b8df1a84e8fe011e568e"
+    "sha": "ce4a3430c7cac575940a1f75cbfca5ec7b255241"
 }

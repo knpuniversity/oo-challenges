@@ -1,0 +1,14 @@
+diff --git a/index.php b/index.php
+index 15bac12..6893922 100644
+--- a/index.php
++++ b/index.php
+@@ -25,6 +25,9 @@ $planets[] = $neptune;
+ $solarSystem = new SolarSystem($planets);
+ 
+ ?>
++<h1>
++    Showing <?php echo count($solarSystem); ?> Planets
++</h1>
+ <?php foreach ($solarSystem as $planet) : ?>
+     <h3><?php echo $planet; ?></h3>
+     <div>

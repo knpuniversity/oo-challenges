@@ -1,0 +1,23 @@
+diff --git a/src/Model/Planet/SolarSystem.php b/src/Model/Planet/SolarSystem.php
+index 03df85a..23b594e 100644
+--- a/src/Model/Planet/SolarSystem.php
++++ b/src/Model/Planet/SolarSystem.php
+@@ -2,7 +2,7 @@
+ 
+ namespace Model\Planet;
+ 
+-class SolarSystem
++class SolarSystem implements \IteratorAggregate
+ {
+     private $planets;
+ 
+@@ -10,4 +10,9 @@ class SolarSystem
+     {
+         $this->planets = $planets;
+     }
++
++    public function getIterator()
++    {
++        return new \ArrayIterator($this->planets);
++    }
+ }
