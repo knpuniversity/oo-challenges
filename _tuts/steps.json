@@ -334,7 +334,12 @@
             "id": "iteratoraggregate-count-planets-solution",
             "name": "IteratorAggregate: Count planets [Solution]",
             "description": null
+        },
+        {
+            "id": "traits-reuse-reuse-name",
+            "name": "Traits reuse: Reuse name",
+            "description": null
         }
     ],
-    "sha": "ce4a3430c7cac575940a1f75cbfca5ec7b255241"
+    "sha": "7c0012c29c18e3bba1e77973fad76a08c57de929"
 }
