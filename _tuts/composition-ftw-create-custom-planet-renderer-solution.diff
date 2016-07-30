@@ -1,0 +1,36 @@
+diff --git a/index.php b/index.php
+index c35846d..84b9cfe 100644
+--- a/index.php
++++ b/index.php
+@@ -5,9 +5,9 @@ require __DIR__ . '/vendor/autoload.php';
+ use Model\Planet\SolarSystem;
+ use Model\Planet\GasPlanet;
+ use Model\Planet\SolidPlanet;
+-use Service\PlanetRenderer;
++use Service\CustomPlanetRenderer;
+ 
+-$renderer = new PlanetRenderer();
++$renderer = new CustomPlanetRenderer();
+ 
+ $planets = [
+     new SolidPlanet('Mercury', 10, 'cccccc'),
+diff --git a/src/Service/CustomPlanetRenderer.php b/src/Service/CustomPlanetRenderer.php
+index e69de29..d21ff82 100644
+--- a/src/Service/CustomPlanetRenderer.php
++++ b/src/Service/CustomPlanetRenderer.php
+@@ -0,0 +1,15 @@
++<?php
++
++namespace Service;
++
++use Model\Planet\PlanetInterface;
++
++class CustomPlanetRenderer extends PlanetRenderer
++{
++    public function render(PlanetInterface $planet)
++    {
++        $html = parent::render($planet);
++
++        return sprintf('<div class="rendered-planet">%s</div>', $html);
++    }
++}

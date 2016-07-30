@@ -1,0 +1,57 @@
+diff --git a/src/Service/PlanetRenderer.php b/src/Service/PlanetRenderer.php
+index 78d0786..5016f5c 100644
+--- a/src/Service/PlanetRenderer.php
++++ b/src/Service/PlanetRenderer.php
+@@ -6,7 +6,7 @@ use Exception\InvalidRadiusException;
+ use Exception\MissingHexException;
+ use Model\Planet\PlanetInterface;
+ 
+-class PlanetRenderer
++class PlanetRenderer implements PlanetRendererInterface
+ {
+     public function render(PlanetInterface $planet)
+     {
+diff --git a/src/Service/PlanetRendererInterface.php b/src/Service/PlanetRendererInterface.php
+new file mode 100644
+index 0000000..d58a26f
+--- /dev/null
++++ b/src/Service/PlanetRendererInterface.php
+@@ -0,0 +1,10 @@
++<?php
++
++namespace Service;
++
++use Model\Planet\PlanetInterface;
++
++interface PlanetRendererInterface
++{
++    public function render(PlanetInterface $planet);
++}
+diff --git a/src/Service/SolarSystemRenderer.php b/src/Service/SolarSystemRenderer.php
+new file mode 100644
+index 0000000..1047fb3
+--- /dev/null
++++ b/src/Service/SolarSystemRenderer.php
+@@ -0,0 +1,22 @@
++<?php
++
++namespace Service;
++
++use Model\Planet\SolarSystem;
++
++class SolarSystemRenderer
++{
++    private $planetRenderer;
++
++    public function __construct(PlanetRendererInterface $planetRenderer)
++    {
++        $this->planetRenderer = $planetRenderer;
++    }
++
++    public function renderSolarSystem(SolarSystem $solarSystem)
++    {
++        foreach ($solarSystem as $planet) {
++            echo $this->planetRenderer->render($planet);
++        }
++    }
++}

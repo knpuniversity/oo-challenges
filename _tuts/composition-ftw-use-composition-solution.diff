@@ -1,0 +1,41 @@
+diff --git a/index.php b/index.php
+index 84b9cfe..daa7408 100644
+--- a/index.php
++++ b/index.php
+@@ -6,8 +6,10 @@ use Model\Planet\SolarSystem;
+ use Model\Planet\GasPlanet;
+ use Model\Planet\SolidPlanet;
+ use Service\CustomPlanetRenderer;
++use Service\PlanetRenderer;
+ 
+-$renderer = new CustomPlanetRenderer();
++$renderer = new PlanetRenderer();
++$renderer = new CustomPlanetRenderer($renderer);
+ 
+ $planets = [
+     new SolidPlanet('Mercury', 10, 'cccccc'),
+diff --git a/src/Service/CustomPlanetRenderer.php b/src/Service/CustomPlanetRenderer.php
+index d21ff82..da016a4 100644
+--- a/src/Service/CustomPlanetRenderer.php
++++ b/src/Service/CustomPlanetRenderer.php
+@@ -4,11 +4,18 @@ namespace Service;
+ 
+ use Model\Planet\PlanetInterface;
+ 
+-class CustomPlanetRenderer extends PlanetRenderer
++class CustomPlanetRenderer implements PlanetRendererInterface
+ {
++    private $planetRenderer;
++
++    public function __construct(PlanetRendererInterface $planetRenderer)
++    {
++        $this->planetRenderer = $planetRenderer;
++    }
++
+     public function render(PlanetInterface $planet)
+     {
+-        $html = parent::render($planet);
++        $html = $this->planetRenderer->render($planet);
+ 
+         return sprintf('<div class="rendered-planet">%s</div>', $html);
+     }

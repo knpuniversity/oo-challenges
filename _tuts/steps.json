@@ -344,7 +344,27 @@
             "id": "traits-reuse-reuse-name-solution",
             "name": "Traits reuse: Reuse name [Solution]",
             "description": null
+        },
+        {
+            "id": "composition-ftw-create-custom-planet-renderer",
+            "name": "Composition FTW: Create custom planet renderer",
+            "description": null
+        },
+        {
+            "id": "composition-ftw-create-custom-planet-renderer-solution",
+            "name": "Composition FTW: Create custom planet renderer [Solution]",
+            "description": null
+        },
+        {
+            "id": "composition-ftw-use-composition",
+            "name": "Composition FTW: Use composition",
+            "description": null
+        },
+        {
+            "id": "composition-ftw-use-composition-solution",
+            "name": "Composition FTW: Use composition [Solution]",
+            "description": null
         }
     ],
-    "sha": "ca939bc50621c886f9b767504cb7512545ee1956"
+    "sha": "73c504aa950dda90e26980a83bf2c2eb6d0e76a8"
 }
