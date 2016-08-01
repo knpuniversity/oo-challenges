@@ -1926,11 +1926,11 @@ exceptionclasses_throwcustomexceptionscoding:
     grading:
         search_exception_1:
             type: php
-            assertTrue: inputContains('index.php', 'Exception\InvalidRadiusException')
+            assertTrue: inputContains('index.php', 'Exception\\InvalidRadiusException')
             failure: Did you catch an `InvalidRadiusException` exception?
         search_exception_2:
             type: php
-            assertTrue: inputContains('index.php', 'Exception\MissingHexException')
+            assertTrue: inputContains('index.php', 'Exception\\MissingHexException')
             failure: Did you catch a `MissingHexException` exception?
         search_for_message_1:
             type: http
