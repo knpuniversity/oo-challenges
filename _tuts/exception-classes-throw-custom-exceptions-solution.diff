@@ -1,5 +1,5 @@
 diff --git a/index.php b/index.php
-index 5b71296..89f795b 100644
+index 27772c9..89f795b 100644
 --- a/index.php
 +++ b/index.php
 @@ -17,7 +17,9 @@ $planets = [
@@ -7,8 +7,9 @@ index 5b71296..89f795b 100644
      try {
          echo $renderer->render($planet);
 -    } catch (\Exception $e) {
+-        echo 'Planet cannot be rendered';
 +    } catch (\Exception\InvalidRadiusException $e) {
-         echo $e->getMessage();
++        echo $e->getMessage();
 +    } catch (\Exception\MissingHexException $e) {
 +        echo 'Planet has no color';
      }
