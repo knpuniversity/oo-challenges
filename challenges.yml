@@ -996,9 +996,10 @@ staticvsnonstaticandself_staticpropertymc:
 
 staticvsnonstaticandself_useselfkeywordcoding:
     question: |
-        We're doing too much work by using the whole class name `GasPlanet`!
+        We're doing too much work in `GasPlanet` by using the *whole* class name
+        (`GasPlanet`) to reference the constants!
     question_steps:
-        - Refactor `GasPlanet` to use `self` to reference the constants.
+        - 'Update the `GasPlanet::getHexColor()` method to use `self` to reference the constants.'
     step: static-vs-non-static-and-self-replace-class-name-with-self
     files:
         GasPlanet.php: ~
@@ -1027,7 +1028,7 @@ staticmethods_staticgetallelementscoding:
     question: |
         The gas planets are kind of pretty, so we want to render
         *all* of them for the user to enjoy. Simple! By creating
-        one `GasPlanet` object for each possible element, we've
+        one `GasPlanet` object in `index.php` for each possible element, we've
         done it!
 
         But, you know the problem: if we add *more* elements to
@@ -1035,15 +1036,16 @@ staticmethods_staticgetallelementscoding:
         another object. Lame!
     question_steps:
         - |
-            Create a new *static* method called `getAllElements()`
+            Create a new *static* method in `GasPlanet` called `getAllElements()`
             that returns the 4 possible gas planet elements.
         - |
-            Call this from `index.php` and use a `foreach` to
-            render the 4 different gas planets.
+            In `index.php`, call this new method and use a `foreach` to
+            create and render the 4 different gas planets. Use any diameter you
+            want for the planets.
     step: static-methods-get-all-elements
     files:
-        GasPlanet.php: ~
         index.php: ~
+        GasPlanet.php: ~
         PlanetInterface.php:
             read_only: true
         PlanetRenderer.php:
@@ -1072,12 +1074,17 @@ staticmethods_staticgetallelementscoding:
             type: php
             assertTrue: inputContains('index.php', 'new GasPlanet')
             failure: Did you create a `new GasPlanet` object in the `foreach` loop?
+        check_basic_output:
+            type: http
+            assertTrue: |
+                body() matches "/border-radius/"
+            failure: "I don't see any planets rendered! Did you remember to render them and echo the output?"
 
 staticmethods_fixerrorscoding:
     question: |
         You take *one* day for a holiday, and the intern experimented
         in the code and broke things! Now that you're back, well-rested
-        and with a nice tan. See if you can get the code working again.
+        and with a nice tan, see if you can **fix the error**.
     question_steps:
         - Render the page to see what the error is
         - Find the bug and squash it!
@@ -1108,7 +1115,7 @@ staticmethods_fixerrorscoding:
         check_method_call_with_this:
             type: php
             assertFalse: inputContains('RandomlyColoredPlanet.php', 'self::getRandomColor')
-            failure: You can call *technically* call the non-static `getRandomColor()` method with `self::`, but it's improper. Use `$this->` instead.
+            failure: You can *technically* call the non-static `getRandomColor()` method with `self::`, but it's improper. Use `$this->` instead inside of the `getHexColor()` method.
         check_argument_name:
             type: php
             assertTrue: inputContains('RandomlyColoredPlanet.php', '__construct($color1, $color2)')
