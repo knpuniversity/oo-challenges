@@ -1251,7 +1251,7 @@ namespacesmakeclassnameslonger_usenamespacecoding:
         search_for_use_without_slash:
             type: php
             assertTrue: inputContains('index.php', 'use Model\\Planet\\RandomlyColoredPlanet;')
-            failure: You should add a `use` statement for the `RandomlyColoredPlanet` class namespace in `index.php`.
+            failure: 'You should add a `use` statement for the `RandomlyColoredPlanet` class namespace in `index.php`. You *could* also just reference the long class name when you use it, but `use` statements are much more common.'
         search_for_use:
             type: php
             assertTrue: inputContains('index.php', 'new RandomlyColoredPlanet')
@@ -1359,7 +1359,7 @@ autoloadingawesomeness_addautoloadercoding:
     question_steps:
         - Remove the `require` statement for `RandomlyColoredPlanet.php`.
         - Add an autoloader function (`spl_autoload_register`) at the top of `index.php`.
-        - Inside that function, if the class equals `RandomlyColoredPlanet`, require that file.
+        - Inside that function, if the class equals `Model\Planet\RandomlyColoredPlanet`, require that file.
         - Refresh to see everything working *without* the `require` statement!
     step: autoloading-awesomeness-add-simple-autoloader
     files:
@@ -1442,7 +1442,7 @@ morewithusestatements_usesmartautoloadercoding:
         *and* our `spl_autoload_register` function is smart!
     question_steps:
         - Remove all of the require statements
-        - Give each class a proper namespace so that the autoload function can find them!
+        - Give each class a proper namespace so that the autoload function can find them! Remember, the namespace should match the directory, but without the `src/` part!
         - Fix anything else needed in the code after giving the classes namespaces
     step: more-with-use-statements-use-smart-autoloader
     files:
@@ -1477,11 +1477,11 @@ morewithusestatements_usesmartautoloadercoding:
 
 morewithusestatements_fixnamespacecoding:
     question: |
-        We *thought* we were done converting everything to have a
-        namespace, but now we're stuck on this error!
+        Ok, I *swear* this was all working a second ago. But, it looks
+        like someone accidentally changed something and broke everything!
     question_steps:
         - Reload the page to see the error
-        - Find the bug and squash it!
+        - Find the bug and squash it! The error is in `GasPlanet`.
     step: more-with-use-statements-fix-invalid-namespace
     files:
         src/Model/Planet/GasPlanet.php: ~
@@ -1715,6 +1715,7 @@ namespacescorephpclasses_datetimemc:
 #             failure: Did you add an `autoload` section to `composer.json` that looks at the `includes/` directory?
 
 # throw-exceptions
+# this challenge is not used yet - if you throw an exception, we grade it incorrect
 throwexceptions_validateelementcoding:
     question: |
         When you create a `GasPlanet`, you now *must* pass in one of
@@ -1908,22 +1909,22 @@ exceptionclasses_throwcustomexceptionscoding:
         we are throwing a different exception when the radius is negative
         versus when the hex color is missing.
     question_steps:
-        - Update `index.php` to *only* catch the `InvalidRadiusException`
+        - Update `index.php` to *only* catch the `InvalidRadiusException` (but don't forget a `use` statement for this Exception class!)
         - |
             Add a *second* `catch` after the first `catch` (yes, this is
             possible!) that will catch the `MissingHexException`. If this
-            happens, print the message "Planet has no color".
+            happens, print the message `Planet has no color`.
         - Reload the page to see it all working!
     step: exception-classes-throw-custom-exceptions
     files:
         index.php: ~
+        src/Service/PlanetRenderer.php:
+            read_only: true
         src/Exception/InvalidRadiusException.php:
             read_only: true
         src/Exception/MissingHexException.php:
             read_only: true
         src/Model/Planet/GasPlanet.php:
-            read_only: true
-        src/Service/PlanetRenderer.php:
             read_only: true
         src/Model/Planet/PlanetInterface.php:
             read_only: true
@@ -1941,12 +1942,12 @@ exceptionclasses_throwcustomexceptionscoding:
             failure: Did you catch a `MissingHexException` exception?
         search_for_message_1:
             type: http
-            assertTrue: body() matches '/greater than 0/'
-            failure: Did you print a message of `InvalidRadiusException` exception in the output.
+            assertTrue: body() matches '/Planet cannot be rendered/'
+            failure: Did you print `Planet cannot be rendered` when an `InvalidRadiusException` is thrown?
         search_for_message_2:
             type: http
             assertTrue: body() matches '/Planet has no color/'
-            failure: Did you print a `Planet has no color` message when `MissingHexException` exception is thrown.
+            failure: Did you print `Planet has no color` when a `MissingHexException` exception is thrown?
 
 # magic-methods
 magicmethods_printobjectscoding:
@@ -1959,8 +1960,9 @@ magicmethods_printobjectscoding:
         is *almost* working, but when we print the `$planet` variable,
         it gives us an error!
     question_steps:
+        - Refresh the page or check the code to see the error!
         - |
-            Update both `GasPlanet` and `SolidPlanet` so that
+            Update both `SolidPlanet` and `GasPlanet` so that
             when you print them, it prints the planet's name.
         - Refresh and enjoy the solar system :p
     step: magic-methods-print-objects
@@ -1998,7 +2000,7 @@ magicmethods_setprivatepropertycoding:
     question_steps:
         - |
             Keep the `$name` property private, but add
-            a magic `__set()` method that makes the code
+            a magic `__set()` method to `GasPlanet` that makes the code
             in `index.php` work!
         - Reload and make sure it works!
     step: magic-methods-set-method
@@ -2019,11 +2021,11 @@ magicmethods_setprivatepropertycoding:
         search_method:
             type: php
             assertTrue: reflection_class('\\Model\\Planet\\GasPlanet').hasMethod('__set')
-            failure: The `Model\Planet\GasPlanet` class should have the magic method which allows set private property.
+            failure: "The `Model\Planet\GasPlanet` class needs a magic `__set()` method - bit I don't see this!."
         check_output:
             type: http
             assertTrue: body() matches '/Nep-Toon/'
-            failure: I don't see `Nep-Toon` name in the output - did you set it right in the `__set()` magic method?
+            failure: I don't see `Nep-Toon` (the new name we have the planet) in the output! Did you set it right in the `__set()` magic method?
 
 magicmethods_adddesctructmethodcoding:
     question: |
@@ -2034,11 +2036,11 @@ magicmethods_adddesctructmethodcoding:
         And while it's much less common, you can *also* create a
         method whenever an object is *destructed*  - it's called
         `__destruct()`. This is usually called at the very end of
-        your script, but made be called earlier - once you're done
+        your script, but may be called earlier - once you're done
         working with your object.
     question_steps:
         - Add a `__destruct()` method to `GasPlanet`. Inside, just `echo $this->name`.
-        - Refresh to see if this method is called!
+        - Refresh to see if this method is called! Hint: scroll to the bottom of the output.
     step: magic-methods-add-destruct-method
     files:
         src/Model/Planet/GasPlanet.php: ~
@@ -2057,7 +2059,7 @@ magicmethods_adddesctructmethodcoding:
         search_method:
             type: php
             assertTrue: reflection_class('\\Model\\Planet\\GasPlanet').hasMethod('__destruct')
-            failure: I don't see `__destruct()` magic method in `Model\Planet\GasPlanet` class.
+            failure: I don't see the `__destruct()` magic method in `Model\Planet\GasPlanet`.
 
 # array-access
 arrayaccess_implementingarrayaccesscoding:
@@ -2073,8 +2075,8 @@ arrayaccess_implementingarrayaccesscoding:
     question_steps:
         - |
             Implement the `ArrayAccess` interface and add the
-            4 methods you need to your class (sorry, PhpStorm can't
-            help you this one time!)
+            4 methods you need to your class: `offsetExists($offset)`,
+            `offsetGet($offset)`, `offsetSet($offset, $value)` and `offsetUnset($offset)`.
         - |
             Fill in the logic for each method so that we can
             access the `$elements` property like an array.
@@ -2093,11 +2095,15 @@ arrayaccess_implementingarrayaccesscoding:
         assert_implementing:
             type: php
             assertTrue: reflection_class('\Meteoroid').implementsInterface('\ArrayAccess')
-            failure: Class `Meteoroid` should implement the `ArrayAccess` interface.
+            failure: The `Meteoroid` class should implement the `ArrayAccess` interface.
         search_for_array_call:
             type: php
             assertTrue: inputContains('metor.php', '$meteoroid[')
-            failure: Did you call `$meteoroid` variable as array to print each element mass in the table?
+            failure: Did you use the `$meteoroid` variable like an array to print each element's mass in the table?
+        check_output:
+            type: http
+            assertTrue: body() matches '/45712/'
+            failure: I don't see `45712` (the mass of Iron) in the output. Are you printing this?
 
 arrayaccess_arrayorobjectmc:
     question: |
@@ -2176,15 +2182,15 @@ iteratoraggregate_implementinterfacecoding:
         assert_implementing:
             type: php
             assertTrue: reflection_class('\\Model\\Planet\\SolarSystem').implementsInterface('\IteratorAggregate')
-            failure: Class `SolarSystem` should implement the `IteratorAggregate` interface.
+            failure: The `SolarSystem` class should implement the `IteratorAggregate` interface.
         assert_object:
             type: php
             assertTrue: get_class(variable('solarSystem').getIterator()) === 'ArrayIterator'
-            failure: The `getIterator()` method should return the `ArrayIterator` object.
-        assert_value:
-            type: php
-            assertTrue: inputContains('src/Model/Planet/SolarSystem.php', 'ArrayIterator($this->planets)')
-            failure: Pass planets of our solar system to the `ArrayIterator` object in `SolarSystem.php`.
+            failure: The `getIterator()` method should return an `ArrayIterator` object.
+        check_output:
+            type: http
+            assertTrue: body() matches '/Jupiter/'
+            failure: "I don't see the planets being printed! Something still isn't right..."
 
 iteratoraggregate_countplanetscoding:
     question: |
@@ -2194,7 +2200,7 @@ iteratoraggregate_countplanetscoding:
 
         We asked the intern to do it, but he couldn't figure it out.
         Sure, we can *loop* over the `SolarSystem` object, but we can't
-        seem to count it (he tried in `index.php`).
+        seem to count it (he tried in `index.php` - it always says 1!).
     question_steps:
         - |
             Add a new interface: `Countable`. This will allow
@@ -2223,16 +2229,15 @@ iteratoraggregate_countplanetscoding:
         assert_implementing_1:
             type: php
             assertTrue: reflection_class('\\Model\\Planet\\SolarSystem').implementsInterface('\IteratorAggregate')
-            failure: Class `SolarSystem` still should implement the `IteratorAggregate` interface - bring him back.
+            failure: The class `SolarSystem` should *still* implement the `IteratorAggregate` interface - bring him back!
         assert_implementing_2:
             type: php
             assertTrue: reflection_class('\\Model\\Planet\\SolarSystem').implementsInterface('\Countable')
-            failure: Class `SolarSystem` should implement one more interface - the `Countable` interface.
+            failure: The class `SolarSystem` should also implement a new `Countable` interface.
         assert_value:
             type: php
-            assertTrue: variable('solarSystem').count() === 8
-            failure: Hm, looks like we have 8 planets in our solar system. Did you implement the `Countable` interface right?
-
+            assertTrue: variable('solarSystem').count() == 8
+            failure: "Hm, we should have 8 planets in our solar system, but the `count()` method is returning a different number. Is your logic in `count()` correct?"
 # traits-reuse
 traitsreuse_reusenamecoding:
     question: |
@@ -2243,7 +2248,8 @@ traitsreuse_reusenamecoding:
         I hate duplication!
     question_steps:
         - |
-            Create a new trait: `NameableItemTrait`.
+            Create a new trait: `NameableItemTrait` (and don't forget to give it
+            the correct `namespace`!)
         - |
             Move the `$name` property and the 2 duplicated methods
             into this trait.
@@ -2275,27 +2281,27 @@ traitsreuse_reusenamecoding:
         assert_is_trait:
             type: php
             assertTrue: reflection_class('\\Model\\Planet\\NameableItemTrait').isTrait()
-            failure: Class `Model\Planet\NameableItemTrait` should be declared as a trait.
+            failure: Make sure to create `Model\Planet\NameableItemTrait` and make it a `trait`.
         search_methods:
             type: php
             assertTrue: reflection_class('\\Model\\Planet\\NameableItemTrait').hasMethod('setName') and reflection_class('\\Model\\Planet\\NameableItemTrait').hasMethod('getName')
-            failure: Move `setName()` and `getName()` methods inside `Model\Planet\NameableItemTrait` trait.
+            failure: Move `setName()` and `getName()` methods into the `Model\Planet\NameableItemTrait` trait.
         search_property:
             type: php
             assertTrue: reflection_class('\\Model\\Planet\\NameableItemTrait').hasProperty('name')
-            failure: Move `$name` property inside `Model\Planet\NameableItemTrait` trait.
+            failure: Move the `$name` property into the `Model\Planet\NameableItemTrait` trait.
         search_trait:
             type: php
             assertTrue: inputContains('src/Model/Planet/SolidPlanet.php', 'NameableItemTrait') and inputContains('src/Model/Planet/GasPlanet.php', 'NameableItemTrait')
-            failure: Ensure `SolidPlanet` and `GasPlanet` classes use `NameableItemTrait` trait.
+            failure: MAke sure that `SolidPlanet` and `GasPlanet` use the `NameableItemTrait` trait.
         search_moved_methods_1:
             type: php
             assertFalse: inputContains('src/Model/Planet/SolidPlanet.php', 'function setName') or inputContains('src/Model/Planet/SolidPlanet.php', 'function getName')
-            failure: Ensure `SolidPlanet` class don't have `setName()` and `getName()` methods inside anymore.
+            failure: "Now that it uses the trait, the `SolidPlanet` class doesn't need to have the `setName()` and `getName()` methods anymore! Yay!"
         search_moved_methods_2:
             type: php
             assertFalse: inputContains('src/Model/Planet/GasPlanet.php', 'function setName') or inputContains('src/Model/Planet/GasPlanet.php', 'function getName')
-            failure: Ensure `GasPlanet` class don't have `setName()` and `getName()` methods inside anymore.
+            failure: "Now that it uses the trait, the `GasPlanet` class doesn't need to have the `setName()` and `getName()` methods anymore! Yay!"
 
 traitsreuse_inheritancevstraitsmc:
     question: |
@@ -2344,10 +2350,10 @@ compositionftw_overrideclasscoding:
         from an external library that you're using.
 
         But here's the challenge: the existing `PlanetRenderer` returns
-        a `div` with the planet inside of it. But to allow for some
-        styling, *we* need to add a class to this div `rendered-planet`.
+        a `div` aroudn the plane. But to allow for some extra
+        styling, *we* need to add a *class* to this div: `rendered-planet`.
         Unfortunately, it doesn't look like there's any easy way to
-        configure this.
+        do this.
 
         Let's fix this by overriding the class!
     question_steps:
@@ -2355,7 +2361,10 @@ compositionftw_overrideclasscoding:
             Create a new `CustomPlanetRenderer` and make it extend
             `PlanetRenderer`.
         - |
-            Call the [parent](http://knpuniversity.com/screencast/oo-ep3/parent)
+            Override the `render(PlanetInterface $planet)` method (and don't
+            forget that you'll need a `use` statement for `PlanetInterface`)
+        - |
+            Call the [parent()](http://knpuniversity.com/screencast/oo-ep3/parent)
             method, but then wrap the string in a new div - something like this:
 
             ```php
@@ -2386,10 +2395,14 @@ compositionftw_overrideclasscoding:
             type: php
             assertTrue: reflection_class('\\Service\\CustomPlanetRenderer').isSubclassOf('\\Service\\PlanetRenderer')
             failure: The `CustomPlanetRenderer` class should extend `PlanetRenderer` one.
+        search_for_render_override:
+            type: php
+            assertTrue: inputContains('src/Service/CustomPlanetRenderer.php', 'render')
+            failure: Make sure that you override the `render()` method in `CustomPlanetRenderer`!
         search_for_parent_call:
             type: php
             assertTrue: inputContains('src/Service/CustomPlanetRenderer.php', 'parent::render')
-            failure: You should call a parent method inside of `render()`.
+            failure: You should call the `parent()` method inside of `render()`.
         assert_class:
             type: php
             assertTrue: get_class(variable('renderer')) === 'Service\\CustomPlanetRenderer'
@@ -2397,7 +2410,7 @@ compositionftw_overrideclasscoding:
         search_css_class:
             type: http
             assertTrue: body() matches '/rendered-planet/'
-            failure: Did you render each planet in a div class with `rendered-planet` CSS class? Check our output.
+            failure: Did you render each planet in a div with a `rendered-planet` CSS class? Check the output and update your `render()` method if needed!
 
 compositionftw_usecompositioncoding:
     question: |
@@ -2413,10 +2426,9 @@ compositionftw_usecompositioncoding:
             Instead of extending `PlanetRenderer`, make `CustomPlanetRenderer`
             implement the new `PlanetRendererInterface`
         - |
-            Allow the other `PlanetRenderer` object to be passed into
-            the `__construct()` method of `CustomPlanetRenderer`. In other
-            words, add a `__construct()` method that has a single `PlanetRendererInterface`
-            object and set this on a new `planetRenderer` property.
+            Add a `__construct()` method to `CustomPlanetRenderer` that accepts a
+            single argument: a `PlanetRendererInterface` object. Set this on a new
+            `planetRenderer` property.
         - |
             Update `CustomPlanetRenderer` to call `render()` on the new
             `planetRenderer` property and *then* add the new div with
@@ -2454,10 +2466,14 @@ compositionftw_usecompositioncoding:
             type: php
             assertTrue: get_class(variable('renderer')) === 'Service\\CustomPlanetRenderer'
             failure: The `$renderer` variable should be an instance of `CustomPlanetRenderer` class instead of `PlanetRenderer` in `index.php`
+        assert_construct_exists:
+            type: php
+            assertTrue: method_exists(variable('renderer'), '__construct')
+            failure: Make sure your `CustomPlanetRenderer` has a `__construct()` method.
         search_css_class:
             type: http
             assertTrue: body() matches '/rendered-planet/'
-            failure: Did you render each planet in a div class with `rendered-planet` CSS class? Check our output.
+            failure: Did you render each planet in a div witha  `rendered-planet` CSS class? Check the output.
 
 compositionftw_compositionmc:
     question: |
