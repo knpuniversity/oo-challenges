@@ -2021,7 +2021,7 @@ magicmethods_setprivatepropertycoding:
         search_method:
             type: php
             assertTrue: reflection_class('\\Model\\Planet\\GasPlanet').hasMethod('__set')
-            failure: "The `Model\Planet\GasPlanet` class needs a magic `__set()` method - bit I don't see this!."
+            failure: The `Model\Planet\GasPlanet` class needs a magic `__set()` method - bit I don't see this!.
         check_output:
             type: http
             assertTrue: body() matches '/Nep-Toon/'
