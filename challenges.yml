@@ -2040,7 +2040,7 @@ magicmethods_adddesctructmethodcoding:
         working with your object.
     question_steps:
         - Add a `__destruct()` method to `GasPlanet`. Inside, just `echo $this->name`.
-        - Refresh to see if this method is called! Hint: scroll to the bottom of the output.
+        - 'Refresh to see if this method is called! Hint: scroll to the bottom of the output.'
     step: magic-methods-add-destruct-method
     files:
         src/Model/Planet/GasPlanet.php: ~
