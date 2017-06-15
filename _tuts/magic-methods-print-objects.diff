@@ -1,8 +1,8 @@
 diff --git a/index.php b/index.php
-index 89f795b..971cb4e 100644
+index 1b1b037..a4c8c28 100644
 --- a/index.php
 +++ b/index.php
-@@ -9,17 +9,22 @@ use Service\PlanetRenderer;
+@@ -9,17 +9,21 @@ use Service\PlanetRenderer;
  $renderer = new PlanetRenderer();
  
  $planets = [
@@ -22,7 +22,7 @@ index 89f795b..971cb4e 100644
 -    try {
 -        echo $renderer->render($planet);
 -    } catch (\Exception\InvalidRadiusException $e) {
--        echo $e->getMessage();
+-        echo 'Planet cannot be rendered';
 -    } catch (\Exception\MissingHexException $e) {
 -        echo 'Planet has no color';
 -    }
@@ -37,7 +37,6 @@ index 89f795b..971cb4e 100644
 +        <?php echo $renderer->render($planet); ?>
 +    </div>
 +<?php endforeach; ?>
-+
 diff --git a/src/Model/Planet/GasPlanet.php b/src/Model/Planet/GasPlanet.php
 index bdc2c5b..e105217 100644
 --- a/src/Model/Planet/GasPlanet.php
