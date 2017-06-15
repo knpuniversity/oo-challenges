@@ -1,5 +1,5 @@
 diff --git a/index.php b/index.php
-index fa8c7fd..15bac12 100644
+index f7cc8db..15bac12 100644
 --- a/index.php
 +++ b/index.php
 @@ -2,6 +2,7 @@
@@ -10,7 +10,7 @@ index fa8c7fd..15bac12 100644
  use Model\Planet\GasPlanet;
  use Model\Planet\SolidPlanet;
  use Service\PlanetRenderer;
-@@ -21,11 +22,12 @@ $neptune = new GasPlanet('Neptune', GasPlanet::MATERIAL_HYDROGEN, 49);
+@@ -21,8 +22,10 @@ $neptune = new GasPlanet('Neptune', GasPlanet::MATERIAL_HYDROGEN, 49);
  $neptune->name = 'Nep-Toon!'; // this is a silly name
  $planets[] = $neptune;
  
@@ -22,9 +22,6 @@ index fa8c7fd..15bac12 100644
      <h3><?php echo $planet; ?></h3>
      <div>
          <?php echo $renderer->render($planet); ?>
-     </div>
- <?php endforeach; ?>
--
 diff --git a/src/Model/Planet/SolarSystem.php b/src/Model/Planet/SolarSystem.php
 new file mode 100644
 index 0000000..03df85a
