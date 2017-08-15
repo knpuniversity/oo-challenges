@@ -328,7 +328,18 @@ abstractship_extendabstractclasscoding:
             type: php
             assertTrue: reflection_class('\DeathStar').isSubclassOf('\AbstractDeathStar') and reflection_class('\DeathStarII').isSubclassOf('\AbstractDeathStar')
             failure: The both `DeathStar` and `DeathStarII` classes should extend `AbstractDeathStar` one.
-
+        check_methods_removed:
+            type: php
+            assertFalse: |
+                false
+                or inputContains('DeathStar.php', 'getWeaponPower')
+                or inputContains('DeathStar.php', 'setWeaponPower')
+                or inputContains('DeathStar.php', 'makeFiringNoise')
+            failure: The `DeathStar` class should not have `getWeaponPower()`, `setWeaponPower()`, `makeFiringNoise()` methods.
+        check_property_removed:
+            type: php
+            assertFalse: inputContains('DeathStar.php', 'private $weaponPower')
+            failure: The `DeathStar` class does not need `$weaponPower` property anymore.
 abstractship_inheritanceoverheadmc:
     question: |
         A co-worker created a few classes and has asked for
