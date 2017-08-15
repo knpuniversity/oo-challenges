@@ -316,10 +316,6 @@ abstractship_extendabstractclasscoding:
             type: php
             assertTrue: class_exists('\AbstractDeathStar')
             failure: The `AbstractDeathStar` class does not exist! Did you create it?
-        assert_abstract:
-            type: php
-            assertTrue: reflection_class('\AbstractDeathStar').isAbstract()
-            failure: The `AbstractDeathStar` class should be declared as abstract.
         check_methods:
             type: php
             assertTrue: reflection_class('\AbstractDeathStar').hasMethod('setWeaponPower') and reflection_class('\AbstractDeathStar').hasMethod('getWeaponPower') and reflection_class('\AbstractDeathStar').hasMethod('makeFiringNoise')
