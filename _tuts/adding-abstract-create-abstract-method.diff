@@ -1,10 +1,10 @@
 diff --git a/AbstractDeathStar.php b/AbstractDeathStar.php
-index bdd0a9d..1eeaf2e 100644
+index 7d438a3..cb45bff 100644
 --- a/AbstractDeathStar.php
 +++ b/AbstractDeathStar.php
 @@ -2,20 +2,16 @@
  
- abstract class AbstractDeathStar
+ class AbstractDeathStar
  {
 -    private $weaponPower;
 -

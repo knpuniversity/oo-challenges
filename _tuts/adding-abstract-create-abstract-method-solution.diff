@@ -1,10 +1,10 @@
 diff --git a/AbstractDeathStar.php b/AbstractDeathStar.php
-index 1eeaf2e..ce5c7e8 100644
+index cb45bff..afff4eb 100644
 --- a/AbstractDeathStar.php
 +++ b/AbstractDeathStar.php
 @@ -2,11 +2,13 @@
  
- abstract class AbstractDeathStar
+ class AbstractDeathStar
  {
 +    abstract public function getLaserRange();
 +

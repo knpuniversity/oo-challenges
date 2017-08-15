@@ -1,11 +1,11 @@
 diff --git a/AbstractDeathStar.php b/AbstractDeathStar.php
-index e69de29..bdd0a9d 100644
+index e69de29..7d438a3 100644
 --- a/AbstractDeathStar.php
 +++ b/AbstractDeathStar.php
 @@ -0,0 +1,21 @@
 +<?php
 +
-+abstract class AbstractDeathStar
++class AbstractDeathStar
 +{
 +    private $weaponPower;
 +
