@@ -159,9 +159,9 @@ override_calloverriddenmethodmc:
     features:
         multiple_choice:
             choices:
-                a: Empire ShipRebelShip
-                b: Empire ShipI like to fly!RebelShip
-                c: Empire ShipI like to fly!RebelShipI like to fly
+                a: Empire ShipRebel Ship
+                b: Empire ShipI like to fly!Rebel Ship
+                c: Empire ShipI like to fly!Rebel ShipI like to fly!
                 d: RebelShipRebelShip
             correct: b
 
