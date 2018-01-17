@@ -18,7 +18,7 @@ before_install:
     - export CHALLENGER_REPO_URL=https://github.com/$TRAVIS_REPO_SLUG
     - echo $CHALLENGER_REPO_URL
 
-script: php $HOME/challenger/bin/challenger test
+script: php $HOME/challenger/bin/challenger test -vvv
 
 notifications:
     slack:
