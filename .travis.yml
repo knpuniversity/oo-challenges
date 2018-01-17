@@ -17,6 +17,7 @@ before_install:
     - export CHALLENGER_REPO_SHA=$TRAVIS_COMMIT
     - export CHALLENGER_REPO_URL=https://github.com/$TRAVIS_REPO_SLUG
     - echo $CHALLENGER_REPO_URL
+    - echo $CHALLENGER_CHALLENGE_RUNNER_URL
 
 script: php $HOME/challenger/bin/challenger test -vvv
 
