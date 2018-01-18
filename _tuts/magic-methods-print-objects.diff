@@ -74,20 +74,20 @@ diff --git a/src/Model/Planet/PlanetInterface.php b/src/Model/Planet/PlanetInter
 index 8c44a5a..3d09db8 100644
 --- a/src/Model/Planet/PlanetInterface.php
 +++ b/src/Model/Planet/PlanetInterface.php
-@@ -5,6 +5,13 @@ namespace Model\Planet;
+@@ -4,6 +4,13 @@ namespace Model\Planet;
+ 
  interface PlanetInterface
  {
-     /**
++    /**
 +     * Return name of the planet
 +     *
 +     * @return string
 +     */
 +    public function getName();
 +
-+    /**
+     /**
       * Return the radius if the planet, in thousands of kilometers.
       *
-      * @return integer
 diff --git a/src/Model/Planet/SolidPlanet.php b/src/Model/Planet/SolidPlanet.php
 index 5b7a3a8..6ecc693 100644
 --- a/src/Model/Planet/SolidPlanet.php
