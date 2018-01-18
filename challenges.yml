@@ -1723,55 +1723,55 @@ namespacescorephpclasses_datetimemc:
 
 # throw-exceptions
 # this challenge is not used yet - if you throw an exception, we grade it incorrect
-throwexceptions_validateelementcoding:
-    question: |
-        When you create a `GasPlanet`, you now *must* pass in one of
-        the 4 valid elements. If you don't, `getHexColor()` will fail
-        to return a color and weird things will happen!
-
-        Let's not let that weirdness happen.
-    question_steps:
-        - |
-            In `GasPlanet::__construct()`, add an `if` statement to check
-            if the `$mainElement` argument is *not* one of the 4 valid values
-            (hint, you can use the `getAllElements()` method to help)
-        - |
-            If it is *not* valid, throw a new `Exception` object with
-            the message: `This is not a valid element!`.
-        - |
-            In `index.php`, change the `$planet` variable to use an
-            invalid element - like `gold` (but wouldn't it be cool if
-            a planet were entirely gold!?).
-        - Refresh to see the error!
-    step: throw-exceptions-validate-element
-    files:
-        index.php: ~
-        src/Model/Planet/GasPlanet.php: ~
-        src/Service/PlanetRenderer.php:
-            read_only: true
-        src/Model/Planet/PlanetInterface.php:
-            read_only: true
-    features:
-        editor: ~
-        browser: ~
-    grading:
-        search_for_exception:
-            type: php
-            assertTrue: inputContains('src/Model/Planet/GasPlanet.php', 'Exception')
-            failure: You should throw a new `Exception` object from `GasPlanet::__construct()`.
-        assert_exception:
-            type: http
-            assertTrue: |
-                body() matches "/Fatal error: Uncaught exception 'Exception'/"
-            failure: I don't see the error! Make sure that you're passing an *invalid* element to the `$planet` variable in index.php - like `'gold'`.
-        search_for_message:
-            type: php
-            assertTrue: inputContains('src/Model/Planet/GasPlanet.php', 'This is not a valid element!')
-            failure: "Make sure that your Exception will have the message: `This is not a valid element!` inside of `GasPlanet::__construct()`."
-        look_for_message:
-            type: http
-            assertTrue: body() matches '/with message 'This is not a valid element!'/'
-            failure: "Everything looks ok, but somehow, I don't see the exception message: `This is not a valid element!`."
+# throwexceptions_validateelementcoding:
+#    question: |
+#        When you create a `GasPlanet`, you now *must* pass in one of
+#        the 4 valid elements. If you don't, `getHexColor()` will fail
+#        to return a color and weird things will happen!
+#
+#        Let's not let that weirdness happen.
+#    question_steps:
+#        - |
+#            In `GasPlanet::__construct()`, add an `if` statement to check
+#            if the `$mainElement` argument is *not* one of the 4 valid values
+#            (hint, you can use the `getAllElements()` method to help)
+#        - |
+#            If it is *not* valid, throw a new `Exception` object with
+#            the message: `This is not a valid element!`.
+#        - |
+#            In `index.php`, change the `$planet` variable to use an
+#            invalid element - like `gold` (but wouldn't it be cool if
+#            a planet were entirely gold!?).
+#        - Refresh to see the error!
+#    step: throw-exceptions-validate-element
+#    files:
+#        index.php: ~
+#        src/Model/Planet/GasPlanet.php: ~
+#        src/Service/PlanetRenderer.php:
+#            read_only: true
+#        src/Model/Planet/PlanetInterface.php:
+#            read_only: true
+#    features:
+#        editor: ~
+#        browser: ~
+#    grading:
+#        search_for_exception:
+#            type: php
+#            assertTrue: inputContains('src/Model/Planet/GasPlanet.php', 'Exception')
+#            failure: You should throw a new `Exception` object from `GasPlanet::__construct()`.
+#        assert_exception:
+#            type: http
+#            assertTrue: |
+#                body() matches "/Fatal error: Uncaught exception 'Exception'/"
+#            failure: I don't see the error! Make sure that you're passing an *invalid* element to the `$planet` variable in index.php - like `'gold'`.
+#        search_for_message:
+#            type: php
+#            assertTrue: inputContains('src/Model/Planet/GasPlanet.php', 'This is not a valid element!')
+#            failure: "Make sure that your Exception will have the message: `This is not a valid element!` inside of `GasPlanet::__construct()`."
+#        look_for_message:
+#            type: http
+#            assertTrue: body() matches '/with message 'This is not a valid element!'/'
+#            failure: "Everything looks ok, but somehow, I don't see the exception message: `This is not a valid element!`."
 
 throwexceptions_catchexceptioncoding:
     question: |
