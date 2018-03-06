@@ -352,7 +352,7 @@ abstractship_inheritanceoverheadmc:
 
             public function getName()
             {
-                return $name;
+                return $this->name;
             }
 
             public function setName($name)
@@ -371,7 +371,7 @@ abstractship_inheritanceoverheadmc:
 
             public function getName()
             {
-                return $name;
+                return $this->name;
             }
 
             public function setName($name)
