@@ -583,10 +583,6 @@ pdoshipstorage_decomposestringtransformercoding:
             failure: Class `Cache` does not exist. Did you create it?
         check_method:
             type: php
-            assertTrue: reflection_class('\Cache').hasMethod('fetchFromCache')
-            failure: Method `fetchFromCache()` does not exist in the `Cache` class.
-        check_method:
-            type: php
             assertTrue: reflection_class('\Cache').hasMethod('saveToCache')
             failure: Method `saveToCache()` does not exist in the `Cache` class.
         check_variable:
