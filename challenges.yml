@@ -2357,7 +2357,7 @@ compositionftw_overrideclasscoding:
         from an external library that you're using.
 
         But here's the challenge: the existing `PlanetRenderer` returns
-        a `div` around the plane. But to allow for some extra
+        a `div` around the planet. But to allow for some extra
         styling, *we* need to add a *class* to this div: `rendered-planet`.
         Unfortunately, it doesn't look like there's any easy way to
         do this.
